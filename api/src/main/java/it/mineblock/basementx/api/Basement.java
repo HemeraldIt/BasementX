@@ -81,13 +81,12 @@ public interface Basement {
     /**
      * Register a new PlayerManager instance with custom BasementPlayer implementation
      * @param type the new BasementPlayer implementation class
-     * @param save if true the basement player object save is handled by basement. When registering a custom object set to false and handle it by yourself
      * @param <T> the BasementPlayer implementation type
      */
-    <T extends BasementPlayer> void registerBasementPlayerType(Class<T> type, boolean save);
+    <T extends BasementPlayer> void registerBasementPlayerType(Class<T> type);
 
     /**
-     * Gets if a custom type of BasementPlayer is registered. if false Basement will not register players on join
+     * Gets if a custom type of BasementPlayer is registered. if false Basement will not register players on join, the registration must be handled by yourself
      * @return false if a custom type of BasementPlayer is registered
      */
     boolean savePlayer();

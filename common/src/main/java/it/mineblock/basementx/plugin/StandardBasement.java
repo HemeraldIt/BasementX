@@ -134,9 +134,9 @@ public class StandardBasement implements Basement {
     }
 
     @Override
-    public <T extends BasementPlayer> void registerBasementPlayerType(Class<T> type, boolean save) {
+    public <T extends BasementPlayer> void registerBasementPlayerType(Class<T> type) {
         playerManager = new DefaultPlayerManager<T>(this);
-        this.savePlayer = save;
+        this.savePlayer = false;
     }
 
     @Override

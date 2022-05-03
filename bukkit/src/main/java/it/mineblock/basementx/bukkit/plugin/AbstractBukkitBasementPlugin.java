@@ -20,7 +20,6 @@ public abstract class AbstractBukkitBasementPlugin extends AbstractBasementPlugi
     public void init() {
         basement = new StandardBasementBukkit(this, plugin);
 
-        basement.registerBasementPlayerType(BukkitBasementPlayer.class, true);
         basement.getServerManager().setServerAddConsumer(server -> Bukkit.getPluginManager().callEvent(new BasementNewServerFound(server)));
         basement.getServerManager().setServerRemoveConsumer(server -> Bukkit.getPluginManager().callEvent(new BasementServerRemoved(server)));
     }
@@ -29,7 +28,6 @@ public abstract class AbstractBukkitBasementPlugin extends AbstractBasementPlugi
     public void init(Class<? extends SettingsHolder> settingsHolder) {
         basement = new StandardBasementBukkit(this, plugin);
 
-        basement.registerBasementPlayerType(BukkitBasementPlayer.class, true);
         basement.getServerManager().setServerAddConsumer(server -> Bukkit.getPluginManager().callEvent(new BasementNewServerFound(server)));
         basement.getServerManager().setServerRemoveConsumer(server -> Bukkit.getPluginManager().callEvent(new BasementServerRemoved(server)));
     }
