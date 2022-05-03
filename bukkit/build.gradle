@@ -1,0 +1,49 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+project.tasks.publishShadowPublicationToBytesafeRepository.enabled = false
+project.tasks.publishAllPublicationsToBytesafeRepository.enabled = false
+
+repositories {
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+    maven {
+        name = 'bytesafe'
+        url 'https://mineblock.bytesafe.dev/maven/minecraft/'
+        credentials {
+            username = 'bytesafe'
+            password = '01FWC4FBF8JZMH89ZXPQB9CBBN'
+        }
+    }
+    maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url 'https://repo.viaversion.com' }
+}
+
+dependencies {
+    compileOnly 'fr.minuskube.inv:smart-invs:1.2.7'
+
+    implementation project(':common')
+    implementation project(':api-bukkit')
+
+    compileOnly 'app.ashcon:sportpaper:1.8.8'
+    compileOnly 'it.vulcan:vulcan-api:2.5.2'
+    compileOnly 'me.clip:placeholderapi:2.11.1'
+    compileOnly 'com.viaversion:viaversion-api:4.2.1'
+
+    implementation project('nms:1_18_R2')
+    implementation project('nms:1_17_R1')
+    implementation project('nms:1_8_R3')
+}
+
+shadowJar {
+    archiveFileName = "BasementX-Bukkit-${project.version}.jar"
+    dependencies {
+        exclude(dependency(':lombok'))
+        exclude(dependency(':spigot'))
+    }
+}
+
+artifacts {
+    archives shadowJar
+}

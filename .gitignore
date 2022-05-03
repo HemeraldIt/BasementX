@@ -1,0 +1,12 @@
+# Project exclude paths
+/.gradle/
+/.idea/
+/api/build/
+/api-bukkit/build/
+/api-velocity/build/
+/bukkit/build/
+/bukkit/nms/1_8_R3/build/
+/bukkit/nms/1_17_R1/build/
+/bukkit/nms/1_18_R2/build/
+/common/build/
+/velocity/build/

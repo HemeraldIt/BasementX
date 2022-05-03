@@ -1,0 +1,10 @@
+plugins {
+    id("java-library")
+}
+
+dependencies {
+    api(project(':api'))
+    compileOnly 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT'
+    api 'net.luckperms:api:5.4'
+    api 'com.github.cryptomorin:XSeries:8.7.1'
+}
