@@ -2,8 +2,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
 
-    group = 'it.mineblock.basement'
-    version = '1.0'
+    group = 'it.mineblock.basementx'
+    version = '2.0'
 
     compileJava {
         options.release = 17
