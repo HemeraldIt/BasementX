@@ -20,8 +20,8 @@ import it.mineblock.basementx.api.redis.messages.implementation.BukkitNotifyShut
 import it.mineblock.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.mineblock.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import it.mineblock.basementx.api.remote.RemoteVelocityService;
-import it.mineblock.basementx.api.velocity.AbstractBasementVelocity;
 import it.mineblock.basementx.config.BasementConfig;
+import it.mineblock.basementx.plugin.AbstractBasementPlugin;
 import it.mineblock.basementx.velocity.alert.AlertType;
 import it.mineblock.basementx.velocity.commands.*;
 import it.mineblock.basementx.velocity.database.DatabaseConstants;
@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 
 @Plugin(id = "basement", name = "Basement", version = "1.0", authors = {"TheDarkSword"}, dependencies = {@Dependency(id = "luckperms")})
 @Getter
-public class BasementVelocity extends AbstractBasementVelocity {
+public class BasementVelocity extends AbstractBasementPlugin {
 
     private final ProxyServer server;
     private final File dataFolder;
