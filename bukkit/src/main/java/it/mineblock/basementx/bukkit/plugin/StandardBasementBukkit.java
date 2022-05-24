@@ -15,6 +15,7 @@ import it.mineblock.basementx.api.redis.messages.implementation.PartyWarpMessage
 import it.mineblock.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.mineblock.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import it.mineblock.basementx.api.server.BukkitServer;
+import it.mineblock.basementx.bukkit.cooldown.BukkitCooldownFactory;
 import it.mineblock.basementx.bukkit.disguise.handler.DisguiseHandler;
 import it.mineblock.basementx.bukkit.disguise.module.DefaultDisguiseModule;
 import it.mineblock.basementx.bukkit.nametag.module.DefaultNameTagModule;
@@ -96,6 +97,12 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
 
         this.scoreboardAdapter = ScoreboardAdapter.builder(plugin, scoreboardUtils).build();
         this.itemDataManager = itemDataManager;
+
+        cooldownFactory = new BukkitCooldownFactory(plugin);
+
+        cooldownFactory.create(itemDataManager, 1000, true, () -> {
+
+        });
     }
 
     @Override

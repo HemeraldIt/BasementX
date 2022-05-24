@@ -4,6 +4,7 @@ import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import it.mineblock.basementx.api.Basement;
+import it.mineblock.basementx.api.cooldown.CooldownFactory;
 import it.mineblock.basementx.api.locale.LocaleManager;
 import it.mineblock.basementx.api.party.PartyManager;
 import it.mineblock.basementx.api.persistence.generic.Holder;
@@ -19,6 +20,7 @@ import it.mineblock.basementx.api.remote.RemoteCerebrumService;
 import it.mineblock.basementx.api.remote.RemoteVelocityService;
 import it.mineblock.basementx.api.server.ServerManager;
 import it.mineblock.basementx.config.BasementConfig;
+import it.mineblock.basementx.cooldown.DefaultCooldownFactory;
 import it.mineblock.basementx.locale.DefaultLocaleManager;
 import it.mineblock.basementx.party.DefaultPartyManager;
 import it.mineblock.basementx.persistence.hikari.TypeHolder;
@@ -49,6 +51,8 @@ public class StandardBasement implements Basement {
 
     private boolean savePlayer = false;
 
+    protected CooldownFactory cooldownFactory;
+
     public StandardBasement(BasementPlugin plugin) {
         this(plugin, null);
     }
@@ -74,6 +78,8 @@ public class StandardBasement implements Basement {
 
         velocityService = redisManager.getRedissonClient().getRemoteService().get(RemoteVelocityService.class);
         cerebrumService = redisManager.getRedissonClient().getRemoteService().get(RemoteCerebrumService.class);
+
+        cooldownFactory = new DefaultCooldownFactory();
     }
 
     public void start() {}
@@ -168,5 +174,10 @@ public class StandardBasement implements Basement {
             }
         }
         return type.cast(holder);
+    }
+
+    @Override
+    public CooldownFactory getCooldownFactory() {
+        return cooldownFactory;
     }
 }

@@ -1,6 +1,7 @@
 package it.mineblock.basementx.api;
 
 import ch.jalu.configme.SettingsManager;
+import it.mineblock.basementx.api.cooldown.CooldownFactory;
 import it.mineblock.basementx.api.locale.LocaleManager;
 import it.mineblock.basementx.api.party.PartyManager;
 import it.mineblock.basementx.api.persistence.generic.Holder;
@@ -104,4 +105,10 @@ public interface Basement {
     Connector getConnector(TypeConnector type);
 
     <T extends Holder> T getHolder(Class<?> key, Class<T> type);
+
+    /**
+     * Gets the cooldown factory
+     * @return the cooldown factory
+     */
+    CooldownFactory getCooldownFactory();
 }
