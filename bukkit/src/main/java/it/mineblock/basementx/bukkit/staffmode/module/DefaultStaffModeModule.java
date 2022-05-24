@@ -254,6 +254,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         if(vanishSet.contains(player.getName())) {
             localVanish(player);
+            player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "Sei invisibile!");
         }
     }
 
