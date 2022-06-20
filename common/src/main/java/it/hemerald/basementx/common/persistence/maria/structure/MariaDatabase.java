@@ -1,0 +1,97 @@
+package it.hemerald.basementx.common.persistence.maria.structure;
+
+import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
+import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderInsert;
+import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
+import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
+import it.hemerlad.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
+import it.hemerlad.basementx.api.persistence.maria.queries.builders.table.QueryBuilderDropTable;
+import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
+import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaTable;
+import it.hemerald.basementx.common.persistence.maria.queries.data.QueryDelete;
+import it.hemerald.basementx.common.persistence.maria.queries.data.QueryInsert;
+import it.hemerald.basementx.common.persistence.maria.queries.data.QuerySelect;
+import it.hemerald.basementx.common.persistence.maria.queries.data.QueryUpdate;
+import it.hemerald.basementx.common.persistence.maria.queries.table.QueryCreateTable;
+import it.hemerald.basementx.common.persistence.maria.queries.table.QueryDropTable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RequiredArgsConstructor
+public class MariaDatabase implements AbstractMariaDatabase {
+
+    /*
+        State
+     */
+
+    @Getter
+    private final AbstractMariaHolder holder;
+    private final String databaseName;
+
+    private final Map<String, AbstractMariaTable> tables = new HashMap<>();
+
+    /*
+        Internal Use
+     */
+
+    public void addTable(AbstractMariaTable table) {
+        tables.put(table.getName(), table);
+    }
+
+    public void removeTable(AbstractMariaTable table) {
+        removeTable(table.getName());
+    }
+
+    public void removeTable(String tableName) {
+        tables.remove(tableName);
+    }
+
+    /*
+        Super Use
+     */
+
+    @Override
+    public String getName() {
+        return databaseName;
+    }
+
+    @Override
+    public QueryBuilderCreateTable createTable(String tableName) {
+        return new QueryCreateTable(this, tableName);
+    }
+
+    @Override
+    public QueryBuilderDropTable dropTable(String tableName) {
+        return new QueryDropTable(this, tableName);
+    }
+
+    @Override
+    public AbstractMariaTable useTable(String tableName) {
+        return tables.get(tableName);
+    }
+
+    @Override
+    public QueryBuilderSelect select() {
+        return new QuerySelect(holder, databaseName);
+    }
+
+    @Override
+    public QueryBuilderInsert insert() {
+        return new QueryInsert(holder, databaseName);
+    }
+
+    @Override
+    public QueryBuilderDelete delete() {
+        return new QueryDelete(holder, databaseName);
+    }
+
+    @Override
+    public QueryBuilderUpdate update() {
+        return new QueryUpdate(holder, databaseName);
+    }
+
+}

@@ -1,0 +1,34 @@
+package it.hemerlad.basementx.api.bukkit.staffmode.module;
+
+import ch.jalu.configme.properties.Property;
+import it.hemerlad.basementx.api.bukkit.staffmode.adapter.StaffModeAdapter;
+import it.hemerlad.basementx.api.bukkit.BasementBukkit;
+import it.hemerlad.basementx.api.bukkit.module.Module;
+import org.bukkit.entity.Player;
+
+public abstract class StaffModeModule extends Module<StaffModeAdapter> {
+
+    public StaffModeModule(BasementBukkit basement, Property<Boolean> property) {
+        super(basement, property);
+    }
+
+    public abstract void enableMode(Player player);
+
+    public abstract void disableMode(Player player);
+
+    public abstract void toggleMode(Player player);
+
+    public abstract boolean isMode(Player player);
+
+    public abstract void vanish(Player player);
+
+    public abstract boolean localVanish(Player player);
+
+    public abstract void unvanish(Player player);
+
+    public abstract boolean localUnvanish(Player player);
+
+    public abstract void toggleVanish(Player player);
+
+    public abstract boolean isVanished(Player player);
+}
