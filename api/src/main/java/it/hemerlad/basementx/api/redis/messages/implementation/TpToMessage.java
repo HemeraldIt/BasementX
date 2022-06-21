@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class TpToMessage extends BasementMessage {
 
-    public static final String TOPIC = "spectate";
+    public static final String TOPIC = "tp-to";
 
     private final String player;
     private final String target;
