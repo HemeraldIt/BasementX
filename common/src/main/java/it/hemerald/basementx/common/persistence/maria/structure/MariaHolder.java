@@ -1,13 +1,13 @@
 package it.hemerald.basementx.common.persistence.maria.structure;
 
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderInsert;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.database.QueryBuilderCreateDatabase;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.database.QueryBuilderDropDatabase;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderInsert;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.database.QueryBuilderCreateDatabase;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.database.QueryBuilderDropDatabase;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
 import it.hemerald.basementx.common.persistence.maria.queries.data.QueryDelete;
 import it.hemerald.basementx.common.persistence.maria.queries.data.QueryInsert;
 import it.hemerald.basementx.common.persistence.maria.queries.data.QuerySelect;

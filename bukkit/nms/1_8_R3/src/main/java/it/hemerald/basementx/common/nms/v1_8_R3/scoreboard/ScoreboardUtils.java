@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 
-public class ScoreboardUtils implements it.hemerlad.basementx.api.bukkit.scoreboard.ScoreboardUtils {
+public class ScoreboardUtils implements it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardUtils {
 
     @Override
     public int getCharactersLimits() {

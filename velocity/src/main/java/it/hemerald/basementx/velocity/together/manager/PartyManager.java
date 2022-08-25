@@ -3,7 +3,7 @@ package it.hemerald.basementx.velocity.together.manager;
 import com.google.common.collect.Sets;
 import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.velocity.together.commands.CommandArgument;
-import it.hemerlad.basementx.api.party.Party;
+import it.hemerald.basementx.api.party.Party;
 import it.hemerald.basementx.common.party.BasementParty;
 import it.hemerald.basementx.velocity.together.Together;
 import lombok.Getter;

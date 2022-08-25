@@ -1,10 +1,10 @@
 package it.hemerald.basementx.common.player;
 
-import it.hemerlad.basementx.api.Basement;
-import it.hemerlad.basementx.api.player.BasementPlayer;
-import it.hemerlad.basementx.api.player.PlayerManager;
-import it.hemerlad.basementx.api.remote.RemoteVelocityService;
-import it.hemerlad.basementx.api.server.BukkitServer;
+import it.hemerald.basementx.api.Basement;
+import it.hemerald.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.player.PlayerManager;
+import it.hemerald.basementx.api.remote.RemoteVelocityService;
+import it.hemerald.basementx.api.server.BukkitServer;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RSetCache;
 

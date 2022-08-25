@@ -1,9 +1,9 @@
 package it.hemerald.basementx.bukkit.redis.message.handler;
 
-import it.hemerlad.basementx.api.Basement;
-import it.hemerlad.basementx.api.bukkit.events.PartyWarpEvent;
-import it.hemerlad.basementx.api.redis.messages.handler.BasementMessageHandler;
-import it.hemerlad.basementx.api.redis.messages.implementation.PartyWarpMessage;
+import it.hemerald.basementx.api.Basement;
+import it.hemerald.basementx.api.bukkit.events.PartyWarpEvent;
+import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
+import it.hemerald.basementx.api.redis.messages.implementation.PartyWarpMessage;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

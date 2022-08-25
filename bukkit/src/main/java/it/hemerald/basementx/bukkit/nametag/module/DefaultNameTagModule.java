@@ -1,9 +1,9 @@
 package it.hemerald.basementx.bukkit.nametag.module;
 
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
-import it.hemerlad.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
-import it.hemerlad.basementx.api.bukkit.nametag.module.NameTagModule;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
+import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.tags.TagGUI;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import org.bukkit.Bukkit;

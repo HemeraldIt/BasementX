@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;
 
-public class ItemDataManager implements it.hemerlad.basementx.api.bukkit.item.ItemDataManager {
+public class ItemDataManager implements it.hemerald.basementx.api.bukkit.item.ItemDataManager {
 
     @Override
     public String getData(ItemStack itemStack, String key) {

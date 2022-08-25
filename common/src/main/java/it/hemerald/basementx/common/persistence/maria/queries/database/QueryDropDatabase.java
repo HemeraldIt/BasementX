@@ -1,8 +1,8 @@
 package it.hemerald.basementx.common.persistence.maria.queries.database;
 
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.database.QueryBuilderDropDatabase;
-import it.hemerlad.basementx.api.persistence.maria.queries.effective.MariaQuery;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.database.QueryBuilderDropDatabase;
+import it.hemerald.basementx.api.persistence.maria.queries.effective.MariaQuery;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
 
 import java.sql.PreparedStatement;
 import java.util.concurrent.CompletableFuture;

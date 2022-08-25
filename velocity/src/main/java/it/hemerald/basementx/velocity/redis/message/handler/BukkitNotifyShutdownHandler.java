@@ -2,8 +2,8 @@ package it.hemerald.basementx.velocity.redis.message.handler;
 
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import it.hemerlad.basementx.api.redis.messages.handler.BasementMessageHandler;
-import it.hemerlad.basementx.api.redis.messages.implementation.BukkitNotifyShutdownMessage;
+import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
+import it.hemerald.basementx.api.redis.messages.implementation.BukkitNotifyShutdownMessage;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

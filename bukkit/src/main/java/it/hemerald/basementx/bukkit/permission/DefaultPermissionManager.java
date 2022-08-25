@@ -1,6 +1,6 @@
 package it.hemerald.basementx.bukkit.permission;
 
-import it.hemerlad.basementx.api.bukkit.permission.PermissionManager;
+import it.hemerald.basementx.api.bukkit.permission.PermissionManager;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;

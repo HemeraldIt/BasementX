@@ -1,8 +1,8 @@
 package it.hemerald.basementx.bukkit.disguise.handler;
 
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
-import it.hemerlad.basementx.api.redis.messages.handler.BasementMessageHandler;
-import it.hemerlad.basementx.api.redis.messages.implementation.DisguiseMessage;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
+import it.hemerald.basementx.api.redis.messages.implementation.DisguiseMessage;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

@@ -4,10 +4,10 @@ import it.hemerald.basementx.common.persistence.maria.structure.MariaDatabase;
 import it.hemerald.basementx.common.persistence.maria.structure.MariaTable;
 import it.hemerald.basementx.common.persistence.maria.structure.column.ForeignKeyDefinition;
 import it.hemerald.basementx.common.persistence.maria.structure.column.MariaColumn;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
-import it.hemerlad.basementx.api.persistence.maria.queries.effective.MariaQuery;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaTable;
-import it.hemerlad.basementx.api.persistence.maria.structure.column.MariaType;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
+import it.hemerald.basementx.api.persistence.maria.queries.effective.MariaQuery;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaTable;
+import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 
 import java.sql.PreparedStatement;
 import java.util.*;

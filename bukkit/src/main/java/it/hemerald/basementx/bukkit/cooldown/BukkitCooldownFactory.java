@@ -2,8 +2,8 @@ package it.hemerald.basementx.bukkit.cooldown;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import it.hemerlad.basementx.api.cooldown.Cooldown;
-import it.hemerlad.basementx.api.cooldown.CooldownFactory;
+import it.hemerald.basementx.api.cooldown.Cooldown;
+import it.hemerald.basementx.api.cooldown.CooldownFactory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitCooldownFactory implements CooldownFactory {

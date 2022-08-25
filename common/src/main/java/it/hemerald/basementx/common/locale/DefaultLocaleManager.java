@@ -1,8 +1,8 @@
 package it.hemerald.basementx.common.locale;
 
-import it.hemerlad.basementx.api.locale.Locale;
-import it.hemerlad.basementx.api.locale.LocaleManager;
-import it.hemerlad.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.locale.Locale;
+import it.hemerald.basementx.api.locale.LocaleManager;
+import it.hemerald.basementx.api.player.BasementPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,18 +1,17 @@
 package it.hemerald.basementx.bukkit.disguise.module;
 
 import it.hemerald.basementx.bukkit.disguise.adapter.DefaultDisguiseAdapter;
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
-import it.hemerlad.basementx.api.bukkit.disguise.adapter.DisguiseAdapter;
-import it.hemerlad.basementx.api.bukkit.disguise.module.DisguiseModule;
-import it.hemerlad.basementx.api.persistence.generic.connection.Connector;
-import it.hemerlad.basementx.api.persistence.generic.connection.TypeConnector;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
-import it.hemerlad.basementx.api.persistence.maria.structure.column.MariaType;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.disguise.adapter.DisguiseAdapter;
+import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
+import it.hemerald.basementx.api.persistence.generic.connection.Connector;
+import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
+import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import org.bukkit.entity.Player;
 
 import java.sql.SQLException;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DefaultDisguiseModule extends DisguiseModule {
 

@@ -1,6 +1,6 @@
 package it.hemerald.basementx.common.party;
 
-import it.hemerlad.basementx.api.party.Party;
+import it.hemerald.basementx.api.party.Party;
 
 import java.util.HashSet;
 import java.util.Set;

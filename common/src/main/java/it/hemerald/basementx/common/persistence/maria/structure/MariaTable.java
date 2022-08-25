@@ -1,7 +1,7 @@
 package it.hemerald.basementx.common.persistence.maria.structure;
 
 import it.hemerald.basementx.common.persistence.maria.structure.column.MariaColumn;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaTable;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaTable;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;

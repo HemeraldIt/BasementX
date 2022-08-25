@@ -1,7 +1,7 @@
 package it.hemerald.basementx.bukkit.nametag.adapter;
 
-import it.hemerlad.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
-import it.hemerlad.basementx.api.bukkit.nametag.module.NameTagModule;
+import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
+import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;

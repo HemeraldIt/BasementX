@@ -2,10 +2,10 @@ package it.hemerald.basementx.common.redis;
 
 import ch.jalu.configme.SettingsManager;
 import it.hemerald.basementx.common.config.BasementConfig;
-import it.hemerlad.basementx.api.redis.RedisCredentials;
-import it.hemerlad.basementx.api.redis.RedisManager;
-import it.hemerlad.basementx.api.redis.messages.BasementMessage;
-import it.hemerlad.basementx.api.redis.messages.handler.BasementMessageHandler;
+import it.hemerald.basementx.api.redis.RedisCredentials;
+import it.hemerald.basementx.api.redis.RedisManager;
+import it.hemerald.basementx.api.redis.messages.BasementMessage;
+import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
 import org.redisson.Redisson;
 import org.redisson.api.RReliableTopic;
 import org.redisson.api.RedissonClient;

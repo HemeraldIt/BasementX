@@ -2,8 +2,8 @@ package it.hemerald.basementx.bukkit.plugin;
 
 import ch.jalu.configme.SettingsHolder;
 import it.hemerald.basementx.common.plugin.AbstractBasementPlugin;
-import it.hemerlad.basementx.api.bukkit.events.BasementNewServerFound;
-import it.hemerlad.basementx.api.bukkit.events.BasementServerRemoved;
+import it.hemerald.basementx.api.bukkit.events.BasementNewServerFound;
+import it.hemerald.basementx.api.bukkit.events.BasementServerRemoved;
 import lombok.RequiredArgsConstructor;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;

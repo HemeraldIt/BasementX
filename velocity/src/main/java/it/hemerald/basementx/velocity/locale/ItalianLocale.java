@@ -1,7 +1,7 @@
 package it.hemerald.basementx.velocity.locale;
 
-import it.hemerlad.basementx.api.velocity.locale.ComponentLocale;
-import it.hemerlad.basementx.api.yaml.Configuration;
+import it.hemerald.basementx.api.velocity.locale.ComponentLocale;
+import it.hemerald.basementx.api.yaml.Configuration;
 
 import java.io.File;
 import java.io.IOException;

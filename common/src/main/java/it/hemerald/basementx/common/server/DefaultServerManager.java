@@ -1,8 +1,8 @@
 package it.hemerald.basementx.common.server;
 
-import it.hemerlad.basementx.api.Basement;
-import it.hemerlad.basementx.api.server.BukkitServer;
-import it.hemerlad.basementx.api.server.ServerManager;
+import it.hemerald.basementx.api.Basement;
+import it.hemerald.basementx.api.server.BukkitServer;
+import it.hemerald.basementx.api.server.ServerManager;
 import lombok.Setter;
 import org.redisson.api.RMapCache;
 import org.redisson.api.map.event.EntryCreatedListener;

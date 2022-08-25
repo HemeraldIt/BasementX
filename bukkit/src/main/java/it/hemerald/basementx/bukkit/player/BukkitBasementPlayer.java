@@ -1,12 +1,12 @@
 package it.hemerald.basementx.bukkit.player;
 
 import com.viaversion.viaversion.api.Via;
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
-import it.hemerlad.basementx.api.locale.Locale;
-import it.hemerlad.basementx.api.locale.LocaleManager;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.WhereBuilder;
-import it.hemerlad.basementx.api.player.BasementPlayer;
-import it.hemerlad.basementx.api.player.version.MinecraftVersion;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.locale.Locale;
+import it.hemerald.basementx.api.locale.LocaleManager;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.WhereBuilder;
+import it.hemerald.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.player.version.MinecraftVersion;
 import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;

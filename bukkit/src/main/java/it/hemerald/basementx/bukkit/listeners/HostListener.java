@@ -1,6 +1,6 @@
 package it.hemerald.basementx.bukkit.listeners;
 
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

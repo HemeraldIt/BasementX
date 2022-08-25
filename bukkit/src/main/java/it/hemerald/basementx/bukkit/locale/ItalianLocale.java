@@ -1,7 +1,7 @@
 package it.hemerald.basementx.bukkit.locale;
 
-import it.hemerlad.basementx.api.bukkit.locale.ColoredLocale;
-import it.hemerlad.basementx.api.yaml.Configuration;
+import it.hemerald.basementx.api.bukkit.locale.ColoredLocale;
+import it.hemerald.basementx.api.yaml.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;

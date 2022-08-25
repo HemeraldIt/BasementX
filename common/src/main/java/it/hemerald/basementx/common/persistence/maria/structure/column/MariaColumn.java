@@ -1,7 +1,7 @@
 package it.hemerald.basementx.common.persistence.maria.structure.column;
 
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
-import it.hemerlad.basementx.api.persistence.maria.structure.column.MariaType;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
+import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

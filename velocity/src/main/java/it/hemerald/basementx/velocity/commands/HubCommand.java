@@ -3,7 +3,7 @@ package it.hemerald.basementx.velocity.commands;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import it.hemerlad.basementx.api.server.BukkitServer;
+import it.hemerald.basementx.api.server.BukkitServer;
 import it.hemerald.basementx.velocity.BasementVelocity;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;

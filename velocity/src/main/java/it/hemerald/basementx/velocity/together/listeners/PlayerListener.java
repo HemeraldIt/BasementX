@@ -6,7 +6,7 @@ import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import it.hemerald.basementx.velocity.together.Together;
-import it.hemerlad.basementx.api.party.Party;
+import it.hemerald.basementx.api.party.Party;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

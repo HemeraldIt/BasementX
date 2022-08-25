@@ -1,6 +1,6 @@
 package it.hemerald.basementx.common.nms.v1_8_R3.team;
 
-import it.hemerlad.basementx.api.bukkit.nametag.module.NameTagModule;
+import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Team;
 

@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.proxy.ProxyServer;
 import it.hemerald.basementx.velocity.together.commands.PartyCommand;
 import it.hemerald.basementx.velocity.together.manager.PartyManager;
-import it.hemerlad.basementx.api.Basement;
+import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.velocity.BasementVelocity;
 import it.hemerald.basementx.velocity.together.invitation.InvitationService;
 import it.hemerald.basementx.velocity.together.listeners.PlayerListener;

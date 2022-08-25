@@ -1,11 +1,11 @@
 package it.hemerald.basementx.bukkit.staffmode.adapter;
 
 import com.cryptomorin.xseries.XMaterial;
-import it.hemerlad.basementx.api.bukkit.item.InteractiveItem;
-import it.hemerlad.basementx.api.bukkit.item.ItemBuilder;
-import it.hemerlad.basementx.api.bukkit.item.ItemClickListener;
-import it.hemerlad.basementx.api.bukkit.staffmode.adapter.StaffModeAdapter;
-import it.hemerlad.basementx.api.bukkit.staffmode.module.StaffModeModule;
+import it.hemerald.basementx.api.bukkit.item.InteractiveItem;
+import it.hemerald.basementx.api.bukkit.item.ItemBuilder;
+import it.hemerald.basementx.api.bukkit.item.ItemClickListener;
+import it.hemerald.basementx.api.bukkit.staffmode.adapter.StaffModeAdapter;
+import it.hemerald.basementx.api.bukkit.staffmode.module.StaffModeModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

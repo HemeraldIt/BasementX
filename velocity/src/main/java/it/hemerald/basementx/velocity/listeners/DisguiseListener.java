@@ -3,9 +3,9 @@ package it.hemerald.basementx.velocity.listeners;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
-import it.hemerlad.basementx.api.Basement;
-import it.hemerlad.basementx.api.player.disguise.DisguiseAction;
-import it.hemerlad.basementx.api.redis.messages.implementation.DisguiseMessage;
+import it.hemerald.basementx.api.Basement;
+import it.hemerald.basementx.api.player.disguise.DisguiseAction;
+import it.hemerald.basementx.api.redis.messages.implementation.DisguiseMessage;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

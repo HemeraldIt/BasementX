@@ -4,8 +4,8 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import it.hemerald.basementx.velocity.together.commands.CommandArgument;
 import it.hemerald.basementx.velocity.together.manager.PartyManager;
-import it.hemerlad.basementx.api.party.Party;
-import it.hemerlad.basementx.api.redis.messages.implementation.PartyWarpMessage;
+import it.hemerald.basementx.api.party.Party;
+import it.hemerald.basementx.api.redis.messages.implementation.PartyWarpMessage;
 
 import java.util.Optional;
 

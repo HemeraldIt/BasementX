@@ -1,8 +1,8 @@
 package it.hemerald.basementx.bukkit.generic.handler;
 
 import it.hemerald.basementx.bukkit.listeners.PlayerListener;
-import it.hemerlad.basementx.api.redis.messages.handler.BasementMessageHandler;
-import it.hemerlad.basementx.api.redis.messages.implementation.TpToMessage;
+import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
+import it.hemerald.basementx.api.redis.messages.implementation.TpToMessage;
 
 public class TpToHandler implements BasementMessageHandler<TpToMessage> {
 

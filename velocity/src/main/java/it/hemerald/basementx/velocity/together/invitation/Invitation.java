@@ -1,7 +1,7 @@
 package it.hemerald.basementx.velocity.together.invitation;
 
 import com.velocitypowered.api.scheduler.ScheduledTask;
-import it.hemerlad.basementx.api.party.Party;
+import it.hemerald.basementx.api.party.Party;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

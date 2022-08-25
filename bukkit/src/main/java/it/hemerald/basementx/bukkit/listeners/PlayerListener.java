@@ -2,7 +2,7 @@ package it.hemerald.basementx.bukkit.listeners;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;

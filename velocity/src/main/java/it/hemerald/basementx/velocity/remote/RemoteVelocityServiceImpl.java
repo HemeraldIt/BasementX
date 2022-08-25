@@ -4,7 +4,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
-import it.hemerlad.basementx.api.remote.RemoteVelocityService;
+import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.velocity.BasementVelocity;
 import it.hemerald.basementx.velocity.alert.AlertType;
 import lombok.RequiredArgsConstructor;

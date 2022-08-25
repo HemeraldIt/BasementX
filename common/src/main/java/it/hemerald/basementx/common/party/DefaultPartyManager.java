@@ -1,8 +1,8 @@
 package it.hemerald.basementx.common.party;
 
-import it.hemerlad.basementx.api.party.Party;
-import it.hemerlad.basementx.api.party.PartyManager;
-import it.hemerlad.basementx.api.redis.RedisManager;
+import it.hemerald.basementx.api.party.Party;
+import it.hemerald.basementx.api.party.PartyManager;
+import it.hemerald.basementx.api.redis.RedisManager;
 import org.redisson.api.LocalCachedMapOptions;
 import org.redisson.api.RLocalCachedMap;
 

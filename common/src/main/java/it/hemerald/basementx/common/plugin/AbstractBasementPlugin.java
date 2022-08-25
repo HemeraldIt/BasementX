@@ -1,9 +1,9 @@
 package it.hemerald.basementx.common.plugin;
 
 import ch.jalu.configme.SettingsHolder;
-import it.hemerlad.basementx.api.Basement;
-import it.hemerlad.basementx.api.BasementProvider;
-import it.hemerlad.basementx.api.plugin.BasementPlugin;
+import it.hemerald.basementx.api.Basement;
+import it.hemerald.basementx.api.BasementProvider;
+import it.hemerald.basementx.api.plugin.BasementPlugin;
 import lombok.Getter;
 
 @Getter

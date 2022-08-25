@@ -1,10 +1,10 @@
 package it.hemerald.basementx.common.persistence.maria.queries.data;
 
-import it.hemerlad.basementx.api.persistence.generic.queries.effective.ExecutiveQuery;
-import it.hemerlad.basementx.api.persistence.generic.queries.effective.ReturningQuery;
-import it.hemerlad.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
-import it.hemerlad.basementx.api.persistence.maria.queries.effective.MariaQuery;
-import it.hemerlad.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerald.basementx.api.persistence.generic.queries.effective.ExecutiveQuery;
+import it.hemerald.basementx.api.persistence.generic.queries.effective.ReturningQuery;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
+import it.hemerald.basementx.api.persistence.maria.queries.effective.MariaQuery;
+import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;

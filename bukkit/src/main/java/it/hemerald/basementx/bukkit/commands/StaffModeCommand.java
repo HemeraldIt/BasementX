@@ -1,7 +1,7 @@
 package it.hemerald.basementx.bukkit.commands;
 
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
-import it.hemerlad.basementx.api.locale.Locale;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.locale.Locale;
 import it.hemerald.basementx.bukkit.generic.chat.BasementMessages;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.Command;

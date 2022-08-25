@@ -1,7 +1,7 @@
 package it.hemerald.basementx.common.cooldown;
 
-import it.hemerlad.basementx.api.cooldown.Cooldown;
-import it.hemerlad.basementx.api.cooldown.CooldownFactory;
+import it.hemerald.basementx.api.cooldown.Cooldown;
+import it.hemerald.basementx.api.cooldown.CooldownFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

@@ -8,7 +8,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 @RequiredArgsConstructor
-public class ItemDataManager implements it.hemerlad.basementx.api.bukkit.item.ItemDataManager {
+public class ItemDataManager implements it.hemerald.basementx.api.bukkit.item.ItemDataManager {
 
     private final Plugin plugin;
 

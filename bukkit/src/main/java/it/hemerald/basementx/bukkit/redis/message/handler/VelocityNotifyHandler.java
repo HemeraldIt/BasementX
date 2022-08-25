@@ -1,8 +1,8 @@
 package it.hemerald.basementx.bukkit.redis.message.handler;
 
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
-import it.hemerlad.basementx.api.redis.messages.handler.BasementMessageHandler;
-import it.hemerlad.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
+import it.hemerald.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

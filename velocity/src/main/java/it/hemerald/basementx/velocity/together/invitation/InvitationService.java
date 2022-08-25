@@ -1,7 +1,7 @@
 package it.hemerald.basementx.velocity.together.invitation;
 
 import it.hemerald.basementx.velocity.together.Together;
-import it.hemerlad.basementx.api.party.Party;
+import it.hemerald.basementx.api.party.Party;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

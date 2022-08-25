@@ -1,9 +1,9 @@
 package it.hemerald.basementx.bukkit.scoreboard;
 
-import it.hemerlad.basementx.api.bukkit.scoreboard.IScoreboardManager;
-import it.hemerlad.basementx.api.bukkit.scoreboard.ScoreboardProvider;
-import it.hemerlad.basementx.api.bukkit.scoreboard.board.Scoreboard;
-import it.hemerlad.basementx.api.bukkit.scoreboard.board.line.ScoreboardLine;
+import it.hemerald.basementx.api.bukkit.scoreboard.IScoreboardManager;
+import it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardProvider;
+import it.hemerald.basementx.api.bukkit.scoreboard.board.Scoreboard;
+import it.hemerald.basementx.api.bukkit.scoreboard.board.line.ScoreboardLine;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

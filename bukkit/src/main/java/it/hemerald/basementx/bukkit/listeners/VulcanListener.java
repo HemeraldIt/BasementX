@@ -1,6 +1,6 @@
 package it.hemerald.basementx.bukkit.listeners;
 
-import it.hemerlad.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import lombok.RequiredArgsConstructor;
 import me.frep.vulcan.api.VulcanAPI;
 import me.frep.vulcan.api.event.VulcanFlagEvent;

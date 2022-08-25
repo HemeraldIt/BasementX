@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
-public class ScoreboardUtils implements it.hemerlad.basementx.api.bukkit.scoreboard.ScoreboardUtils {
+public class ScoreboardUtils implements it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardUtils {
 
     private static Constructor<PacketPlayOutScoreboardTeam> teamConstructor;
 

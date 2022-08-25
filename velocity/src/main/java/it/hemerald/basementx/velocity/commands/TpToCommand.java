@@ -5,7 +5,7 @@ import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
-import it.hemerlad.basementx.api.redis.messages.implementation.TpToMessage;
+import it.hemerald.basementx.api.redis.messages.implementation.TpToMessage;
 import it.hemerald.basementx.velocity.BasementVelocity;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;

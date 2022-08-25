@@ -1,6 +1,6 @@
 package it.hemerald.basementx.bukkit.placeholders;
 
-import it.hemerlad.basementx.api.Basement;
+import it.hemerald.basementx.api.Basement;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
