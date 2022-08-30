@@ -24,25 +24,28 @@ public abstract class HikariConnector implements Connector {
         config.setDataSourceProperties(provider.getBuild());
     }
 
-    public void connect(String host) {
+    public HikariDataSource connect(String host) {
         config.setJdbcUrl(host);
         source = new HikariDataSource(config);
         establish();
+        return source;
     }
 
-    public void connect(String host, String username) {
+    public HikariDataSource connect(String host, String username) {
         config.setJdbcUrl(host);
         config.setUsername(username);
         source = new HikariDataSource(config);
         establish();
+        return source;
     }
 
-    public void connect(String host, String username, String password) {
+    public HikariDataSource connect(String host, String username, String password) {
         config.setJdbcUrl(host);
         config.setUsername(username);
         config.setPassword(password);
         source = new HikariDataSource(config);
         establish();
+        return source;
     }
 
     private void establish() {

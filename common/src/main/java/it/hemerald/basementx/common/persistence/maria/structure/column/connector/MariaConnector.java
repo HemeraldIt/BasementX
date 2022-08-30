@@ -1,6 +1,7 @@
 package it.hemerald.basementx.common.persistence.maria.structure.column.connector;
 
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import it.hemerald.basementx.common.persistence.hikari.HikariConnector;
 import it.hemerald.basementx.common.persistence.hikari.property.HikariProperty;
 import it.hemerald.basementx.common.persistence.hikari.property.PropertiesProvider;
@@ -82,18 +83,18 @@ public class MariaConnector extends HikariConnector {
     }
 
     @Override
-    public void connect(String host) {
-        super.connect("jdbc:mariadb://" + host);
+    public HikariDataSource connect(String host) {
+        return super.connect("jdbc:mariadb://" + host);
     }
 
     @Override
-    public void connect(String host, String username) {
-        super.connect("jdbc:mariadb://" + host, username);
+    public HikariDataSource connect(String host, String username) {
+        return super.connect("jdbc:mariadb://" + host, username);
     }
 
     @Override
-    public void connect(String host, String username, String password) {
-        super.connect("jdbc:mariadb://" + host, username, password);
+    public HikariDataSource connect(String host, String username, String password) {
+        return super.connect("jdbc:mariadb://" + host, username, password);
     }
 
 }
