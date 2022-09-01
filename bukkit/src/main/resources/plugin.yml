@@ -1,7 +1,7 @@
 name: Basement
 author: TheDarkSword
 version: ${pluginVersion}
-main: it.mineblock.basementx.bukkit.BasementPluginMain
+main: it.hemerald.basementx.bukkit.BasementPluginMain
 api-version: 1.17
 depend: [LuckPerms, ViaVersion]
 softdepend: [Vulcan, PlaceholderAPI, SkinsRestorer]
