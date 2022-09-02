@@ -143,7 +143,7 @@ public class PlayerListener {
 
     @Subscribe
     private void onMessage(PlayerChatEvent event) {
-        if(event.getPlayer().hasPermission("mineblock.staff")) return;
+        if(event.getPlayer().hasPermission("hemerald.staff")) return;
         if(chatCache.getIfPresent(event.getPlayer()) != null) {
             event.getPlayer().sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))

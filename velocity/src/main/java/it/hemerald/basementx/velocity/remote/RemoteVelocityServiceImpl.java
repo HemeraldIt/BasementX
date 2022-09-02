@@ -112,7 +112,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void cheatAlert(String server, String alert, long ping) {
         for (Player player : velocity.getServer().getAllPlayers()) {
-            if (!player.hasPermission("mineblock.alerts")) continue;
+            if (!player.hasPermission("hemerald.alerts")) continue;
 
 
             Optional<ServerConnection> currentServer = player.getCurrentServer();
@@ -163,7 +163,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
         for (Player velocityPlayer : velocity.getServer().getAllPlayers()) {
             Optional<ServerConnection> playerServer = velocityPlayer.getCurrentServer();
-            if (velocityPlayer.hasPermission("mineblock.alerts") || playerServer.isPresent() && playerServer.get().getServerInfo().getName().equals(server)) {
+            if (velocityPlayer.hasPermission("hemerald.alerts") || playerServer.isPresent() && playerServer.get().getServerInfo().getName().equals(server)) {
                 velocityPlayer.sendMessage(component);
             }
         }

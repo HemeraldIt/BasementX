@@ -22,7 +22,7 @@ public class BasementPlaceholder extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getAuthor() {
-        return "Mineblock";
+        return "Hemerald";
     }
 
     @Override

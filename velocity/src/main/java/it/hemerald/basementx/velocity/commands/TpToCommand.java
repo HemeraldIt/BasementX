@@ -94,6 +94,6 @@ public class TpToCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("mineblock.staff");
+        return invocation.source().hasPermission("hemerald.staff");
     }
 }

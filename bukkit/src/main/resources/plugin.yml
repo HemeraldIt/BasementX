@@ -8,27 +8,27 @@ softdepend: [Vulcan, PlaceholderAPI, SkinsRestorer]
 commands:
   basementx:
     aliases: [basement]
-    permission: mineblock.staff
+    permission: hemerald.staff
   tabreload:
-    permission: mineblock.reloadtab
+    permission: hemerald.reloadtab
   staffmode:
-    permission: mineblock.staff
+    permission: hemerald.staff
     aliases:
       - staff
       - sf
       - smode
       - staffm
   vanish:
-    permission: mineblock.staff
+    permission: hemerald.staff
   tag:
     aliases: [tags, nametag, nametags]
   cheatban:
     permission: cheat.ban
 
 permissions:
-  mineblock.staff:
+  hemerald.staff:
     default: op
-  mineblock.reloadtab:
+  hemerald.reloadtab:
     default: op
   cheat.ban:
     default: op

@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 
 public final class BasementMessages {
 
-    public static final String STAFF_PERMISSION = "mineblock.staff";
+    public static final String STAFF_PERMISSION = "hemerald.staff";
 
     public static final String RELOAD_TAB = "basement.reloadtab";
 

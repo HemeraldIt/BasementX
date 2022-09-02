@@ -120,7 +120,7 @@ public class TagGUI implements InventoryProvider {
             itemBuilder.addLore("", active ? ChatColor.GREEN + "Attivo" : ChatColor.RED + "Disattivo");
         } else {
             itemBuilder.setName(ChatColor.RED + tag);
-            itemBuilder.addLore("", ChatColor.GRAY + "Sbloccala su " + ChatColor.AQUA + "store.mineblock.it");
+            itemBuilder.addLore("", ChatColor.GRAY + "Sbloccala su " + ChatColor.AQUA + "store.hemerald.net");
         }
 
         return ClickableItem.of(itemBuilder.build(), event -> {
@@ -134,7 +134,7 @@ public class TagGUI implements InventoryProvider {
                 });
             } else
                 player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "TAGS! "
-                        + ChatColor.WHITE + "Puoi utilizzare questa Tag solo dopo averla acquistata su " + ChatColor.DARK_AQUA + "store.mineblock.it");
+                        + ChatColor.WHITE + "Puoi utilizzare questa Tag solo dopo averla acquistata su " + ChatColor.DARK_AQUA + "store.hemerald.net");
         });
     }
 }

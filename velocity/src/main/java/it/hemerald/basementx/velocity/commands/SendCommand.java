@@ -78,6 +78,6 @@ public class SendCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("mineblock.send");
+        return invocation.source().hasPermission("hemerald.send");
     }
 }
