@@ -1,7 +1,6 @@
 package it.hemerald.basementx.api.bukkit.chat;
 
-import com.google.common.base.Preconditions;
-import org.bukkit.Bukkit;
+import lombok.Setter;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -12,20 +11,8 @@ import java.util.stream.Collectors;
 
 public final class Colorizer {
 
-    private static final Pattern hexColorPattern = Pattern.compile("#([A-Fa-f0-9]{6})");
-    private static boolean useAllColors;
-
-    static {
-        Matcher matcher = Pattern.compile("[0-9]\\.[0-9]+").matcher(Bukkit.getBukkitVersion());
-
-        if (matcher.find()) {
-            try {
-                useAllColors = Integer.parseInt(matcher.group(0).split("\\.")[1]) >= 16;
-            } catch (NumberFormatException ignored) {
-                useAllColors = false;
-            }
-        }
-    }
+    @Setter
+    private static NMS nms;
 
     private Colorizer() {
         throw new AssertionError("Nope");
@@ -33,8 +20,7 @@ public final class Colorizer {
 
     public static String colorize(String string) {
         string =  ChatColor.translateAlternateColorCodes('&', string);
-        string = translateHex(string);
-        return string;
+        return nms.translateHex(string);
     }
 
     public static List<String> colorize(List<String> strings) {
@@ -46,19 +32,11 @@ public final class Colorizer {
     }
 
     public static String translateHex(String msg) {
-        Preconditions.checkNotNull(msg, "Cannot translate null text");
+        return nms.translateHex(msg);
+    }
 
-        msg = msg.replace("&g", "#2196F3")
-                .replace("&h", "#2962FF");
+    public interface NMS {
 
-        if (!useAllColors) return msg;
-
-        Matcher matcher = hexColorPattern.matcher(msg);
-        while (matcher.find()) {
-            String match = matcher.group(0);
-            msg = msg.replace(match, net.md_5.bungee.api.ChatColor.of(match).toString());
-        }
-
-        return msg;
+        String translateHex(String msg);
     }
 }

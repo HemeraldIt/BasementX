@@ -1,5 +1,6 @@
 package it.hemerald.basementx.bukkit.plugin;
 
+import it.hemerald.basementx.api.bukkit.chat.Colorizer;
 import it.hemerald.basementx.bukkit.cooldown.BukkitCooldownFactory;
 import it.hemerald.basementx.bukkit.disguise.handler.DisguiseHandler;
 import it.hemerald.basementx.bukkit.disguise.module.DefaultDisguiseModule;
@@ -8,7 +9,6 @@ import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import it.hemerald.basementx.bukkit.redis.message.handler.PartyWarpHandler;
 import it.hemerald.basementx.bukkit.redis.message.handler.ServerShutdownHandler;
 import it.hemerald.basementx.bukkit.redis.message.handler.VelocityNotifyHandler;
-import it.hemerald.basementx.common.nms.v1_8_R3.item.ItemBuilderNMS;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
 import it.hemerald.basementx.api.bukkit.item.ItemBuilder;
@@ -82,17 +82,20 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
             case "v1_8_R3" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemDataManager();
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_8_R3.scoreboard.ScoreboardUtils();
-                ItemBuilder.setNms(new ItemBuilderNMS());
+                ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemBuilderNMS());
+                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.chat.ColorizerNMS());
             }
             case "v1_17_R1" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_17_R1.item.ItemDataManager(plugin);
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_17_R1.scoreboard.ScoreboardUtils();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_17_R1.item.ItemBuilderNMS());
+                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_17_R1.chat.ColorizerNMS());
             }
             case "v1_18_R2" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_18_R2.item.ItemDataManager(plugin);
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_18_R2.scoreboard.ScoreboardUtils();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_18_R2.item.ItemBuilderNMS());
+                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_18_R2.chat.ColorizerNMS());
             }
         }
 
