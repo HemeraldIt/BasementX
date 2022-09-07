@@ -41,6 +41,38 @@ shadowJar {
     dependencies {
         exclude(dependency(':lombok'))
         exclude(dependency(':spigot'))
+        exclude 'oshi/**'
+        exclude 'org/spigotmc/**'
+        exclude 'org/sonatype/**'
+        exclude 'org/objectweb/**'
+        exclude 'org/junit/**'
+        exclude 'org/json/**'
+        exclude 'org/hamcrest/**'
+        exclude 'org/fusesource/**'
+        exclude 'org/eclipse/**'
+        exclude 'org/codehaus/**'
+        exclude 'org/checkerframework/**'
+        exclude 'org/bukkit/**'
+        exclude 'org/apache/**'
+        exclude 'net/md_5/**'
+        exclude 'net/luckperms/**'
+        exclude 'mozilla/**'
+        exclude 'mojang-translations/**'
+        exclude 'licenses/**'
+        exclude 'junit/**'
+        exclude 'joptsimple/**'
+        exclude 'jline/**'
+        exclude 'it/unimi/**'
+        exclude 'io/netty/**'
+        exclude 'google/**'
+        exclude 'com/sun/**'
+        exclude 'com/mysql/**'
+        exclude 'com/mojang/**'
+        exclude 'com/google/thirdparty/**'
+        exclude 'com/google/protobuf/**'
+        exclude 'com/google/j2objc/**'
+        exclude 'com/google/errorprone/**'
+        exclude 'com/google/common/**'
     }
 }
 
