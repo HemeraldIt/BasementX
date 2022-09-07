@@ -79,18 +79,18 @@ public class BasementVelocity extends AbstractBasementPlugin {
         holder.setConnector(connector);
         database = holder.createDatabase("minecraft").ifNotExists(true).build().execReturn();
 
-        database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
-                .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-                .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
-                .addColumn("username", MariaType.VARCHAR, 32)
-                .addColumn("last_join", MariaType.DATETIME, "CURRENT_TIMESTAMP")
-                .withPrimaryKeys("id").build().exec();
+       //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
+       //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
+       //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
+       //        .addColumn("username", MariaType.VARCHAR, 32)
+       //        .addColumn("last_join", MariaType.DATETIME, "CURRENT_TIMESTAMP")
+       //        .withPrimaryKeys("id").build().exec();
 
-        database.createTable(DatabaseConstants.PREMIUM_TABLE).ifNotExists(true)
-                .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-                .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
-                .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
-                .withPrimaryKeys("id").build().exec();
+       //database.createTable(DatabaseConstants.PREMIUM_TABLE).ifNotExists(true)
+       //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
+       //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
+       //        .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
+       //        .withPrimaryKeys("id").build().exec();
 
         basement.getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(server));
         basement.getRedisManager().registerTopicListener(BukkitNotifyShutdownMessage.TOPIC, new BukkitNotifyShutdownHandler(server));
