@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api(project(':api'))
-    compileOnly 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT'
+    compileOnly 'app.ashcon:sportpaper:1.8.8'
     api 'net.luckperms:api:5.4'
-    api 'com.github.cryptomorin:XSeries:8.7.1'
+    api 'com.github.cryptomorin:XSeries:9.0.0'
 }
