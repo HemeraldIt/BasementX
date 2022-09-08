@@ -21,4 +21,8 @@ public class BasementNewServerFound extends Event {
     public @NotNull HandlerList getHandlers() {
         return HANDLERS_LIST;
     }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS_LIST;
+    }
 }
