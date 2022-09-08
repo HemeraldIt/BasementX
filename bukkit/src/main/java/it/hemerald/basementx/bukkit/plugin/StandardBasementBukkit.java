@@ -65,15 +65,6 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         setServerID(plugin.getServer().getServerName());
         getRemoteVelocityService().registerServer(plugin.getServer().getServerName(), plugin.getServer().getPort());
 
-        this.staffModeModule = new DefaultStaffModeModule(this);
-        this.nameTagModule = new DefaultNameTagModule(this);
-        this.disguiseModule = new DefaultDisguiseModule(this);
-
-        getRedisManager().registerTopicListener(DisguiseMessage.TOPIC, new DisguiseHandler(this));
-        getRedisManager().registerTopicListener(VelocityNotifyMessage.TOPIC, new VelocityNotifyHandler(this));
-        getRedisManager().registerTopicListener(PartyWarpMessage.TOPIC, new PartyWarpHandler(this));
-        getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(this));
-
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         ItemDataManager itemDataManager = null;
         ScoreboardUtils scoreboardUtils = null;
@@ -104,6 +95,15 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.chat.ColorizerNMS());
             }
         }
+
+        this.staffModeModule = new DefaultStaffModeModule(this);
+        this.nameTagModule = new DefaultNameTagModule(this);
+        this.disguiseModule = new DefaultDisguiseModule(this);
+
+        getRedisManager().registerTopicListener(DisguiseMessage.TOPIC, new DisguiseHandler(this));
+        getRedisManager().registerTopicListener(VelocityNotifyMessage.TOPIC, new VelocityNotifyHandler(this));
+        getRedisManager().registerTopicListener(PartyWarpMessage.TOPIC, new PartyWarpHandler(this));
+        getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(this));
 
         this.scoreboardAdapter = ScoreboardAdapter.builder(plugin, scoreboardUtils).build();
         this.itemDataManager = itemDataManager;
