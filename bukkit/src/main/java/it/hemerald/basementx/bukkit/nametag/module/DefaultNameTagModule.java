@@ -46,6 +46,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
             case "v1_8_R3" -> new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils();
             case "v1_17_R1" -> new it.hemerald.basementx.common.nms.v1_17_R1.team.TeamUtils();
             case "v1_18_R2" -> new it.hemerald.basementx.common.nms.v1_18_R2.team.TeamUtils();
+            case "v1_19_R1" -> new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils();
             default -> throw new IllegalStateException("Unsupported version: " + version);
         };
     }
