@@ -59,6 +59,11 @@ public class QueryDataImpl implements QueryData {
     }
 
     @Override
+    public boolean isBeforeFirst() {
+        return index == -1 && dataByName.size() > 0;
+    }
+
+    @Override
     public byte getByte(String columnLabel) {
         return getDataByName(columnLabel, byte.class);
     }

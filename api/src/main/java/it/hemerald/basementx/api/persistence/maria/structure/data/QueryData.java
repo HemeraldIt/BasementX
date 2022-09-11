@@ -8,6 +8,7 @@ public interface QueryData {
 
     boolean next();
     boolean hasNext();
+    boolean isBeforeFirst();
 
     byte getByte(String columnLabel);
     byte getByte(int columnIndex);
