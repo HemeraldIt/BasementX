@@ -5,12 +5,11 @@ import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.locale.Locale;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.WhereBuilder;
+import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.version.MinecraftVersion;
 import org.bukkit.entity.Player;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class BukkitBasementPlayer implements BasementPlayer {
@@ -23,17 +22,12 @@ public class BukkitBasementPlayer implements BasementPlayer {
         this.player = player;
         this.localeManager = basement.getLocaleManager();
 
-        try {
-            ResultSet resultSet = basement.getDatabase().select().columns("language")
-                    .from("players").where(WhereBuilder.builder().equals("uuid", player.getUniqueId().toString()).close())
-                    .build().execReturn();
-            if(resultSet.next()) {
-                language = resultSet.getString(1);
-            } else {
-                language = "en-us";
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        QueryData queryData = basement.getDatabase().select().columns("language")
+                .from("players").where(WhereBuilder.builder().equals("uuid", player.getUniqueId().toString()).close())
+                .build().execReturn();
+        if(queryData.next()) {
+            language = queryData.getString(1);
+        } else {
             language = "en-us";
         }
     }

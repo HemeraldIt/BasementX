@@ -1,6 +1,5 @@
 package it.hemerald.basementx.bukkit.disguise.module;
 
-import it.hemerald.basementx.bukkit.disguise.adapter.DefaultDisguiseAdapter;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.disguise.adapter.DisguiseAdapter;
 import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
@@ -8,10 +7,9 @@ import it.hemerald.basementx.api.persistence.generic.connection.Connector;
 import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
+import it.hemerald.basementx.bukkit.disguise.adapter.DefaultDisguiseAdapter;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import org.bukkit.entity.Player;
-
-import java.sql.SQLException;
 
 public class DefaultDisguiseModule extends DisguiseModule {
 
@@ -37,14 +35,9 @@ public class DefaultDisguiseModule extends DisguiseModule {
 
     @Override
     public void onStart() {
-        database.select().columns("*").from("disguise_names").build().execReturnAsync().thenAccept(resultSet -> {
-            try {
-                while (resultSet.next()) {
-                    names.add(resultSet.getString(1));
-                }
-                resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        database.select().columns("*").from("disguise_names").build().execReturnAsync().thenAccept(queryData -> {
+            while (queryData.next()) {
+                names.add(queryData.getString(1));
             }
         });
     }

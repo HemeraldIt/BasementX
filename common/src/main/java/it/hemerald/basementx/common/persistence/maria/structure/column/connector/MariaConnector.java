@@ -2,12 +2,17 @@ package it.hemerald.basementx.common.persistence.maria.structure.column.connecto
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 import it.hemerald.basementx.common.persistence.hikari.HikariConnector;
 import it.hemerald.basementx.common.persistence.hikari.property.HikariProperty;
 import it.hemerald.basementx.common.persistence.hikari.property.PropertiesProvider;
 import it.hemerald.basementx.common.persistence.hikari.property.PropertyPair;
+import it.hemerald.basementx.common.persistence.maria.structure.data.QueryDataImpl;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Logger;
 
 public class MariaConnector extends HikariConnector {
@@ -67,9 +72,9 @@ public class MariaConnector extends HikariConnector {
     }
 
     @Override
-    public ResultSet executeReturn(String query) {
+    public QueryData executeReturn(String query) {
         try (Connection connection = source.getConnection() ; Statement statement = connection.createStatement()) {
-            return statement.executeQuery(query);
+            return new QueryDataImpl(statement.executeQuery(query));
         } catch (SQLException throwable) {
             Logger.getGlobal().severe("Error on sql query:" + query);
             throwable.printStackTrace();

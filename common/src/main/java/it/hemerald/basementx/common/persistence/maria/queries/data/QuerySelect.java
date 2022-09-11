@@ -3,9 +3,9 @@ package it.hemerald.basementx.common.persistence.maria.queries.data;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
 import it.hemerald.basementx.api.persistence.maria.queries.effective.MariaQuery;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
@@ -174,33 +174,33 @@ public class QuerySelect extends MariaQuery implements QueryBuilderSelect {
     }
 
     @Override
-    public ResultSet execReturn() {
+    public QueryData execReturn() {
         return getConnector().executeReturn(getSql());
     }
 
     @Override
-    public CompletableFuture<ResultSet> execReturnAsync() {
+    public CompletableFuture<QueryData> execReturnAsync() {
         return CompletableFuture.supplyAsync(this::execReturn);
     }
 
     @Override
-    public QueryBuilderSelect execConsume(Consumer<ResultSet> digest) {
+    public QueryBuilderSelect execConsume(Consumer<QueryData> digest) {
         digest.accept(execReturn());
         return this;
     }
 
     @Override
-    public CompletableFuture<QueryBuilderSelect> execConsumeAsync(Consumer<ResultSet> digest) {
+    public CompletableFuture<QueryBuilderSelect> execConsumeAsync(Consumer<QueryData> digest) {
         return CompletableFuture.supplyAsync(() -> execConsume(digest));
     }
 
     @Override
-    public ResultSet execReturnAfter(UnaryOperator<ResultSet> action) {
+    public QueryData execReturnAfter(UnaryOperator<QueryData> action) {
         return action.apply(execReturn());
     }
 
     @Override
-    public CompletableFuture<ResultSet> execReturnAfterAsync(UnaryOperator<ResultSet> action) {
+    public CompletableFuture<QueryData> execReturnAfterAsync(UnaryOperator<QueryData> action) {
         return CompletableFuture.supplyAsync(() -> execReturnAfter(action));
     }
 

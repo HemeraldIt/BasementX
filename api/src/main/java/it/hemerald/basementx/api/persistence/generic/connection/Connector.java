@@ -1,9 +1,9 @@
 package it.hemerald.basementx.api.persistence.generic.connection;
 
 import com.zaxxer.hikari.HikariDataSource;
+import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * It represents the abstraction of the object
@@ -53,7 +53,7 @@ public interface Connector {
      * @param query the query
      * @return the return set of the query
      */
-    ResultSet executeReturn(String query);
+    QueryData executeReturn(String query);
 
     void close();
 

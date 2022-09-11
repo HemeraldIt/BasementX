@@ -1,13 +1,12 @@
 package it.hemerald.basementx.api.persistence.maria.queries.builders.data;
 
 import it.hemerald.basementx.api.persistence.generic.queries.effective.ReturningQuery;
-
-import java.sql.ResultSet;
+import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 
 /**
  * Builder representing a 'SELECT' Query
  */
-public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, ResultSet> {
+public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, QueryData> {
 
     /**
      * Specifies the columns to select from a table
