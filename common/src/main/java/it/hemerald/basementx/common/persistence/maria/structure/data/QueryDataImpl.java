@@ -64,6 +64,18 @@ public class QueryDataImpl implements QueryData {
     }
 
     @Override
+    public boolean first() {
+        index = 0;
+        return dataByName.size() > 0;
+    }
+
+    @Override
+    public boolean last() {
+        index = dataByName.size()-1;
+        return dataByName.size() > 0;
+    }
+
+    @Override
     public byte getByte(String columnLabel) {
         return getDataByName(columnLabel, byte.class);
     }
