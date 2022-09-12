@@ -77,72 +77,72 @@ public class QueryDataImpl implements QueryData {
 
     @Override
     public byte getByte(String columnLabel) {
-        return getDataByName(columnLabel, byte.class);
+        return getDataByName(columnLabel, Byte.class);
     }
 
     @Override
     public byte getByte(int columnIndex) {
-        return getDataById(columnIndex, byte.class);
+        return getDataById(columnIndex, Byte.class);
     }
 
     @Override
     public short getShort(String columnLabel) {
-        return getDataByName(columnLabel, short.class);
+        return getDataByName(columnLabel, Short.class);
     }
 
     @Override
     public short getShort(int columnIndex) {
-        return getDataById(columnIndex, short.class);
+        return getDataById(columnIndex, Short.class);
     }
 
     @Override
     public int getInt(String columnLabel) {
-        return getDataByName(columnLabel, int.class);
+        return getDataByName(columnLabel, Integer.class);
     }
 
     @Override
     public int getInt(int columnIndex) {
-        return getDataById(columnIndex, int.class);
+        return getDataById(columnIndex, Integer.class);
     }
 
     @Override
     public long getLong(String columnLabel) {
-        return getDataByName(columnLabel, long.class);
+        return getDataByName(columnLabel, Long.class);
     }
 
     @Override
     public long getLong(int columnIndex) {
-        return getDataById(columnIndex, long.class);
+        return getDataById(columnIndex, Long.class);
     }
 
     @Override
     public float getFloat(String columnLabel) {
-        return getDataByName(columnLabel, float.class);
+        return getDataByName(columnLabel, Float.class);
     }
 
     @Override
     public float getFloat(int columnIndex) {
-        return getDataById(columnIndex, float.class);
+        return getDataById(columnIndex, Float.class);
     }
 
     @Override
     public double getDouble(String columnLabel) {
-        return getDataByName(columnLabel, double.class);
+        return getDataByName(columnLabel, Double.class);
     }
 
     @Override
     public double getDouble(int columnIndex) {
-        return getDataById(columnIndex, double.class);
+        return getDataById(columnIndex, Double.class);
     }
 
     @Override
     public boolean getBoolean(String columnLabel) {
-        return getDataByName(columnLabel, boolean.class);
+        return getDataByName(columnLabel, Boolean.class);
     }
 
     @Override
     public boolean getBoolean(int columnIndex) {
-        return getDataById(columnIndex, boolean.class);
+        return getDataById(columnIndex, Boolean.class);
     }
 
     @Override
