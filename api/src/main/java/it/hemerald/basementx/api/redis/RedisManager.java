@@ -19,14 +19,14 @@ public interface RedisManager {
      * @param <T> the {@link BasementMessage} whose you register the listener
      * @return the listener ID
      */
-    <T extends BasementMessage> String registerTopicListener(String name, BasementMessageHandler<T> basementMessageHandler);
+    <T extends BasementMessage> int registerTopicListener(String name, BasementMessageHandler<T> basementMessageHandler);
 
     /**
      * Unregister some listeners of a {@link BasementMessage}
      * @param name the topic name
      * @param listenerId the listener ID return from {@link RedisManager#registerTopicListener(String, BasementMessageHandler)}
      */
-    void unregisterTopicListener(String name, String... listenerId);
+    void unregisterTopicListener(String name, Integer... listenerId);
 
     /**
      * Unregister all listeners of a {@link BasementMessage}

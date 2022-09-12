@@ -7,7 +7,7 @@ import it.hemerald.basementx.api.redis.RedisManager;
 import it.hemerald.basementx.api.redis.messages.BasementMessage;
 import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
 import org.redisson.Redisson;
-import org.redisson.api.RReliableTopic;
+import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.TypedJsonJacksonCodec;
 import org.redisson.config.Config;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class DefaultRedisManager implements RedisManager {
 
     private final RedissonClient redissonClient;
-    private final Map<String, RReliableTopic> reliableTopicMap;
+    private final Map<String, RTopic> topicMap;
 
     public DefaultRedisManager(SettingsManager settingsManager) {
         RedisCredentials credentials = new RedisCredentials(
@@ -38,7 +38,7 @@ public class DefaultRedisManager implements RedisManager {
         if (!credentials.getPassword().isEmpty())
             singleConfig.setPassword(credentials.getPassword());
         redissonClient = Redisson.create(config);
-        reliableTopicMap = new HashMap<>();
+        topicMap = new HashMap<>();
     }
 
     @Override
@@ -47,38 +47,38 @@ public class DefaultRedisManager implements RedisManager {
     }
 
     @Override
-    public <T extends BasementMessage> String registerTopicListener(String name, BasementMessageHandler<T> basementMessageHandler) {
-        RReliableTopic topic = reliableTopicMap.get(name);
+    public <T extends BasementMessage> int registerTopicListener(String name, BasementMessageHandler<T> basementMessageHandler) {
+        RTopic topic = topicMap.get(name);
         if(topic == null) {
-            topic = redissonClient.getReliableTopic(name);
-            reliableTopicMap.put(name, topic);
+            topic = redissonClient.getTopic(name);
+            topicMap.put(name, topic);
         }
         return topic.addListener(basementMessageHandler.getCommandClass(), basementMessageHandler);
     }
 
-    public void unregisterTopicListener(String name, String... listenerId) {
-        RReliableTopic topic = reliableTopicMap.get(name);
+    public void unregisterTopicListener(String name, Integer... listenerId) {
+        RTopic topic = topicMap.get(name);
         if(topic == null) {
-            topic = redissonClient.getReliableTopic(name);
-            reliableTopicMap.put(name, topic);
+            topic = redissonClient.getTopic(name);
+            topicMap.put(name, topic);
         }
         topic.removeListener(listenerId);
     }
 
     public void clearTopicListeners(String name) {
-        RReliableTopic topic = reliableTopicMap.get(name);
+        RTopic topic = topicMap.get(name);
         if(topic == null) {
-            topic = redissonClient.getReliableTopic(name);
-            reliableTopicMap.put(name, topic);
+            topic = redissonClient.getTopic(name);
+            topicMap.put(name, topic);
         }
         topic.removeAllListeners();
     }
 
     public <T extends BasementMessage> long publishMessage(T message) {
-        RReliableTopic topic = reliableTopicMap.get(message.getTopic());
+        RTopic topic = topicMap.get(message.getTopic());
         if(topic == null) {
-            topic = redissonClient.getReliableTopic(message.getTopic());
-            reliableTopicMap.put(message.getTopic(), topic);
+            topic = redissonClient.getTopic(message.getTopic());
+            topicMap.put(message.getTopic(), topic);
         }
         return topic.publish(message);
     }
