@@ -2,6 +2,7 @@ package it.hemerald.basementx.api.player.version;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +43,7 @@ public enum MinecraftVersion {
     v1_18_1(757),
     v1_18_2(758);
 
-    private static final Int2ObjectMap<MinecraftVersion> mapping = Int2ObjectMaps.emptyMap();
+    private static final Int2ObjectMap<MinecraftVersion> mapping = new Int2ObjectOpenHashMap<>();
 
     static {
         for (MinecraftVersion minecraftVersion : values()) {
