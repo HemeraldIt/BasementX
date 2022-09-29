@@ -32,7 +32,10 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
 
     @Override
     public void removeBasementPlayer(String name) {
-        playerMap.remove(name);
+        E player = playerMap.remove(name);
+        if(player != null) {
+            player.remove();
+        }
     }
 
     @Override

@@ -140,17 +140,6 @@ public class StandardBasement implements Basement {
     }
 
     @Override
-    public <T extends BasementPlayer> void registerBasementPlayerType(Class<T> type) {
-        playerManager = new DefaultPlayerManager<T>(this);
-        this.savePlayer = false;
-    }
-
-    @Override
-    public boolean savePlayer() {
-        return savePlayer;
-    }
-
-    @Override
     public AbstractMariaDatabase getDatabase() {
         return database;
     }
