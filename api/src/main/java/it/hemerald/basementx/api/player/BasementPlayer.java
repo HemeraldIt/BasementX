@@ -14,6 +14,24 @@ public interface BasementPlayer {
     String getName();
 
     /**
+     * Gets the player stream name
+     * @return player stream name
+     */
+    String getStreamName();
+
+    /**
+     * Turn on or off the stream mode
+     * @param enabled true if enable stream mode, false otherwise
+     */
+    void streamMode(boolean enabled);
+
+    /**
+     * Gets if the player is in stream mode
+     * @return true if the player is in stream mode
+     */
+    boolean isInStreamMode();
+
+    /**
      * Gets the player language
      * @return player language
      */
@@ -31,4 +49,9 @@ public interface BasementPlayer {
      * @return the minecraft version of the player
      */
     MinecraftVersion getVersion();
+
+    /**
+     * Called when player is removed
+     */
+    public void remove();
 }
