@@ -54,9 +54,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if(basement.savePlayer()) {
-            basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), new BukkitBasementPlayer(event.getPlayer(), basement));
-        }
+        BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
+        basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
+
         String targetName = tpToCache.asMap().get(event.getPlayer().getName());
         if(targetName == null) return;
         Player target = Bukkit.getPlayer(targetName);
@@ -68,9 +68,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        if(basement.savePlayer()) {
-            basement.getPlayerManager().removeBasementPlayer(event.getPlayer().getName());
-        }
+        basement.getPlayerManager().removeBasementPlayer(event.getPlayer().getName());
     }
 
     public void tpTo(String playerName, String targetName) {
