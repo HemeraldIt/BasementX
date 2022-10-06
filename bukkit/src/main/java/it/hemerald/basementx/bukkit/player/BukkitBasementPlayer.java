@@ -10,13 +10,14 @@ import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.version.MinecraftVersion;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class BukkitBasementPlayer implements BasementPlayer {
 
-    private static final List<Integer> numbers = IntStream.range(1, 1000).boxed().toList();
+    private static final List<Integer> numbers = new ArrayList<>(IntStream.range(1, 1000).boxed().toList());
 
     private final Player player;
     private final LocaleManager localeManager;
