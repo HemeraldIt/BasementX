@@ -160,49 +160,49 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public void addNetworkLevel(UUID uuid, int level) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkLevel(data.getNetworkLevel()+level);
+        data.setNetworkLevel(Math.max(0, data.getNetworkLevel()+level));
     }
 
     @Override
     public void addNetworkLevel(String username, int level) {
         UserData data = userDataManager.getUserData(username);
-        data.setNetworkLevel(data.getNetworkLevel()+level);
+        data.setNetworkLevel(Math.max(0, data.getNetworkLevel()+level));
     }
 
     @Override
     public void addXP(UUID uuid, int xp) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setXp(data.getXp()+xp);
+        data.setXp(Math.max(0, data.getXp()+xp));
     }
 
     @Override
     public void addXP(String username, int xp) {
         UserData data = userDataManager.getUserData(username);
-        data.setXp(data.getXp()+xp);
+        data.setXp(Math.max(0, data.getXp()+xp));
     }
 
     @Override
     public void addNetworkCoin(UUID uuid, int coin) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkCoin(data.getNetworkCoin()+coin);
+        data.setNetworkCoin(Math.max(0, data.getNetworkCoin()+coin));
     }
 
     @Override
     public void addNetworkCoin(String username, int coin) {
         UserData data = userDataManager.getUserData(username);
-        data.setNetworkCoin(data.getNetworkCoin()+coin);
+        data.setNetworkCoin(Math.max(0, data.getNetworkCoin()+coin));
     }
 
     @Override
     public void addGems(UUID uuid, int gems) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setGems(data.getGems()+gems);
+        data.setGems(Math.max(0, data.getGems()+gems));
     }
 
     @Override
     public void addGems(String username, int gems) {
         UserData data = userDataManager.getUserData(username);
-        data.setGems(data.getGems()+gems);
+        data.setGems(Math.max(0, data.getGems()+gems));
     }
 
     @Override
