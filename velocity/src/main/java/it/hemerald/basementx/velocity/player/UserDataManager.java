@@ -65,7 +65,7 @@ public class UserDataManager {
         userData.setNetworkLevel(data.getInt("level"));
         userData.setNetworkCoin(data.getInt("coins"));
         userData.setGems(data.getInt("gems"));
-        userData.setPremium(data.getInt("premiun") == 1);
+        userData.setPremium(data.getInt("premium") == 1);
         userData.setLanguage(data.getString("language"));
         userData.setProtocolVersion(player.getProtocolVersion().getProtocol());
 
