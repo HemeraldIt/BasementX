@@ -3,6 +3,7 @@ package it.hemerald.basementx.bukkit.listeners;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
@@ -56,6 +57,10 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
         basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
+
+        basement.getStreamMode().sendPackets(basement.getPlugin(), event.getPlayer(), basementPlayer.getStreamName(),
+                basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
+                .map(BasementPlayer::getName).map(Bukkit::getPlayer).toArray(Player[]::new));
 
         String targetName = tpToCache.asMap().get(event.getPlayer().getName());
         if(targetName == null) return;

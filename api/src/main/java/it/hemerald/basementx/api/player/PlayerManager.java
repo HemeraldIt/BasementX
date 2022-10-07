@@ -103,6 +103,13 @@ public interface PlayerManager<E extends BasementPlayer> {
     void undisguise(String name);
 
     /**
+     * Turn on or off the stream mode of a player
+     * @param name the name of the player
+     * @param enabled true if enable stream mode, false otherwise
+     */
+    void streamMode(String name, boolean enabled);
+
+    /**
      * Send same messages to a player
      * @param player player name
      * @param messages the messages to send to the player

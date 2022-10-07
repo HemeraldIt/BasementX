@@ -5,6 +5,7 @@ import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
 import it.hemerald.basementx.api.bukkit.item.ItemDataManager;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.api.bukkit.permission.PermissionManager;
+import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
 import it.hemerald.basementx.api.bukkit.scoreboard.IScoreboardManager;
 import it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardProvider;
 import it.hemerald.basementx.api.bukkit.scoreboard.adapter.ScoreboardAdapter;
@@ -75,6 +76,12 @@ public interface BasementBukkit extends Basement {
      * @return the ItemData manager
      */
     ItemDataManager getItemDataManager();
+
+    /**
+     * Gets the StreamMode for managing player skin and names for streamers
+     * @return the StreamMode object
+     */
+    StreamMode getStreamMode();
 
     /**
      * Gets the server object

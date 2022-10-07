@@ -59,6 +59,14 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     }
 
     @Override
+    public void streamMode(String name, boolean enabled) {
+        E player = playerMap.get(name);
+        if(player != null) {
+            player.streamMode(enabled);
+        }
+    }
+
+    @Override
     public void sendMessage(String player, String... messages) {
         velocityService.sendMessage(player, messages);
     }

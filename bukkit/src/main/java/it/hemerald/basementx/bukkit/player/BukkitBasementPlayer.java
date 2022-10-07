@@ -5,6 +5,7 @@ import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.locale.Locale;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.player.UserData;
 import it.hemerald.basementx.api.player.version.MinecraftVersion;
 import org.bukkit.entity.Player;
 
@@ -19,25 +20,15 @@ public class BukkitBasementPlayer implements BasementPlayer {
 
     private final Player player;
     private final LocaleManager localeManager;
-    private String language;
-    private boolean streamMode;
+    private final UserData userData;
     private final String streamName;
     private final Integer streamId;
 
     public BukkitBasementPlayer(Player player, BasementBukkit basement) {
         this.player = player;
         this.localeManager = basement.getLocaleManager();
+        this.userData = basement.getUserDataService().getUserData(player.getUniqueId());
         this.streamName = "Player" + (streamId = numbers.remove(0));
-        language = "en-us";
-
-       //QueryData queryData = basement.getDatabase().select().columns("language")
-       //        .from("players").where(WhereBuilder.builder().equals("uuid", player.getUniqueId().toString()).close())
-       //        .build().execReturn();
-       //if(queryData.next()) {
-       //    language = queryData.getString(1);
-       //} else {
-       //    language = "en-us";
-       //}
     }
 
     @Override
@@ -52,17 +43,17 @@ public class BukkitBasementPlayer implements BasementPlayer {
 
     @Override
     public void streamMode(boolean enabled) {
-        streamMode = enabled;
+        userData.setStreamMode(enabled);
     }
 
     @Override
     public boolean isInStreamMode() {
-        return streamMode;
+        return userData.getStreamMode();
     }
 
     @Override
     public String getLanguage() {
-        return language;
+        return userData.getLanguage();
     }
 
     @Override

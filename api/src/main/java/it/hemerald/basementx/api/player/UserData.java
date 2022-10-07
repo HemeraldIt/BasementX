@@ -31,8 +31,13 @@ public class UserData {
     private boolean premium;
     private int protocolVersion;
     private String language;
+    private boolean streamMode;
 
     public boolean getPremium() {
         return premium;
+    }
+
+    public boolean getStreamMode() {
+        return streamMode;
     }
 }
