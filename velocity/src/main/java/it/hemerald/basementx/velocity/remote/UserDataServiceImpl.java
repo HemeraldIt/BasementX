@@ -88,6 +88,16 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
+    public boolean isInStreamMode(UUID uuid) {
+        return userDataManager.getUserData(uuid).getStreamMode();
+    }
+
+    @Override
+    public boolean isInStreamMode(String username) {
+        return userDataManager.getUserData(username).getStreamMode();
+    }
+
+    @Override
     public void setNetworkLevel(UUID uuid, int level) {
         userDataManager.getUserData(uuid).setNetworkLevel(level);
     }
@@ -135,6 +145,16 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public void setLanguage(String username, String lang) {
         userDataManager.getUserData(username).setLanguage(lang);
+    }
+
+    @Override
+    public void setStreamMode(UUID uuid, boolean streamMode) {
+        userDataManager.getUserData(uuid).setStreamMode(streamMode);
+    }
+
+    @Override
+    public void setStreamMode(String username, boolean streamMode) {
+        userDataManager.getUserData(username).setStreamMode(streamMode);
     }
 
     @Override

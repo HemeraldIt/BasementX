@@ -29,6 +29,9 @@ public interface UserDataService {
     String getLanguage(UUID uuid);
     String getLanguage(String username);
 
+    boolean isInStreamMode(UUID uuid);
+    boolean isInStreamMode(String username);
+
 
     void setNetworkLevel(UUID uuid, int level);
     void setNetworkLevel(String username, int level);
@@ -44,6 +47,9 @@ public interface UserDataService {
 
     void setLanguage(UUID uuid, String lang);
     void setLanguage(String username, String lang);
+
+    void setStreamMode(UUID uuid, boolean streamMode);
+    void setStreamMode(String username, boolean streamMode);
 
 
     void addNetworkLevel(UUID uuid, int level);
