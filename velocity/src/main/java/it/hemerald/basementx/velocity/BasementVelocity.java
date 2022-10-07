@@ -95,7 +95,7 @@ public class BasementVelocity extends AbstractBasementPlugin {
        //        .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
        //        .withPrimaryKeys("id").build().exec();
 
-        userDataManager = new UserDataManager(basement.getRedisManager().getRedissonClient(), database);
+        userDataManager = new UserDataManager(this, database);
 
         basement.getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(server));
         basement.getRedisManager().registerTopicListener(BukkitNotifyShutdownMessage.TOPIC, new BukkitNotifyShutdownHandler(server));

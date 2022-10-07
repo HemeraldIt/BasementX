@@ -8,6 +8,7 @@ import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBu
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 import it.hemerald.basementx.api.player.UserData;
+import it.hemerald.basementx.velocity.BasementVelocity;
 import org.redisson.api.RedissonClient;
 import org.redisson.api.condition.Conditions;
 
@@ -26,22 +27,25 @@ public class UserDataManager {
     private final QueryBuilderSelect builderSelect;
     private final QueryBuilderUpdate builderUpdate;
 
-    public UserDataManager(RedissonClient redissonClient, AbstractMariaDatabase database) {
-        this.redissonClient = redissonClient;
+    public UserDataManager(BasementVelocity velocity, AbstractMariaDatabase database) {
+        this.redissonClient = velocity.getBasement().getRedisManager().getRedissonClient();
         builderSelect = database.select().from("players").columns("username", "xp", "level", "coins", "gems", "premium", "language");
         builderUpdate = database.update().table("players");
 
         userDataCache = CacheBuilder.newBuilder().removalListener((RemovalListener<UUID, UserData>) notification -> {
             if(notification.getCause() == RemovalCause.EXPIRED) {
-                UserData userData = notification.getValue();
-                builderUpdate.patternClone()
-                        .set("xp", userData.getXp())
-                        .set("level", userData.getNetworkLevel())
-                        .set("coins", userData.getNetworkCoin())
-                        .set("gems", userData.getGems())
-                        .set("language", userData.getLanguage()).build().exec();
+                saveToDatabase(notification.getValue());
             }
         }).expireAfterAccess(10, TimeUnit.MINUTES).build();
+
+        velocity.getServer().getScheduler().buildTask(velocity, () -> {
+            for (UserData userData : userDataMap.values()) {
+                saveToDatabase(userData);
+            }
+            for (UserData userData : userDataCache.asMap().values()) {
+                saveToDatabase(userData);
+            }
+        }).repeat(5, TimeUnit.MINUTES).schedule();
     }
 
     public void prepareUser(Player player) {
@@ -85,4 +89,12 @@ public class UserDataManager {
         return (UserData) data.toArray()[0];
     }
 
+    private void saveToDatabase(UserData userData) {
+        builderUpdate.patternClone()
+                .set("xp", userData.getXp())
+                .set("level", userData.getNetworkLevel())
+                .set("coins", userData.getNetworkCoin())
+                .set("gems", userData.getGems())
+                .set("language", userData.getLanguage()).build().exec();
+    }
 }
