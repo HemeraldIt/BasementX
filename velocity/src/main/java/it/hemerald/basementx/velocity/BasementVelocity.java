@@ -9,31 +9,32 @@ import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import it.hemerald.basementx.velocity.alert.AlertType;
-import it.hemerald.basementx.velocity.database.DatabaseConstants;
-import it.hemerald.basementx.velocity.locale.EnglishLocale;
-import it.hemerald.basementx.velocity.locale.ItalianLocale;
-import it.hemerald.basementx.velocity.redis.message.handler.BukkitNotifyShutdownHandler;
-import it.hemerald.basementx.velocity.redis.message.handler.ServerShutdownHandler;
-import it.hemerald.basementx.velocity.remote.RemoteVelocityServiceImpl;
-import it.hemerald.basementx.velocity.together.Together;
-import it.hemerald.basementx.velocity.commands.*;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.persistence.generic.connection.Connector;
 import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
-import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import it.hemerald.basementx.api.redis.messages.implementation.BukkitNotifyShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
+import it.hemerald.basementx.api.remote.UserDataService;
 import it.hemerald.basementx.common.config.BasementConfig;
 import it.hemerald.basementx.common.plugin.AbstractBasementPlugin;
+import it.hemerald.basementx.velocity.alert.AlertType;
+import it.hemerald.basementx.velocity.commands.*;
 import it.hemerald.basementx.velocity.listeners.DisguiseListener;
 import it.hemerald.basementx.velocity.listeners.PlayerListener;
+import it.hemerald.basementx.velocity.locale.EnglishLocale;
+import it.hemerald.basementx.velocity.locale.ItalianLocale;
+import it.hemerald.basementx.velocity.player.UserDataManager;
+import it.hemerald.basementx.velocity.redis.message.handler.BukkitNotifyShutdownHandler;
+import it.hemerald.basementx.velocity.redis.message.handler.ServerShutdownHandler;
+import it.hemerald.basementx.velocity.remote.RemoteVelocityServiceImpl;
+import it.hemerald.basementx.velocity.remote.UserDataServiceImpl;
+import it.hemerald.basementx.velocity.together.Together;
 import lombok.Getter;
+import org.redisson.api.RRemoteService;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -57,6 +58,8 @@ public class BasementVelocity extends AbstractBasementPlugin {
     private AbstractMariaDatabase database;
 
     private final Map<String, AlertType> toggled = new HashMap<>();
+
+    private UserDataManager userDataManager;
 
     @Inject
     public BasementVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
@@ -92,9 +95,13 @@ public class BasementVelocity extends AbstractBasementPlugin {
        //        .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
        //        .withPrimaryKeys("id").build().exec();
 
+        userDataManager = new UserDataManager(basement.getRedisManager().getRedissonClient(), database);
+
         basement.getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(server));
         basement.getRedisManager().registerTopicListener(BukkitNotifyShutdownMessage.TOPIC, new BukkitNotifyShutdownHandler(server));
-        basement.getRedisManager().getRedissonClient().getRemoteService().register(RemoteVelocityService.class, new RemoteVelocityServiceImpl(this), 3, Executors.newSingleThreadExecutor());
+        RRemoteService remoteService = basement.getRedisManager().getRedissonClient().getRemoteService();
+        remoteService.register(RemoteVelocityService.class, new RemoteVelocityServiceImpl(this), 3, Executors.newSingleThreadExecutor());
+        remoteService.register(UserDataService.class, new UserDataServiceImpl(userDataManager), 3, Executors.newSingleThreadExecutor());
 
         together = new Together(this);
         together.enable();

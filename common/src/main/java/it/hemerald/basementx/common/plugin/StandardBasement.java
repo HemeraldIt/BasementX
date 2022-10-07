@@ -3,13 +3,6 @@ package it.hemerald.basementx.common.plugin;
 import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
-import it.hemerald.basementx.common.config.BasementConfig;
-import it.hemerald.basementx.common.locale.DefaultLocaleManager;
-import it.hemerald.basementx.common.party.DefaultPartyManager;
-import it.hemerald.basementx.common.persistence.hikari.TypeHolder;
-import it.hemerald.basementx.common.player.DefaultPlayerManager;
-import it.hemerald.basementx.common.redis.DefaultRedisManager;
-import it.hemerald.basementx.common.server.DefaultServerManager;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.cooldown.CooldownFactory;
 import it.hemerald.basementx.api.locale.LocaleManager;
@@ -25,8 +18,17 @@ import it.hemerald.basementx.api.plugin.BasementPlugin;
 import it.hemerald.basementx.api.redis.RedisManager;
 import it.hemerald.basementx.api.remote.RemoteCerebrumService;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
+import it.hemerald.basementx.api.remote.UserDataService;
 import it.hemerald.basementx.api.server.ServerManager;
+import it.hemerald.basementx.common.config.BasementConfig;
 import it.hemerald.basementx.common.cooldown.DefaultCooldownFactory;
+import it.hemerald.basementx.common.locale.DefaultLocaleManager;
+import it.hemerald.basementx.common.party.DefaultPartyManager;
+import it.hemerald.basementx.common.persistence.hikari.TypeHolder;
+import it.hemerald.basementx.common.player.DefaultPlayerManager;
+import it.hemerald.basementx.common.redis.DefaultRedisManager;
+import it.hemerald.basementx.common.server.DefaultServerManager;
+import org.redisson.api.RRemoteService;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -44,6 +46,7 @@ public class StandardBasement implements Basement {
     private final LocaleManager localeManager;
     private final RemoteVelocityService velocityService;
     private final RemoteCerebrumService cerebrumService;
+    private final UserDataService userDataService;
 
     private final AbstractMariaDatabase database;
 
@@ -76,8 +79,10 @@ public class StandardBasement implements Basement {
         partyManager = new DefaultPartyManager(redisManager);
         localeManager = new DefaultLocaleManager();
 
-        velocityService = redisManager.getRedissonClient().getRemoteService().get(RemoteVelocityService.class);
-        cerebrumService = redisManager.getRedissonClient().getRemoteService().get(RemoteCerebrumService.class);
+        RRemoteService remoteService = redisManager.getRedissonClient().getRemoteService();
+        velocityService = remoteService.get(RemoteVelocityService.class);
+        cerebrumService = remoteService.get(RemoteCerebrumService.class);
+        userDataService = remoteService.get(UserDataService.class);
 
         cooldownFactory = new DefaultCooldownFactory();
     }
@@ -137,6 +142,11 @@ public class StandardBasement implements Basement {
     @Override
     public RemoteCerebrumService getRemoteCerebrumService() {
         return cerebrumService;
+    }
+
+    @Override
+    public UserDataService getUserDataService() {
+        return userDataService;
     }
 
     @Override

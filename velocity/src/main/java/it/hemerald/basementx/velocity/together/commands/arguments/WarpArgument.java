@@ -2,10 +2,10 @@ package it.hemerald.basementx.velocity.together.commands.arguments;
 
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
-import it.hemerald.basementx.velocity.together.commands.CommandArgument;
-import it.hemerald.basementx.velocity.together.manager.PartyManager;
 import it.hemerald.basementx.api.party.Party;
 import it.hemerald.basementx.api.redis.messages.implementation.PartyWarpMessage;
+import it.hemerald.basementx.velocity.together.commands.CommandArgument;
+import it.hemerald.basementx.velocity.together.manager.PartyManager;
 
 import java.util.Optional;
 

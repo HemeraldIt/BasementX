@@ -2,8 +2,8 @@ package it.hemerald.basementx.common.persistence.hikari;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import it.hemerald.basementx.common.persistence.hikari.property.PropertiesProvider;
 import it.hemerald.basementx.api.persistence.generic.connection.Connector;
+import it.hemerald.basementx.common.persistence.hikari.property.PropertiesProvider;
 
 import java.sql.Connection;
 import java.sql.SQLException;

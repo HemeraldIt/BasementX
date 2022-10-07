@@ -1,8 +1,8 @@
 package it.hemerald.basementx.api.bukkit.disguise.module;
 
 import ch.jalu.configme.properties.Property;
-import it.hemerald.basementx.api.bukkit.disguise.adapter.DisguiseAdapter;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.disguise.adapter.DisguiseAdapter;
 import it.hemerald.basementx.api.bukkit.module.Module;
 import org.bukkit.entity.Player;
 

@@ -1,5 +1,6 @@
 package it.hemerald.basementx.api.bukkit;
 
+import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
 import it.hemerald.basementx.api.bukkit.item.ItemDataManager;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
@@ -9,7 +10,6 @@ import it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardProvider;
 import it.hemerald.basementx.api.bukkit.scoreboard.adapter.ScoreboardAdapter;
 import it.hemerald.basementx.api.bukkit.staffmode.module.StaffModeModule;
 import it.hemerald.basementx.api.server.BukkitServer;
-import it.hemerald.basementx.api.Basement;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.plugin.java.JavaPlugin;
 

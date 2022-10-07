@@ -1,9 +1,9 @@
 package it.hemerald.basementx.api.bukkit.nametag.module;
 
 import ch.jalu.configme.properties.Property;
-import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.module.Module;
+import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;

@@ -1,8 +1,8 @@
 package it.hemerald.basementx.api.bukkit.module;
 
 import ch.jalu.configme.properties.Property;
-import it.hemerald.basementx.api.bukkit.adapter.Adapter;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.adapter.Adapter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

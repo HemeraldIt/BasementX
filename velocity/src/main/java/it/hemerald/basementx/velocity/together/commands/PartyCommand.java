@@ -2,8 +2,8 @@ package it.hemerald.basementx.velocity.together.commands;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import it.hemerald.basementx.velocity.together.commands.arguments.*;
 import it.hemerald.basementx.velocity.together.Together;
+import it.hemerald.basementx.velocity.together.commands.arguments.*;
 import it.hemerald.basementx.velocity.together.manager.PartyManager;
 
 import java.util.*;

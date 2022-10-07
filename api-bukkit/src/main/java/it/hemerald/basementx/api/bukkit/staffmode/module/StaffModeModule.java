@@ -1,9 +1,9 @@
 package it.hemerald.basementx.api.bukkit.staffmode.module;
 
 import ch.jalu.configme.properties.Property;
-import it.hemerald.basementx.api.bukkit.staffmode.adapter.StaffModeAdapter;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.module.Module;
+import it.hemerald.basementx.api.bukkit.staffmode.adapter.StaffModeAdapter;
 import org.bukkit.entity.Player;
 
 public abstract class StaffModeModule extends Module<StaffModeAdapter> {

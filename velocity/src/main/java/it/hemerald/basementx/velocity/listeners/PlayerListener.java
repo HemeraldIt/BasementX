@@ -21,11 +21,13 @@ public class PlayerListener {
     @Subscribe(order = PostOrder.FIRST)
     public void onLogged(PostLoginEvent event) {
         playersCount.set(velocity.getServer().getPlayerCount());
+        velocity.getUserDataManager().prepareUser(event.getPlayer());
     }
 
     @Subscribe
     private void onQuit(DisconnectEvent event) {
         playersCount.set(velocity.getServer().getPlayerCount());
+        velocity.getUserDataManager().cacheUser(event.getPlayer());
     }
 
 }

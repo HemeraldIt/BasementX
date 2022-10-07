@@ -1,7 +1,7 @@
 package it.hemerald.basementx.api.player;
 
-import it.hemerald.basementx.api.player.version.MinecraftVersion;
 import it.hemerald.basementx.api.locale.Locale;
+import it.hemerald.basementx.api.player.version.MinecraftVersion;
 
 import java.util.Optional;
 

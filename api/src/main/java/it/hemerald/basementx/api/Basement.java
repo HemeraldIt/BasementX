@@ -13,6 +13,7 @@ import it.hemerald.basementx.api.player.PlayerManager;
 import it.hemerald.basementx.api.redis.RedisManager;
 import it.hemerald.basementx.api.remote.RemoteCerebrumService;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
+import it.hemerald.basementx.api.remote.UserDataService;
 import it.hemerald.basementx.api.server.ServerManager;
 
 import java.util.UUID;
@@ -78,6 +79,12 @@ public interface Basement {
      * @return remote instance of cerebrum service
      */
     RemoteCerebrumService getRemoteCerebrumService();
+
+    /**
+     * Gets the remote instance of userData service
+     * @return remote instance of userData service
+     */
+    UserDataService getUserDataService();
 
     /**
      * Gets the default server database

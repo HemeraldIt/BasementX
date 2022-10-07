@@ -1,11 +1,11 @@
 package it.hemerald.basementx.bukkit.staffmode.module;
 
-import it.hemerald.basementx.bukkit.generic.chat.BasementMessages;
-import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
-import it.hemerald.basementx.bukkit.staffmode.adapter.DefaultStaffModeAdapter;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.staffmode.adapter.StaffModeAdapter;
 import it.hemerald.basementx.api.bukkit.staffmode.module.StaffModeModule;
+import it.hemerald.basementx.bukkit.generic.chat.BasementMessages;
+import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
+import it.hemerald.basementx.bukkit.staffmode.adapter.DefaultStaffModeAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
