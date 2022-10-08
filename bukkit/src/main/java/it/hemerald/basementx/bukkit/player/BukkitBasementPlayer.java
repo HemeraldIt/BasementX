@@ -27,7 +27,7 @@ public class BukkitBasementPlayer implements BasementPlayer {
     public BukkitBasementPlayer(Player player, BasementBukkit basement) {
         this.player = player;
         this.localeManager = basement.getLocaleManager();
-        this.userData = basement.getUserDataService().getUserData(player.getUniqueId());
+        this.userData = basement.getUserData(player.getUniqueId());
         this.streamName = "Player" + (streamId = numbers.remove(0));
     }
 

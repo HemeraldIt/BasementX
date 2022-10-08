@@ -13,11 +13,6 @@ public class UserDataServiceImpl implements UserDataService {
     private final UserDataManager userDataManager;
 
     @Override
-    public UserData getUserData(UUID uuid) {
-        return userDataManager.getUserData(uuid);
-    }
-
-    @Override
     public int getNetworkLevel(UUID uuid) {
         return userDataManager.getUserData(uuid).getNetworkLevel();
     }

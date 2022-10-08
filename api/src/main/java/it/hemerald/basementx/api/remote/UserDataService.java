@@ -1,12 +1,8 @@
 package it.hemerald.basementx.api.remote;
 
-import it.hemerald.basementx.api.player.UserData;
-
 import java.util.UUID;
 
 public interface UserDataService {
-
-    UserData getUserData(UUID uuid);
 
     int getNetworkLevel(UUID uuid);
     int getNetworkLevel(String username);
