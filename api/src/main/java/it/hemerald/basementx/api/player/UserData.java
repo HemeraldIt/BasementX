@@ -24,14 +24,14 @@ public class UserData {
     @RIndex
     private final String username;
 
-    private int networkLevel;
-    private int xp;
-    private int networkCoin;
-    private int gems;
-    private boolean premium;
+    private int networkLevel = 0;
+    private int xp = 0;
+    private int networkCoin = 0;
+    private int gems = 0;
+    private boolean premium = false;
     private int protocolVersion;
-    private String language;
-    private boolean streamMode;
+    private String language = "it";
+    private boolean streamMode = false;
 
     public boolean getPremium() {
         return premium;

@@ -59,16 +59,17 @@ public class UserDataManager {
         }
 
         QueryData data = builderSelect.where(WhereBuilder.builder().equals("uuid", uuid.toString()).close()).build().execReturn();
-        data.first();
-        userData = new UserData(uuid.toString(), data.getString("username"));
-        userData.setXp(data.getInt("xp"));
-        userData.setNetworkLevel(data.getInt("level"));
-        userData.setNetworkCoin(data.getInt("coins"));
-        userData.setGems(data.getInt("gems"));
-        userData.setPremium(data.getInt("premium") == 1);
-        userData.setLanguage(data.getString("language"));
+        userData = new UserData(uuid.toString(), player.getUsername());
         userData.setProtocolVersion(player.getProtocolVersion().getProtocol());
-
+        if (data.first()) {
+            userData = new UserData(uuid.toString(), player.getUsername());
+            userData.setXp(data.getInt("xp"));
+            userData.setNetworkLevel(data.getInt("level"));
+            userData.setNetworkCoin(data.getInt("coins"));
+            userData.setGems(data.getInt("gems"));
+            userData.setPremium(data.getInt("premium") == 1);
+            userData.setLanguage(data.getString("language"));
+        }
         userDataMap.put(uuid, redissonClient.getLiveObjectService().merge(userData));
     }
 
