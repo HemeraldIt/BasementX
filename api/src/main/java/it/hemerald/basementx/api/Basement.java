@@ -10,6 +10,7 @@ import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
+import it.hemerald.basementx.api.player.UserData;
 import it.hemerald.basementx.api.redis.RedisManager;
 import it.hemerald.basementx.api.remote.RemoteCerebrumService;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
@@ -85,6 +86,20 @@ public interface Basement {
      * @return remote instance of userData service
      */
     UserDataService getUserDataService();
+
+    /**
+     * Gets a UserData instance from player uuid
+     * @param uuid the player uuid
+     * @return the UserData instance associated with player
+     */
+    UserData getUserData(UUID uuid);
+
+    /**
+     * Gets a UserData instance from player name
+     * @param username the player name
+     * @return the UserData instance associated with player
+     */
+    UserData getUserData(String username);
 
     /**
      * Gets the default server database

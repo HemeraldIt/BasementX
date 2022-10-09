@@ -4,6 +4,8 @@ import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import it.hemerald.basementx.api.Basement;
+import it.hemerald.basementx.api.common.SelfExpiringHashMap;
+import it.hemerald.basementx.api.common.SelfExpiringMap;
 import it.hemerald.basementx.api.cooldown.CooldownFactory;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
@@ -14,6 +16,7 @@ import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDataba
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
+import it.hemerald.basementx.api.player.UserData;
 import it.hemerald.basementx.api.plugin.BasementPlugin;
 import it.hemerald.basementx.api.redis.RedisManager;
 import it.hemerald.basementx.api.remote.RemoteCerebrumService;
@@ -29,9 +32,12 @@ import it.hemerald.basementx.common.player.DefaultPlayerManager;
 import it.hemerald.basementx.common.redis.DefaultRedisManager;
 import it.hemerald.basementx.common.server.DefaultServerManager;
 import org.redisson.api.RRemoteService;
+import org.redisson.api.condition.Conditions;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class StandardBasement implements Basement {
@@ -41,18 +47,18 @@ public class StandardBasement implements Basement {
     private final SettingsManager settingsManager;
     private final RedisManager redisManager;
     private final ServerManager serverManager;
-    private PlayerManager<? extends BasementPlayer> playerManager;
+    private final PlayerManager<? extends BasementPlayer> playerManager;
     private final PartyManager partyManager;
     private final LocaleManager localeManager;
     private final RemoteVelocityService velocityService;
     private final RemoteCerebrumService cerebrumService;
     private final UserDataService userDataService;
 
+    private final SelfExpiringMap<UUID, UserData> userDataMap = new SelfExpiringHashMap<>(900000); // 15 minutes
+
     private final AbstractMariaDatabase database;
 
     private final HashMap<Class<?>, Holder> holderBucket = new HashMap<>();
-
-    private boolean savePlayer = false;
 
     protected CooldownFactory cooldownFactory;
 
@@ -147,6 +153,23 @@ public class StandardBasement implements Basement {
     @Override
     public UserDataService getUserDataService() {
         return userDataService;
+    }
+
+    @Override
+    public UserData getUserData(UUID uuid) {
+        UserData userData = userDataMap.get(uuid);
+        if(userData == null) {
+            userData = redisManager.getRedissonClient().getLiveObjectService().get(UserData.class, uuid.toString());
+            userDataMap.put(uuid, userData);
+        }
+        return userData;
+    }
+
+    @Override
+    public UserData getUserData(String username) {
+        Collection<UserData> data = redisManager.getRedissonClient().getLiveObjectService().find(UserData.class, Conditions.eq("username", username));
+        if (data.isEmpty()) return null;
+        return (UserData) data.toArray()[0];
     }
 
     @Override
