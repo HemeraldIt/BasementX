@@ -35,6 +35,7 @@ public class UserDataManager {
         userDataCache = CacheBuilder.newBuilder().removalListener((RemovalListener<UUID, UserData>) notification -> {
             if(notification.getCause() == RemovalCause.EXPIRED) {
                 saveToDatabase(notification.getValue());
+                redissonClient.getLiveObjectService().delete(notification.getValue());
             }
         }).expireAfterAccess(10, TimeUnit.MINUTES).build();
 

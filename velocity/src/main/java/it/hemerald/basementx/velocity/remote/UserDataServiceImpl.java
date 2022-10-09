@@ -165,39 +165,39 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public void addXP(UUID uuid, int xp) {
+    public void addXP(UUID uuid, int xp, boolean applyBoost) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setXp(Math.max(0, data.getXp()+xp));
+        data.setXp(data.getXp()+(applyBoost && data.hasXpBoost() ? xp * data.getXpBoost() : xp));
     }
 
     @Override
-    public void addXP(String username, int xp) {
+    public void addXP(String username, int xp, boolean applyBoost) {
         UserData data = userDataManager.getUserData(username);
-        data.setXp(Math.max(0, data.getXp()+xp));
+        data.setXp(data.getXp()+(applyBoost && data.hasXpBoost() ? xp * data.getXpBoost() : xp));
     }
 
     @Override
-    public void addNetworkCoin(UUID uuid, int coin) {
+    public void addNetworkCoin(UUID uuid, int coin, boolean applyBoost) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkCoin(Math.max(0, data.getNetworkCoin()+coin));
+        data.setNetworkCoin(data.getNetworkCoin()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
     }
 
     @Override
-    public void addNetworkCoin(String username, int coin) {
+    public void addNetworkCoin(String username, int coin, boolean applyBoost) {
         UserData data = userDataManager.getUserData(username);
-        data.setNetworkCoin(Math.max(0, data.getNetworkCoin()+coin));
+        data.setNetworkCoin(data.getNetworkCoin()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
     }
 
     @Override
     public void addGems(UUID uuid, int gems) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setGems(Math.max(0, data.getGems()+gems));
+        data.setGems(data.getGems()+gems);
     }
 
     @Override
     public void addGems(String username, int gems) {
         UserData data = userDataManager.getUserData(username);
-        data.setGems(Math.max(0, data.getGems()+gems));
+        data.setGems(data.getGems()+gems);
     }
 
     @Override

@@ -51,11 +51,25 @@ public interface UserDataService {
     void addNetworkLevel(UUID uuid, int level);
     void addNetworkLevel(String username, int level);
 
-    void addXP(UUID uuid, int xp);
-    void addXP(String username, int xp);
+    void addXP(UUID uuid, int xp, boolean applyBoost);
+    void addXP(String username, int xp, boolean applyBoost);
 
-    void addNetworkCoin(UUID uuid, int coin);
-    void addNetworkCoin(String username, int coin);
+    default void addXP(UUID uuid, int xp) {
+        addXP(uuid, xp, true);
+    }
+    default void addXP(String username, int xp) {
+        addXP(username, xp, true);
+    }
+
+    void addNetworkCoin(UUID uuid, int coin, boolean applyBoost);
+    void addNetworkCoin(String username, int coin, boolean applyBoost);
+
+    default void addNetworkCoin(UUID uuid, int xp) {
+        addNetworkCoin(uuid, xp, true);
+    }
+    default void addNetworkCoin(String username, int xp) {
+        addNetworkCoin(username, xp, true);
+    }
 
     void addGems(UUID uuid, int gems);
     void addGems(String username, int gems);

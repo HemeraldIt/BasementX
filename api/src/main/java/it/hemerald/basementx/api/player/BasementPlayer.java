@@ -53,5 +53,5 @@ public interface BasementPlayer {
     /**
      * Called when player is removed
      */
-    public void remove();
+    void remove();
 }
