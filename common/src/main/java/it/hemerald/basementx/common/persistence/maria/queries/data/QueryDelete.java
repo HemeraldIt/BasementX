@@ -3,15 +3,19 @@ package it.hemerald.basementx.common.persistence.maria.queries.data;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
 import it.hemerald.basementx.api.persistence.maria.queries.effective.MariaQuery;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 
 import java.sql.PreparedStatement;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
 
     private String tableName;
     private String where;
     private String orderBy;
+    private String returning;
     private int limit;
 
     public QueryDelete() {}
@@ -45,6 +49,12 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     }
 
     @Override
+    public QueryBuilderDelete returning(String expression) {
+        this.returning = expression;
+        return this;
+    }
+
+    @Override
     public QueryBuilderDelete build() {
         StringBuilder builder = new StringBuilder("DELETE FROM")
                 .append(" ").append(databaseName).append(".").append(tableName);
@@ -54,6 +64,8 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
             builder.append(" ORDER BY ").append(orderBy);
         if (limit != 0)
             builder.append(" LIMIT ").append(limit);
+        if (returning != null)
+            builder.append(" RETURNING ").append(returning);
         setSql(builder.append(";").toString());
         return this;
     }
@@ -76,6 +88,7 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
         copy.orderBy = orderBy;
         copy.tableName = tableName;
         copy.where = where;
+        copy.returning = returning;
         return copy;
     }
 
@@ -89,4 +102,34 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
         return super.sql;
     }
 
+    @Override
+    public QueryData execReturn() {
+        return getConnector().executeReturn(getSql());
+    }
+
+    @Override
+    public CompletableFuture<QueryData> execReturnAsync() {
+        return CompletableFuture.supplyAsync(this::execReturn);
+    }
+
+    @Override
+    public QueryBuilderDelete execConsume(Consumer<QueryData> digest) {
+        digest.accept(execReturn());
+        return this;
+    }
+
+    @Override
+    public CompletableFuture<QueryBuilderDelete> execConsumeAsync(Consumer<QueryData> digest) {
+        return CompletableFuture.supplyAsync(() -> execConsume(digest));
+    }
+
+    @Override
+    public QueryData execReturnAfter(UnaryOperator<QueryData> action) {
+        return action.apply(execReturn());
+    }
+
+    @Override
+    public CompletableFuture<QueryData> execReturnAfterAsync(UnaryOperator<QueryData> action) {
+        return CompletableFuture.supplyAsync(() -> execReturnAfter(action));
+    }
 }
