@@ -2,7 +2,6 @@ package it.hemerald.basementx.common.persistence.maria.queries.data;
 
 import it.hemerald.basementx.api.persistence.generic.queries.effective.ExecutiveQuery;
 import it.hemerald.basementx.api.persistence.generic.queries.effective.ReturningQuery;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderInsert;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderReplace;
 import it.hemerald.basementx.api.persistence.maria.queries.effective.MariaQuery;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;

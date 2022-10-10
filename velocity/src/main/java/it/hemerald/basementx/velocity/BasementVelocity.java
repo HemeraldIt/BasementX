@@ -12,8 +12,10 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.persistence.generic.connection.Connector;
 import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
+import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import it.hemerald.basementx.api.redis.messages.implementation.BukkitNotifyShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
@@ -82,6 +84,16 @@ public class BasementVelocity extends AbstractBasementPlugin {
         holder.setConnector(connector);
         database = holder.createDatabase("minecraft").ifNotExists(true).build().execReturn();
 
+        database.createTable("player_boosters").ifNotExists(true)
+                .addColumn("user_id", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
+                .addColumn("mode", MariaType.INT, 4, QueryBuilderCreateTable.ColumnData.NOT_NULL)
+                .addColumn("type", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
+                .addColumn("value", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
+                .addColumn("time", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
+                .withPrimaryKeys("user_id", "mode", "type")
+                .addForeignKey("user_id", "players", "id")
+                .build().exec();
+
        //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
        //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
        //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
@@ -126,6 +138,7 @@ public class BasementVelocity extends AbstractBasementPlugin {
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
         together.disable();
+        userDataManager.shutdown();
         disable();
         holder.close();
     }

@@ -27,9 +27,12 @@ public class UserData {
     @RIndex
     private final String username;
 
+    @RIndex
+    private int tableIndex = -1;
+
     private int networkLevel = 0;
     private int xp = 0;
-    private int networkCoin = 0;
+    private int networkCoins = 0;
     private int gems = 0;
     private boolean premium = false;
     private int protocolVersion;

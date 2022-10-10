@@ -34,12 +34,12 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public int getNetworkCoin(UUID uuid) {
-        return userDataManager.getUserData(uuid).getNetworkCoin();
+        return userDataManager.getUserData(uuid).getNetworkCoins();
     }
 
     @Override
     public int getNetworkCoin(String username) {
-        return userDataManager.getUserData(username).getNetworkCoin();
+        return userDataManager.getUserData(username).getNetworkCoins();
     }
 
     @Override
@@ -114,12 +114,12 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setNetworkCoin(UUID uuid, int coin) {
-        userDataManager.getUserData(uuid).setNetworkCoin(coin);
+        userDataManager.getUserData(uuid).setNetworkCoins(coin);
     }
 
     @Override
     public void setNetworkCoin(String username, int coin) {
-        userDataManager.getUserData(username).setNetworkCoin(coin);
+        userDataManager.getUserData(username).setNetworkCoins(coin);
     }
 
     @Override
@@ -179,13 +179,13 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public void addNetworkCoin(UUID uuid, int coin, boolean applyBoost) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkCoin(data.getNetworkCoin()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
+        data.setNetworkCoins(data.getNetworkCoins()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
     }
 
     @Override
     public void addNetworkCoin(String username, int coin, boolean applyBoost) {
         UserData data = userDataManager.getUserData(username);
-        data.setNetworkCoin(data.getNetworkCoin()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
+        data.setNetworkCoins(data.getNetworkCoins()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
     }
 
     @Override
@@ -227,13 +227,13 @@ public class UserDataServiceImpl implements UserDataService {
     @Override
     public void removeNetworkCoin(UUID uuid, int coin) {
         UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkCoin(Math.max(0, data.getNetworkCoin()-coin));
+        data.setNetworkCoins(Math.max(0, data.getNetworkCoins()-coin));
     }
 
     @Override
     public void removeNetworkCoin(String username, int coin) {
         UserData data = userDataManager.getUserData(username);
-        data.setNetworkCoin(Math.max(0, data.getNetworkCoin()-coin));
+        data.setNetworkCoins(Math.max(0, data.getNetworkCoins()-coin));
     }
 
     @Override
