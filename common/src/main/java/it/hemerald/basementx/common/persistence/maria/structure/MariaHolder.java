@@ -1,17 +1,11 @@
 package it.hemerald.basementx.common.persistence.maria.structure;
 
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderInsert;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.*;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.database.QueryBuilderCreateDatabase;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.database.QueryBuilderDropDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
-import it.hemerald.basementx.common.persistence.maria.queries.data.QueryDelete;
-import it.hemerald.basementx.common.persistence.maria.queries.data.QueryInsert;
-import it.hemerald.basementx.common.persistence.maria.queries.data.QuerySelect;
-import it.hemerald.basementx.common.persistence.maria.queries.data.QueryUpdate;
+import it.hemerald.basementx.common.persistence.maria.queries.data.*;
 import it.hemerald.basementx.common.persistence.maria.queries.database.QueryCreateDatabase;
 import it.hemerald.basementx.common.persistence.maria.queries.database.QueryDropDatabase;
 
@@ -83,6 +77,11 @@ public class MariaHolder extends AbstractMariaHolder {
     @Override
     public QueryBuilderUpdate update(String database) {
         return new QueryUpdate(this, database);
+    }
+
+    @Override
+    public QueryBuilderReplace replace(String database) {
+        return new QueryReplace(this, database);
     }
 
     @Override

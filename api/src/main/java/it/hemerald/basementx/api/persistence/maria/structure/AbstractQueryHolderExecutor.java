@@ -1,9 +1,6 @@
 package it.hemerald.basementx.api.persistence.maria.structure;
 
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderInsert;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
+import it.hemerald.basementx.api.persistence.maria.queries.builders.data.*;
 
 /**
  * represents the interface containing the
@@ -39,4 +36,11 @@ public interface AbstractQueryHolderExecutor {
      * @return query to build
      */
     QueryBuilderUpdate update(String database);
+
+    /**
+     * initializes a replace query on a table
+     * @param database referent database for the query
+     * @return query to build
+     */
+    QueryBuilderReplace replace(String database);
 }
