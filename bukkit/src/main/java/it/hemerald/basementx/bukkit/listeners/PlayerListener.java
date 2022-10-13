@@ -16,6 +16,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -56,11 +58,20 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
-        basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
-        basement.getStreamMode().sendPackets(basement.getPlugin(), event.getPlayer(), basementPlayer.getStreamName(),
-                basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                .map(BasementPlayer::getName).map(Bukkit::getPlayer).toArray(Player[]::new));
+        if(basement.getStreamMode().isEnabled()) {
+            if(basementPlayer.isInStreamMode()) {
+                List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+                players.remove(event.getPlayer());
+                basement.getStreamMode().sendPackets(basement, players, event.getPlayer());
+            }
+
+            basement.getStreamMode().sendPackets(basement.getPlugin(), event.getPlayer(), basementPlayer.getStreamName(),
+                    basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
+                            .map(BasementPlayer::getName).map(Bukkit::getPlayer).toArray(Player[]::new));
+        }
+
+        basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
         String targetName = tpToCache.asMap().get(event.getPlayer().getName());
         if(targetName == null) return;

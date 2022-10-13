@@ -115,6 +115,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         this.scoreboardAdapter = ScoreboardAdapter.builder(plugin, scoreboardUtils).build();
         this.itemDataManager = itemDataManager;
         this.streamMode = streamMode;
+        this.streamMode.toggle(getSettingsManager().getProperty(BasementBukkitConfig.STREAM_MODE));
 
         cooldownFactory = new BukkitCooldownFactory(plugin);
     }

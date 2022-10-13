@@ -1,5 +1,9 @@
 package it.hemerald.basementx.common.nms.v1_18_R2.stream;
 
+import com.mojang.authlib.GameProfile;
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.player.PlayerManager;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
@@ -10,12 +14,16 @@ import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class StreamMode implements it.hemerald.basementx.api.bukkit.player.stream.StreamMode {
+import java.util.List;
+
+public class StreamMode extends it.hemerald.basementx.api.bukkit.player.stream.StreamMode {
 
     @Override
-    public void sendPackets(JavaPlugin plugin, Player who, String streamName, Player... players) {
+    public void sendPackets(JavaPlugin plugin, Player who, String streamName, Player... streamers) {
         // Get the entity player from the base player
-        EntityPlayer entityPlayer = ((CraftPlayer) who).getHandle();
+        EntityPlayer oldEntity = ((CraftPlayer) who).getHandle();
+        EntityPlayer entityPlayer = new EntityPlayer(oldEntity.c, oldEntity.W().getWorld().getHandle(),
+                new GameProfile(who.getUniqueId(), streamName));
 
         // Create the PacketPlayOutRespawn packet
         PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(
@@ -32,18 +40,52 @@ public class StreamMode implements it.hemerald.basementx.api.bukkit.player.strea
         PacketPlayOutPlayerInfo removePlayerPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
         PacketPlayOutPlayerInfo addPlayerPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, entityPlayer);
 
-        for (Player player : players) {
+        for (Player player : streamers) {
             NetworkManager connection = ((CraftPlayer)player).getHandle().b.a;
             connection.a(entitiesPacket);
             connection.a(removePlayerPacket);
         }
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            for (Player player : players) {
+            for (Player player : streamers) {
                 NetworkManager connection = ((CraftPlayer)player).getHandle().b.a;
                 connection.a(respawn);
                 connection.a(addPlayerPacket);
             }
         }, 1L);
+    }
+
+    @Override
+    public void sendPackets(BasementBukkit basement, List<Player> players, Player streamer) {
+        PlayerManager<BasementPlayer> playerManager = basement.getPlayerManager();
+        for (Player who : players) {
+            EntityPlayer oldEntity = ((CraftPlayer) who).getHandle();
+            EntityPlayer entityPlayer = new EntityPlayer(oldEntity.c, oldEntity.W().getWorld().getHandle(),
+                    new GameProfile(who.getUniqueId(), playerManager.getBasementPlayer(who.getName()).getStreamName()));
+
+            // Create the PacketPlayOutRespawn packet
+            PacketPlayOutRespawn respawn = new PacketPlayOutRespawn(
+                    entityPlayer.W().Z(),
+                    entityPlayer.W().aa(),
+                    entityPlayer.W().n_().c(),
+                    entityPlayer.d.b(),
+                    entityPlayer.d.c(),
+                    false,
+                    entityPlayer.x().C(),
+                    true);
+
+            PacketPlayOutEntityDestroy entitiesPacket = new PacketPlayOutEntityDestroy(entityPlayer.ae());
+            PacketPlayOutPlayerInfo removePlayerPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.e, entityPlayer);
+            PacketPlayOutPlayerInfo addPlayerPacket = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.a, entityPlayer);
+
+            NetworkManager connection = ((CraftPlayer) streamer).getHandle().b.a;
+            connection.a(entitiesPacket);
+            connection.a(removePlayerPacket);
+
+            Bukkit.getScheduler().runTaskLaterAsynchronously(basement.getPlugin(), () -> {
+                connection.a(respawn);
+                connection.a(addPlayerPacket);
+            }, 1L);
+        }
     }
 }

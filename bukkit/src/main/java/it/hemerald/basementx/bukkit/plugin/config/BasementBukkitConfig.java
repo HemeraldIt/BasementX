@@ -12,6 +12,8 @@ public class BasementBukkitConfig extends BasementConfig {
 
     public static final Property<Boolean> HOSTABLE = newProperty("hostable", false);
 
+    public static final Property<Boolean> STREAM_MODE = newProperty("stream-mode.enabled", false);
+
     public static final Property<Boolean> STAFF_MODE = newProperty("modules.staff-mode.enabled", true);
     public static final Property<Boolean> NAME_TAG = newProperty("modules.name-tag.enabled", true);
     public static final Property<Boolean> TAGS = newProperty("modules.name-tag.tags", true);
