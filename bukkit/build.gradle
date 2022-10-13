@@ -18,10 +18,12 @@ repositories {
     }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
     maven { url 'https://repo.viaversion.com' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     compileOnly 'fr.minuskube.inv:smart-invs:1.2.7'
+    compileOnly 'com.github.MilkBowl:VaultApi:1.7'
 
     implementation project(':common')
     implementation project(':api-bukkit')

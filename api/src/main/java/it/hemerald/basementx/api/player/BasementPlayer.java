@@ -13,6 +13,8 @@ public interface BasementPlayer {
      */
     String getName();
 
+    UserData getUserData();
+
     /**
      * Gets the player stream name
      * @return player stream name

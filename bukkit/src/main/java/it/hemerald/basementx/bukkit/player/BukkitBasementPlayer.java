@@ -31,10 +31,6 @@ public class BukkitBasementPlayer implements BasementPlayer {
         this.streamName = "Player" + (streamId = numbers.remove(0));
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
     @Override
     public String getName() {
         return player.getName();
@@ -75,5 +71,14 @@ public class BukkitBasementPlayer implements BasementPlayer {
     public void remove() {
         numbers.add(streamId);
         numbers.sort(null);
+    }
+
+    @Override
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
