@@ -30,7 +30,7 @@ public class UserData {
     @RIndex
     private int tableIndex = -1;
 
-    private int networkLevel = 0;
+    private int networkLevel = 1;
     private int xp = 0;
     private int networkCoins = 0;
     private int gems = 0;
@@ -42,6 +42,18 @@ public class UserData {
     private long xpBoostTime = 0; // Instant.plus(now, duration) then specify the end time of boost
     private int coinsBoost = 1;
     private long coinsBoostTime = 0; // Instant.plus(now, duration) then specify the end time of boost
+
+    public void addXp(int amount) {
+        setXp(xp+amount);
+        tryLevelUp();
+    }
+
+    public void tryLevelUp() {
+        while (getXp()/(1200*getNetworkLevel()) > 0) {
+            setNetworkLevel(getNetworkLevel() + 1);
+            setXp(getXp()/(1200*getNetworkLevel()));
+        }
+    }
 
     public boolean getPremium() {
         return premium;

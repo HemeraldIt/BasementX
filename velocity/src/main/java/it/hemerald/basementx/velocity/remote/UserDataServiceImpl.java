@@ -104,12 +104,16 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setXP(UUID uuid, int xp) {
-        userDataManager.getUserData(uuid).setXp(xp);
+        UserData userData = userDataManager.getUserData(uuid);
+        userData.setXp(xp);
+        userData.tryLevelUp();
     }
 
     @Override
     public void setXP(String username, int xp) {
-        userDataManager.getUserData(username).setXp(xp);
+        UserData userData = userDataManager.getUserData(username);
+        userData.setXp(xp);
+        userData.tryLevelUp();
     }
 
     @Override
@@ -168,12 +172,14 @@ public class UserDataServiceImpl implements UserDataService {
     public void addXP(UUID uuid, int xp, boolean applyBoost) {
         UserData data = userDataManager.getUserData(uuid);
         data.setXp(data.getXp()+(applyBoost && data.hasXpBoost() ? xp * data.getXpBoost() : xp));
+        data.tryLevelUp();
     }
 
     @Override
     public void addXP(String username, int xp, boolean applyBoost) {
         UserData data = userDataManager.getUserData(username);
         data.setXp(data.getXp()+(applyBoost && data.hasXpBoost() ? xp * data.getXpBoost() : xp));
+        data.tryLevelUp();
     }
 
     @Override
