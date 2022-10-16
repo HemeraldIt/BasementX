@@ -62,6 +62,12 @@ public abstract class NameTagModule extends Module<NameTagAdapter> {
 
     public abstract void updateHealthTab(Player player, double health);
 
+    public abstract void removeHealth(Player player);
+
+    public abstract void removeHealth(Player player, boolean tab);
+
+    public abstract void removeHealthTab(Player player);
+
     public interface TeamUtils {
         void setColor(Team team, ChatColor color);
     }

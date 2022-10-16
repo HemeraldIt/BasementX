@@ -280,4 +280,26 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         healthBar.setDisplayName(ChatColor.RED + "\u2764");
         healthBar.getScore(player.getSafeFakeName()).setScore(Math.max(0, (int) Math.round(health)));
     }
+
+    @Override
+    public void removeHealth(Player player) {
+        removeHealth(player, true);
+    }
+
+    @Override
+    public void removeHealth(Player player, boolean tab) {
+        Objective healthBar = getScoreboard(player).getObjective("health");
+        if(healthBar != null) {
+            healthBar.unregister();
+        }
+        if(tab) removeHealthTab(player);
+    }
+
+    @Override
+    public void removeHealthTab(Player player) {
+        Objective healthBar = getScoreboard(player).getObjective("healthtab");
+        if(healthBar != null) {
+            healthBar.unregister();
+        }
+    }
 }
