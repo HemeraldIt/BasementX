@@ -3,8 +3,8 @@ author: TheDarkSword
 version: ${pluginVersion}
 main: it.hemerald.basementx.bukkit.BasementPluginMain
 api-version: 1.17
-depend: [LuckPerms, ViaVersion, Vault]
-softdepend: [Vulcan, PlaceholderAPI, SkinsRestorer]
+depend: [LuckPerms, ViaVersion]
+softdepend: [Vulcan, PlaceholderAPI, SkinsRestorer, Vault]
 commands:
   basementx:
     aliases: [basement]

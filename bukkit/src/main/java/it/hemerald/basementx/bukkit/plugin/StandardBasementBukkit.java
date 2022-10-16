@@ -1,22 +1,13 @@
 package it.hemerald.basementx.bukkit.plugin;
 
-import it.hemerald.basementx.api.bukkit.chat.Colorizer;
-import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
-import it.hemerald.basementx.bukkit.cooldown.BukkitCooldownFactory;
-import it.hemerald.basementx.bukkit.disguise.handler.DisguiseHandler;
-import it.hemerald.basementx.bukkit.disguise.module.DefaultDisguiseModule;
-import it.hemerald.basementx.bukkit.nametag.module.DefaultNameTagModule;
-import it.hemerald.basementx.bukkit.player.economy.GemsVaultProvider;
-import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
-import it.hemerald.basementx.bukkit.redis.message.handler.PartyWarpHandler;
-import it.hemerald.basementx.bukkit.redis.message.handler.ServerShutdownHandler;
-import it.hemerald.basementx.bukkit.redis.message.handler.VelocityNotifyHandler;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.chat.Colorizer;
 import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
 import it.hemerald.basementx.api.bukkit.item.ItemBuilder;
 import it.hemerald.basementx.api.bukkit.item.ItemDataManager;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.api.bukkit.permission.PermissionManager;
+import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
 import it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardProvider;
 import it.hemerald.basementx.api.bukkit.scoreboard.ScoreboardUtils;
 import it.hemerald.basementx.api.bukkit.scoreboard.adapter.ScoreboardAdapter;
@@ -26,13 +17,21 @@ import it.hemerald.basementx.api.redis.messages.implementation.PartyWarpMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import it.hemerald.basementx.api.server.BukkitServer;
+import it.hemerald.basementx.bukkit.cooldown.BukkitCooldownFactory;
+import it.hemerald.basementx.bukkit.disguise.handler.DisguiseHandler;
+import it.hemerald.basementx.bukkit.disguise.module.DefaultDisguiseModule;
+import it.hemerald.basementx.bukkit.nametag.module.DefaultNameTagModule;
 import it.hemerald.basementx.bukkit.permission.DefaultPermissionManager;
+import it.hemerald.basementx.bukkit.player.economy.GemsVaultProvider;
+import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
+import it.hemerald.basementx.bukkit.redis.message.handler.PartyWarpHandler;
+import it.hemerald.basementx.bukkit.redis.message.handler.ServerShutdownHandler;
+import it.hemerald.basementx.bukkit.redis.message.handler.VelocityNotifyHandler;
 import it.hemerald.basementx.bukkit.scoreboard.ScoreboardManager;
 import it.hemerald.basementx.bukkit.staffmode.module.DefaultStaffModeModule;
 import it.hemerald.basementx.common.plugin.StandardBasement;
 import lombok.Setter;
 import net.luckperms.api.LuckPerms;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -116,12 +115,14 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         getRedisManager().registerTopicListener(PartyWarpMessage.TOPIC, new PartyWarpHandler(this));
         getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(this));
 
-        Bukkit.getServicesManager().register(
-                Economy.class,
-                new GemsVaultProvider(getPlayerManager()),
-                getPlugin(),
-                ServicePriority.Normal
-                );
+        if(Bukkit.getPluginManager().getPlugin("Vault") != null) {
+            Bukkit.getServicesManager().register(
+                    net.milkbowl.vault.economy.Economy.class,
+                    new GemsVaultProvider(getPlayerManager()),
+                    getPlugin(),
+                    ServicePriority.Normal
+            );
+        }
 
         this.scoreboardAdapter = ScoreboardAdapter.builder(plugin, scoreboardUtils).build();
         this.itemDataManager = itemDataManager;
