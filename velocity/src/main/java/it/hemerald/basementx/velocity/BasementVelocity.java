@@ -91,7 +91,7 @@ public class BasementVelocity extends AbstractBasementPlugin {
                 .addColumn("value", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
                 .addColumn("time", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
                 .withPrimaryKeys("user_id", "mode", "type")
-                .addForeignKey("user_id", "players", "id")
+                .addForeignKey("user_id", "players", "id", "ON DELETE CASCADE ON UPDATE CASCADE")
                 .build().exec();
 
        //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)

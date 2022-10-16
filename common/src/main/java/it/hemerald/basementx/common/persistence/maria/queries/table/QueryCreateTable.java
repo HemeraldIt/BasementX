@@ -168,8 +168,11 @@ public class QueryCreateTable extends MariaQuery implements QueryBuilderCreateTa
                     .append("(").append(fkd.getName())
                     .append(") ").append("REFERENCES ")
                     .append(fkd.getOuterDb()).append(".").append(fkd.getOuterTable())
-                    .append("(").append(fkd.getOuterColumn()).append(")").append(" ")
-                    .append(fkd.getConstraint());
+                    .append("(").append(fkd.getOuterColumn()).append(")");
+            String constraint = fkd.getConstraint();
+            if (constraint != null) {
+                builder.append(" ").append(constraint);
+            }
         }
 
         builder.append(");");
