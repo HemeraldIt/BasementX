@@ -3,6 +3,7 @@ package it.hemerald.basementx.bukkit.listeners;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import lombok.RequiredArgsConstructor;
@@ -59,16 +60,17 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
 
-        if(basement.getStreamMode().isEnabled()) {
-            if(basementPlayer.isInStreamMode()) {
+        StreamMode streamMode = basement.getStreamMode();
+        if (streamMode.isEnabled()) {
+            if (basementPlayer.isInStreamMode()) {
                 List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-                players.remove(event.getPlayer());
-                basement.getStreamMode().sendPackets(basement, players, event.getPlayer());
+                streamMode.sendPackets(players, event.getPlayer());
             }
-
-            basement.getStreamMode().sendPackets(basement.getPlugin(), event.getPlayer(), basementPlayer.getStreamName(),
+            streamMode.sendPackets(
+                    event.getPlayer(),
                     basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                            .map(BasementPlayer::getName).map(Bukkit::getPlayer).toArray(Player[]::new));
+                            .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
+            );
         }
 
         basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);

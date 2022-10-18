@@ -23,6 +23,7 @@ import it.hemerald.basementx.bukkit.disguise.module.DefaultDisguiseModule;
 import it.hemerald.basementx.bukkit.nametag.module.DefaultNameTagModule;
 import it.hemerald.basementx.bukkit.permission.DefaultPermissionManager;
 import it.hemerald.basementx.bukkit.player.economy.GemsVaultProvider;
+import it.hemerald.basementx.bukkit.player.stream.BukkitStreamMode;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import it.hemerald.basementx.bukkit.redis.message.handler.PartyWarpHandler;
 import it.hemerald.basementx.bukkit.redis.message.handler.ServerShutdownHandler;
@@ -73,34 +74,30 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         ItemDataManager itemDataManager = null;
         ScoreboardUtils scoreboardUtils = null;
-        StreamMode streamMode = null;
+        StreamMode streamMode = new BukkitStreamMode(getPlayerManager());
 
         switch (version) {
             case "v1_8_R3" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemDataManager();
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_8_R3.scoreboard.ScoreboardUtils();
-                streamMode = new it.hemerald.basementx.common.nms.v1_8_R3.stream.StreamMode();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemBuilderNMS());
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.chat.ColorizerNMS());
             }
             case "v1_17_R1" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_17_R1.item.ItemDataManager(plugin);
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_17_R1.scoreboard.ScoreboardUtils();
-                streamMode = new it.hemerald.basementx.common.nms.v1_17_R1.stream.StreamMode();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_17_R1.item.ItemBuilderNMS());
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_17_R1.chat.ColorizerNMS());
             }
             case "v1_18_R2" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_18_R2.item.ItemDataManager(plugin);
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_18_R2.scoreboard.ScoreboardUtils();
-                streamMode = new it.hemerald.basementx.common.nms.v1_18_R2.stream.StreamMode();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_18_R2.item.ItemBuilderNMS());
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_18_R2.chat.ColorizerNMS());
             }
             case "v1_19_R1" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemDataManager(plugin);
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_19_R1.scoreboard.ScoreboardUtils();
-                streamMode = new it.hemerald.basementx.common.nms.v1_19_R1.stream.StreamMode();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemBuilderNMS());
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.chat.ColorizerNMS());
             }
