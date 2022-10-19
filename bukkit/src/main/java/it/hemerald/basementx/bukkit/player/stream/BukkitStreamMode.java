@@ -16,6 +16,7 @@ public class BukkitStreamMode extends StreamMode {
     @Override
     public void sendPackets(Player who, Player... streamers) {
         for (Player streamer : streamers) {
+            if (streamer == who) continue;
             streamer.customizePlayer(
                     playerManager.getBasementPlayer(who.getName()).getStreamName(),
                     STREAM,

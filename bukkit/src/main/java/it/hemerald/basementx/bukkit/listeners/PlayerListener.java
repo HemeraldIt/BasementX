@@ -59,6 +59,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
+        basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
         StreamMode streamMode = basement.getStreamMode();
         if (streamMode.isEnabled()) {
@@ -72,8 +73,6 @@ public class PlayerListener implements Listener {
                             .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
             );
         }
-
-        basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
         String targetName = tpToCache.asMap().get(event.getPlayer().getName());
         if(targetName == null) return;
