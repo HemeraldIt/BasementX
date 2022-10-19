@@ -30,6 +30,7 @@ import it.hemerald.basementx.bukkit.redis.message.handler.ServerShutdownHandler;
 import it.hemerald.basementx.bukkit.redis.message.handler.VelocityNotifyHandler;
 import it.hemerald.basementx.bukkit.scoreboard.ScoreboardManager;
 import it.hemerald.basementx.bukkit.staffmode.module.DefaultStaffModeModule;
+import it.hemerald.basementx.common.nms.v1_19_R1.inventory.InventoryFixer;
 import it.hemerald.basementx.common.plugin.StandardBasement;
 import lombok.Setter;
 import net.luckperms.api.LuckPerms;
@@ -100,6 +101,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_19_R1.scoreboard.ScoreboardUtils();
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemBuilderNMS());
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.chat.ColorizerNMS());
+                new InventoryFixer(plugin);
             }
         }
 
