@@ -84,18 +84,6 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
                 ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemBuilderNMS());
                 Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.chat.ColorizerNMS());
             }
-            case "v1_17_R1" -> {
-                itemDataManager = new it.hemerald.basementx.common.nms.v1_17_R1.item.ItemDataManager(plugin);
-                scoreboardUtils = new it.hemerald.basementx.common.nms.v1_17_R1.scoreboard.ScoreboardUtils();
-                ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_17_R1.item.ItemBuilderNMS());
-                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_17_R1.chat.ColorizerNMS());
-            }
-            case "v1_18_R2" -> {
-                itemDataManager = new it.hemerald.basementx.common.nms.v1_18_R2.item.ItemDataManager(plugin);
-                scoreboardUtils = new it.hemerald.basementx.common.nms.v1_18_R2.scoreboard.ScoreboardUtils();
-                ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_18_R2.item.ItemBuilderNMS());
-                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_18_R2.chat.ColorizerNMS());
-            }
             case "v1_19_R1" -> {
                 itemDataManager = new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemDataManager(plugin);
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_19_R1.scoreboard.ScoreboardUtils();
