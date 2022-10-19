@@ -17,7 +17,6 @@ repositories {
         }
     }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
-    maven { url 'https://repo.viaversion.com' }
     maven { url 'https://jitpack.io' }
 }
 
@@ -31,7 +30,6 @@ dependencies {
     compileOnly 'app.ashcon:sportpaper:1.8.8'
     compileOnly 'it.vulcan:vulcan-api:2.5.2'
     compileOnly 'me.clip:placeholderapi:2.11.1'
-    compileOnly 'com.viaversion:viaversion-api:4.2.1'
 
     implementation project('nms:1_19_R1')
     implementation project('nms:1_18_R2')

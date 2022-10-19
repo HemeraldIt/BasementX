@@ -77,4 +77,11 @@ public interface RemoteVelocityService {
      * @param player the player name
      */
     void cheatBan(String server, String player);
+
+    /**
+     * Gets the protocol version of player, with this you can resolve the minecraft version player is using
+     * @param uuid the uuid of player
+     * @return the protocol version of player
+     */
+    int playerVersion(UUID uuid);
 }

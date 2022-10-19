@@ -4,6 +4,7 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
+import com.viaversion.viaversion.api.Via;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.velocity.BasementVelocity;
 import it.hemerald.basementx.velocity.alert.AlertType;
@@ -167,5 +168,9 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
                 velocityPlayer.sendMessage(component);
             }
         }
+    }
+
+    public int playerVersion(UUID uuid) {
+        return Via.getAPI().getPlayerVersion(uuid);
     }
 }

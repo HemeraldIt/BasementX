@@ -1,6 +1,5 @@
 package it.hemerald.basementx.bukkit.player;
 
-import com.viaversion.viaversion.api.Via;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.locale.Locale;
 import it.hemerald.basementx.api.locale.LocaleManager;
@@ -23,12 +22,14 @@ public class BukkitBasementPlayer implements BasementPlayer {
     private final UserData userData;
     private final String streamName;
     private final Integer streamId;
+    private final MinecraftVersion version;
 
     public BukkitBasementPlayer(Player player, BasementBukkit basement) {
         this.player = player;
         this.localeManager = basement.getLocaleManager();
         this.userData = basement.getUserData(player.getUniqueId());
         this.streamName = "Player" + (streamId = numbers.remove(0));
+        this.version = MinecraftVersion.byProtocolVersion(basement.getRemoteVelocityService().playerVersion(player.getUniqueId()));
     }
 
     @Override
@@ -61,10 +62,9 @@ public class BukkitBasementPlayer implements BasementPlayer {
         return localeManager.getLocale(context, this);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public MinecraftVersion getVersion() {
-        return MinecraftVersion.byProtocolVersion(Via.getAPI().getPlayerVersion(player));
+        return version;
     }
 
     @Override
