@@ -20,7 +20,7 @@ public class BukkitStreamMode extends StreamMode {
             streamer.customizePlayer(
                     playerManager.getBasementPlayer(who.getName()).getStreamName(),
                     STREAM,
-                    streamer
+                    who
             );
         }
     }
