@@ -24,6 +24,8 @@ commands:
     aliases: [tags, nametag, nametags]
   cheatban:
     permission: cheat.ban
+  streammode:
+    aliases: [sm]
 
 permissions:
   hemerald.staff:

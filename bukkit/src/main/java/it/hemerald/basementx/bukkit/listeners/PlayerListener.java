@@ -64,7 +64,7 @@ public class PlayerListener implements Listener {
         if (streamMode.isEnabled()) {
             if (basementPlayer.isInStreamMode()) {
                 List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-                streamMode.sendPackets(players, event.getPlayer());
+                streamMode.sendPackets(players, event.getPlayer(), true);
             }
             streamMode.sendPackets(
                     event.getPlayer(),

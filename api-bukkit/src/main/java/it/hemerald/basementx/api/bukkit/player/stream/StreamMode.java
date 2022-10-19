@@ -42,6 +42,7 @@ public abstract class StreamMode {
      * each name and skin
      * @param players
      * @param streamer
+     * @param enable
      */
-    public abstract void sendPackets(List<Player> players, Player streamer);
+    public abstract void sendPackets(List<Player> players, Player streamer, boolean enable);
 }

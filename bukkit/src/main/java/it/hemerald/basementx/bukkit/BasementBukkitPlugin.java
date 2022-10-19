@@ -114,6 +114,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
         plugin.getCommand("tabreload").setExecutor(new ReloadTabCommand(basement));
         plugin.getCommand("vanish").setExecutor(new VanishCommand(basement));
         plugin.getCommand("tag").setExecutor(new TagCommand(basement));
+        plugin.getCommand("streammode").setExecutor(new StreamModeToggle(basement));
     }
 
     @Override

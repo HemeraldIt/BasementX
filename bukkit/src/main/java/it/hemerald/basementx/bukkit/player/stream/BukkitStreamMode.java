@@ -25,12 +25,13 @@ public class BukkitStreamMode extends StreamMode {
     }
 
     @Override
-    public void sendPackets(List<Player> players, Player streamer) {
+    public void sendPackets(List<Player> players, Player streamer, boolean enable) {
         for (Player who : players) {
             if (who.equals(streamer)) continue;
+            BasementPlayer basementPlayer = playerManager.getBasementPlayer(who.getName());
             streamer.customizePlayer(
-                    playerManager.getBasementPlayer(who.getName()).getStreamName(),
-                    STREAM,
+                    enable ? basementPlayer.getStreamName() : who.getSafeFakeName(),
+                    enable ? STREAM : who.getSafeFakeSkin(),
                     who
             );
         }
