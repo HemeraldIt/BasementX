@@ -61,18 +61,20 @@ public class PlayerListener implements Listener {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
         basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
-        StreamMode streamMode = basement.getStreamMode();
-        if (streamMode.isEnabled()) {
-            if (basementPlayer.isInStreamMode()) {
-                List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-                streamMode.sendPackets(players, event.getPlayer(), true);
+        Bukkit.getScheduler().runTaskLater(basement.getPlugin(), () -> {
+            StreamMode streamMode = basement.getStreamMode();
+            if (streamMode.isEnabled()) {
+                if (basementPlayer.isInStreamMode()) {
+                    List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+                    streamMode.sendPackets(players, event.getPlayer(), true);
+                }
+                streamMode.sendPackets(
+                        event.getPlayer(),
+                        basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
+                                .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
+                );
             }
-            streamMode.sendPackets(
-                    event.getPlayer(),
-                    basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                            .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
-            );
-        }
+        }, 2L);
 
         String targetName = tpToCache.asMap().get(event.getPlayer().getName());
         if(targetName == null) return;
