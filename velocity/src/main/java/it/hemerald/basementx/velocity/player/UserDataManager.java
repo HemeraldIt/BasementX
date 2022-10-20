@@ -73,15 +73,14 @@ public class UserDataManager {
         QueryData data = querySelectUserData.patternClone().where(WhereBuilder.builder().equals("uuid", uuid.toString()).close()).build().execReturn();
         userData = new UserData(uuid.toString(), player.getUsername());
         userData.setProtocolVersion(player.getProtocolVersion().getProtocol());
+        userData.setPremium(player.isOnlineMode());
 
         if (data.first()) {
-            userData = new UserData(uuid.toString(), player.getUsername());
             userData.setTableIndex(data.getInt("id"));
             userData.setXp(data.getInt("xp"));
             userData.setNetworkLevel(data.getInt("level"));
             userData.setNetworkCoins(data.getInt("coins"));
             userData.setGems(data.getInt("gems"));
-            userData.setPremium(data.getInt("premium") == 1);
             userData.setLanguage(data.getString("language"));
 
             // User Boosters Eviction
