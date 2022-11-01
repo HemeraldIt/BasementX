@@ -7,12 +7,14 @@ import it.hemerald.basementx.velocity.together.manager.PartyManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
-public class LeaveArgument extends CommandArgument {
+public class ListArgument extends CommandArgument {
 
-    public LeaveArgument(PartyManager partyService) {
-        super(partyService, "leave", 1);
+    public ListArgument(PartyManager partyService) {
+        super(partyService, "list", 1);
     }
 
     @Override
@@ -24,7 +26,12 @@ public class LeaveArgument extends CommandArgument {
             return;
         }
 
-        partyService.sendMessage(player, Component.text("Sei uscito dal party.").color(NamedTextColor.GRAY));
-        partyService.leave(player);
+        partyService.sendMessage(player, Component.text("§7Leader: §a" + targetParty.get().getLeader() + " §7(§e" + (targetParty.get().getMembers().size()) + "§7)"));
+
+        if (targetParty.get().getMembers().size() > 1) {
+            Set<String> members = new HashSet<>(targetParty.get().getMembers());
+            members.remove(targetParty.get().getLeader());
+            partyService.sendMessage(player, Component.text("§7Membri: §b" + String.join("§7, §b", members)));
+        }
     }
 }

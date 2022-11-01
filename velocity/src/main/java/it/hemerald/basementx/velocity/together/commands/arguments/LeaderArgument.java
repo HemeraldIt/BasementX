@@ -20,35 +20,35 @@ public class LeaderArgument extends CommandArgument {
         Optional<Party> optional = partyService.getParty(player);
 
         if (optional.isEmpty()) {
-            sendMessage(player, "Non sei in nessun party.");
+            partyService.sendMessage(player, "Devi essere in un party per eseguire questo comando!");
             return;
         }
 
         Party party = optional.get();
         if (!party.getLeader().equals(player.getUsername())) {
-            sendMessage(player, "Non hai i permessi sufficienti per nominare un nuovo leader.");
+            partyService.sendMessage(player, "Non hai i permessi sufficienti per nominare un nuovo leader.");
             return;
         }
 
         Optional<Player> newLeader = partyService.getTogether().getServer().getPlayer(args[1]);
         if (newLeader.isEmpty()) {
-            sendMessage(player, "Giocatore non trovato.");
+            partyService.sendMessage(player, "Giocatore non trovato.");
             return;
         }
 
         Optional<Party> targetParty = partyService.getParty(newLeader.get());
         if (targetParty.isEmpty()) {
-            sendMessage(player, "Quel giocatore non è in un party");
+            partyService.sendMessage(player, "Quel giocatore non è in un party");
             return;
         }
 
         if (party != targetParty.get()) {
-            sendMessage(player, "Quel giocatore non fa parte del tuo stesso party.");
+            partyService.sendMessage(player, "Quel giocatore non fa parte del tuo stesso party.");
             return;
         }
 
         if (newLeader.get() == player) {
-            sendMessage(player, "Sei già il leader del player.");
+            partyService.sendMessage(player, "Sei già il leader del player.");
             return;
         }
 
@@ -61,9 +61,9 @@ public class LeaderArgument extends CommandArgument {
         getPartyService().saveParty(party);
 
         partyService.broadcastMessage(party,
-                Component.text(player.getUsername()).color(NamedTextColor.AQUA)
+                Component.text("§b" + player.getUsername())
                         .append(Component.text(" ha nominato ")).color(NamedTextColor.GRAY)
-                        .append(Component.text(newLeader.get().getUsername()).color(NamedTextColor.AQUA))
+                        .append(Component.text(newLeader.get().getUsername()).color(NamedTextColor.GREEN))
                         .append(Component.text(" leader.")).color(NamedTextColor.GRAY));
     }
 }

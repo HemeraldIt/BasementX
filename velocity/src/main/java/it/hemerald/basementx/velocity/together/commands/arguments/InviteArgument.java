@@ -26,17 +26,17 @@ public class InviteArgument extends CommandArgument {
 
         Optional<Player> invitedPlayer = partyService.getTogether().getServer().getPlayer(args[1]);
         if (invitedPlayer.isEmpty()) {
-            sendMessage(player, "Giocatore non trovato.");
+            partyService.sendMessage(player, "Giocatore non trovato.");
             return;
         }
 
         if (invitedPlayer.get() == player) {
-            sendMessage(player, "Non puoi auto invitarti.");
+            partyService.sendMessage(player, "Non puoi auto invitarti.");
             return;
         }
 
         if (partyService.getParty(invitedPlayer.get()).isPresent()) {
-            sendMessage(player, "Questo giocatore è già in un party.");
+            partyService.sendMessage(player, "Questo giocatore è già in un party.");
             return;
         }
 
@@ -47,13 +47,13 @@ public class InviteArgument extends CommandArgument {
         } else {
             party = optional.get();
             if (!party.getLeader().equals(player.getUsername())) {
-                sendMessage(player, "Non sei il leader.");
+                partyService.sendMessage(player, "Non sei il leader.");
                 return;
             }
 
 
             if (party.isFull()) {
-                sendMessage(player, "Il party è pieno!");
+                partyService.sendMessage(player, "Il party è pieno!");
                 return;
             }
 
@@ -71,14 +71,14 @@ public class InviteArgument extends CommandArgument {
         }
 
         partyService.getTogether().getInvitationService().createInvitation(party, invitedName);
-        invitedPlayer.get().sendMessage(PREFIX.append(Component.text("Sei stato invitato da ").color(NamedTextColor.GRAY)
-                .append(Component.text(player.getUsername()).color(NamedTextColor.DARK_AQUA))
+        partyService.sendMessage(invitedPlayer.get(), Component.text("Sei stato invitato da ").color(NamedTextColor.GRAY)
+                .append(Component.text(player.getUsername()).color(NamedTextColor.AQUA))
                 .append(Component.text(" nel party ").color(NamedTextColor.GRAY))
-                .append(Component.text("(clicca o digita: /party join " + player.getUsername() + ")").clickEvent(ClickEvent.runCommand("/party join " + player.getUsername())))));
-        partyService.broadcastMessage(party, PREFIX.append(Component.text(player.getUsername()).color(NamedTextColor.AQUA)
+                .append(Component.text("(Clicca Qui)").clickEvent(ClickEvent.runCommand("/party join " + player.getUsername()))));
+        partyService.broadcastMessage(party, Component.text(player.getUsername()).color(NamedTextColor.AQUA)
                 .append(Component.text(" ha invitato ").color(NamedTextColor.GRAY))
-                .append(Component.text(invitedPlayer.get().getUsername()).color(NamedTextColor.DARK_AQUA))
-                .append(Component.text(" nel party.").color(NamedTextColor.GRAY))));
+                .append(Component.text(invitedPlayer.get().getUsername()).color(NamedTextColor.GREEN))
+                .append(Component.text(" nel party.").color(NamedTextColor.GRAY)));
     }
 
     @Override

@@ -18,7 +18,7 @@ public class ChatArgument extends CommandArgument {
         Optional<Party> targetParty = partyService.getParty(player);
 
         if (targetParty.isEmpty()) {
-            sendMessage(player, "Non sei in nessun party.");
+            partyService.sendMessage(player, "Devi essere in un party per eseguire questo comando!");
             return;
         }
 

@@ -20,20 +20,20 @@ public class WarpArgument extends CommandArgument {
         Optional<Party> optional = partyService.getParty(player);
 
         if (optional.isEmpty()) {
-            sendMessage(player, "Non sei in nessun party.");
+            partyService.sendMessage(player, "Devi essere in un party per eseguire questo comando!");
             return;
         }
 
         Party party = optional.get();
         if (!party.getLeader().equals(player.getUsername())) {
-            sendMessage(player, "Non hai i permessi sufficienti per nominare un nuovo leader.");
+            partyService.sendMessage(player, "Non hai i permessi sufficienti per nominare un nuovo leader.");
             return;
         }
 
         Optional<ServerConnection> serverConnectionOptional = player.getCurrentServer();
 
         if(serverConnectionOptional.isEmpty()) {
-            sendMessage(player, "Errore, non è stato possibile ottenere il server");
+            partyService.sendMessage(player, "Non sei connesso a nessuno server!");
             return;
         }
 

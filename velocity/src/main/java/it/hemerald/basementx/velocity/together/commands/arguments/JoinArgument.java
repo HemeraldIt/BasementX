@@ -19,43 +19,43 @@ public class JoinArgument extends CommandArgument {
     @Override
     public void execute(Player player, String[] args) {
         if (partyService.getParty(player).isPresent()) {
-            sendMessage(player, "Sei già in un party.");
+            partyService.sendMessage(player, "Sei già in un party.");
             return;
         }
 
         Optional<Player> toJoinPlayer = partyService.getTogether().getServer().getPlayer(args[1]);
 
         if (toJoinPlayer.isEmpty()) {
-            sendMessage(player, "Giocatore non trovato.");
+            partyService.sendMessage(player, "Giocatore non trovato.");
             return;
         }
 
         if (toJoinPlayer.get() == player) {
-            sendMessage(player, "Non puoi entrare nel tuo stesso party.");
+            partyService.sendMessage(player, "Non puoi entrare nel tuo stesso party.");
             return;
         }
 
         Optional<Party> party = partyService.getParty(toJoinPlayer.get());
         if (party.isEmpty()) {
-            sendMessage(player, "Questo giocatore è già in un party.");
+            partyService.sendMessage(player, "Questo giocatore è già in un party.");
             return;
         }
         Party toJoin = party.get();
         Optional<Invitation> optionalInvitation = partyService.getTogether().getInvitationService().getByInvited(player.getUsername(), toJoin);
 
         if (!toJoin.isOpen() && optionalInvitation.isEmpty()) {
-            sendMessage(player, "Non sei stato invitato in quel party.");
+            partyService.sendMessage(player, "Non sei stato invitato in quel party.");
             return;
         }
 
         if (toJoin.isFull()) {
-            sendMessage(player, "Il party è pieno.");
+            partyService.sendMessage(player, "Il party è pieno.");
             return;
         }
 
 
         if (optionalInvitation.isPresent() && !partyService.getTogether().getInvitationService().acceptInvitation(optionalInvitation.get())) {
-            sendMessage(player, "Si è verificato un errore nell'accesso al party, prova a farti reinvitare!");
+            partyService.sendMessage(player, "Si è verificato un errore nell'accesso al party, prova a farti reinvitare!");
             return;
         }
 
@@ -63,9 +63,9 @@ public class JoinArgument extends CommandArgument {
         if (name == null) return;
 
         partyService.broadcastMessage(toJoin, Component.text(player.getUsername()).color(NamedTextColor.AQUA)
-                .append(Component.text(" è entrato a far parte del party.").color(NamedTextColor.GRAY)));
+                .append(Component.text(" è entrato nel party.").color(NamedTextColor.GRAY)));
         toJoin.getMembers().add(name);
         partyService.saveParty(toJoin);
-        sendMessage(player, Component.text("Sei entrato nel party di ").append(Component.text(toJoin.getLeader()).color(NamedTextColor.AQUA)));
+        partyService.sendMessage(player, Component.text("Sei entrato nel party di ").append(Component.text(toJoin.getLeader()).color(NamedTextColor.AQUA)));
     }
 }

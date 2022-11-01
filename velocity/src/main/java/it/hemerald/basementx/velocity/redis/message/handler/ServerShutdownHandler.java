@@ -20,8 +20,9 @@ public class ServerShutdownHandler implements BasementMessageHandler<ServerShutd
         if(!message.getReceiver().endsWith("velocity")) return;
         log.info("Il server si sta spegnendo per il ServerShutdownMessage inviato da " + message.getSender());
         server.shutdown(Component.text()
-                .append(Component.text("AVVISO ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD))
-                .append(Component.text("Il server si sta spegnendo").color(NamedTextColor.RED)).build());
+                .append(Component.text("Riavvio del server").color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.BOLD))
+                .append(Component.newline())
+                .append(Component.text("Torneremo online tra pochi secondi!").color(NamedTextColor.LIGHT_PURPLE)).build());
     }
 
     @Override

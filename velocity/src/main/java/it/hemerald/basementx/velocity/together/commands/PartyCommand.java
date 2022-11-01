@@ -28,7 +28,7 @@ public class PartyCommand implements SimpleCommand {
         registerArgument(new InviteArgument(partyService));
         registerArgument(new LeaderArgument(partyService));
         registerArgument(new JoinArgument(partyService));
-        registerArgument(new InfoArgument(partyService));
+        registerArgument(new ListArgument(partyService));
         registerArgument(new ChatArgument(partyService));
         registerArgument(new LeaveArgument(partyService));
         registerArgument(new KickArgument(partyService));
@@ -51,8 +51,9 @@ public class PartyCommand implements SimpleCommand {
 
         CommandArgument argument = arguments.get(invocation.arguments()[0]);
 
-        if(argument == null) {
-            argument = arguments.get("invite");
+        if (argument == null) {
+            arguments.get("invite").execute(player, new String[] {"", invocation.arguments()[0]});
+            return;
         }
 
         if(argument.getLength() > invocation.arguments().length) {
@@ -72,7 +73,9 @@ public class PartyCommand implements SimpleCommand {
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
         Executor executor = (runnable) -> together.getServer().getScheduler().buildTask(together.getPlugin(), runnable).schedule();
         return CompletableFuture.supplyAsync(() -> {
-            if (invocation.arguments().length == 0) return new ArrayList<>();
+            if (invocation.arguments().length == 0) {
+                return new ArrayList<>(arguments.keySet());
+            }
             if (invocation.arguments().length > 1) {
                 return getArgument(invocation.arguments()[0])
                         .suggest(invocation.source(), Arrays.copyOfRange(invocation.arguments(), 1, invocation.arguments().length));

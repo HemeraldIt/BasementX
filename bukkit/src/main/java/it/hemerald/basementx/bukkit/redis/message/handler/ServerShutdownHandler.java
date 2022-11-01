@@ -17,7 +17,7 @@ public class ServerShutdownHandler implements BasementMessageHandler<ServerShutd
     public void execute(ServerShutdownMessage message) {
         if(!message.getReceiver().equals(basement.getServerID())) return;
         log.info("Il server si sta spegnendo per il ServerShutdownMessage inviato da " + message.getSender());
-        basement.getPlugin().getServer().broadcastMessage(ChatColor.RED + ChatColor.BOLD.toString() + "Avviso " + ChatColor.RED + "Il server si sta spegnendo");
+        basement.getPlugin().getServer().broadcastMessage(ChatColor.RED + "Riavvio Server.");
         basement.getPlugin().getServer().shutdown();
     }
 

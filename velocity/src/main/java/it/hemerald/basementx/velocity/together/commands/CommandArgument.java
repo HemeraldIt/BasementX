@@ -16,26 +16,9 @@ import java.util.List;
 @Getter
 public abstract class CommandArgument {
 
-    public static final Component PREFIX = Component.text()
-            .append(Component.text("PARTY!").color(NamedTextColor.DARK_AQUA).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
-            .append(Component.text(" ").color(NamedTextColor.WHITE).append(Component.text("").decoration(TextDecoration.BOLD, TextDecoration.State.FALSE))).build();
-
     protected final PartyManager partyService;
     private final String argument;
     private final int length;
-
-
-    public static void sendMessage(Player player, String message) {
-        player.sendMessage(PREFIX.append(Component.text(message)));
-    }
-
-    public static void sendMessage(Player player, Component message, boolean prefix) {
-        player.sendMessage(PREFIX.append(message));
-    }
-
-    public static void sendMessage(Player player, Component message) {
-        sendMessage(player, message, true);
-    }
 
     public abstract void execute(Player player, String[] args);
 

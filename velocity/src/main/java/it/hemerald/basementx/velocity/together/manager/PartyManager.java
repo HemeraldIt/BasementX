@@ -20,6 +20,8 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class PartyManager {
 
+    public static final Component PREFIX = Component.text("§d§lParty §8§l› ");
+
     @Getter private final Together together;
     private final RLocalCachedMap<String, Party> parties;
     private final Set<String> partyChats = Sets.newConcurrentHashSet();
@@ -73,7 +75,7 @@ public class PartyManager {
     }
 
     public void disband(Party party) {
-        broadcastMessage(party, Component.text("Il tuo party è stato disbandato").color(NamedTextColor.RED));
+        broadcastMessage(party, Component.text("Il tuo party è stato sciolto").color(NamedTextColor.RED));
         partyChats.remove(party.getLeader());
         party.getMembers().forEach(partyChats::remove);
         together.getInvitationService().disband(party);
@@ -83,20 +85,28 @@ public class PartyManager {
     public void toggleChat(Player player) {
         if(partyChats.contains(player.getUsername())) {
             partyChats.remove(player.getUsername());
-            player.sendMessage(CommandArgument.PREFIX.append(Component.text("Ora scriverai in chat pubblica").color(NamedTextColor.GREEN)));
+            sendMessage(player, Component.text("Ora scriverai in chat pubblica").color(NamedTextColor.GREEN));
             return;
         }
 
         partyChats.add(player.getUsername());
-        player.sendMessage(CommandArgument.PREFIX.append(Component.text("Ora scriverai nella chat del party").color(NamedTextColor.AQUA)));
+        sendMessage(player, Component.text("Ora scriverai nella chat del party").color(NamedTextColor.AQUA));
     }
 
     public boolean isChat(Player player) {
         return partyChats.contains(player.getUsername());
     }
 
+    public void sendMessage(Player player, String component) {
+        player.sendMessage(PREFIX.append(Component.text("§7" + component)));
+    }
+
+    public void sendMessage(Player player, Component component) {
+        player.sendMessage(PREFIX.append(component));
+    }
+
     public void broadcastMessage(Party party, Component component) {
-        party.getMembers().forEach(name -> consume(name, player -> player.sendMessage(component)));
+        party.getMembers().forEach(name -> consume(name, player -> sendMessage(player, component)));
     }
 
     private void consume(String name, Consumer<Player> consumer) {
