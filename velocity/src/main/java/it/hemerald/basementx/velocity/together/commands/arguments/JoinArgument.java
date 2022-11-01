@@ -66,6 +66,6 @@ public class JoinArgument extends CommandArgument {
                 .append(Component.text(" è entrato nel party.").color(NamedTextColor.GRAY)));
         toJoin.getMembers().add(name);
         partyService.saveParty(toJoin);
-        partyService.sendMessage(player, Component.text("Sei entrato nel party di ").append(Component.text(toJoin.getLeader()).color(NamedTextColor.AQUA)));
+        partyService.sendMessage(player, Component.text("§7Sei entrato nel party di ").append(Component.text(toJoin.getLeader()).color(NamedTextColor.AQUA)));
     }
 }
