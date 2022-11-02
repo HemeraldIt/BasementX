@@ -22,7 +22,7 @@ import it.hemerald.basementx.bukkit.disguise.handler.DisguiseHandler;
 import it.hemerald.basementx.bukkit.disguise.module.DefaultDisguiseModule;
 import it.hemerald.basementx.bukkit.nametag.module.DefaultNameTagModule;
 import it.hemerald.basementx.bukkit.permission.DefaultPermissionManager;
-import it.hemerald.basementx.bukkit.player.economy.GemsVaultProvider;
+import it.hemerald.basementx.bukkit.player.economy.CoinsVaultProvider;
 import it.hemerald.basementx.bukkit.player.stream.BukkitStreamMode;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import it.hemerald.basementx.bukkit.redis.message.handler.PartyWarpHandler;
@@ -105,7 +105,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         if(Bukkit.getPluginManager().getPlugin("Vault") != null) {
             Bukkit.getServicesManager().register(
                     net.milkbowl.vault.economy.Economy.class,
-                    new GemsVaultProvider(getPlayerManager()),
+                    new CoinsVaultProvider(getPlayerManager()),
                     getPlugin(),
                     ServicePriority.Normal
             );

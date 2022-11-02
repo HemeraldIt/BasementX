@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class GemsVaultProvider implements Economy {
+public class CoinsVaultProvider implements Economy {
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0");
 
@@ -29,7 +29,7 @@ public class GemsVaultProvider implements Economy {
 
     @Override
     public String getName() {
-        return "Gems";
+        return "Coins";
     }
 
     @Override
@@ -49,12 +49,12 @@ public class GemsVaultProvider implements Economy {
 
     @Override
     public String currencyNamePlural() {
-        return "Gems";
+        return "Coins";
     }
 
     @Override
     public String currencyNameSingular() {
-        return "Gem";
+        return "Coin";
     }
 
     @Override
@@ -79,7 +79,7 @@ public class GemsVaultProvider implements Economy {
 
     @Override
     public double getBalance(String playerName) {
-        return getUserData(playerName).getGems();
+        return getUserData(playerName).getNetworkCoins();
     }
 
     @Override
@@ -99,8 +99,8 @@ public class GemsVaultProvider implements Economy {
 
     @Override
     public boolean has(String playerName, double amount) {
-        double gems = getBalance(playerName);
-        return gems >= amount;
+        double coins = getBalance(playerName);
+        return coins >= amount;
     }
 
     @Override
@@ -123,11 +123,11 @@ public class GemsVaultProvider implements Economy {
         UserData userData = getUserData(playerName);
 
         if (has(playerName, amount)) {
-            userData.setGems((int) (userData.getGems()-amount));
-            return new EconomyResponse(amount, userData.getGems(), EconomyResponse.ResponseType.SUCCESS, "Sono state rimosse " + amount + " gemme dal tuo conto.");
+            userData.setNetworkCoins((int) (userData.getGems()-amount));
+            return new EconomyResponse(amount, userData.getNetworkCoins(), EconomyResponse.ResponseType.SUCCESS, "Sono stati rimossi " + amount + " coins dal tuo conto.");
         }
 
-        return new EconomyResponse(amount, userData.getGems(), EconomyResponse.ResponseType.FAILURE, "Non hai abbastanza gemme");
+        return new EconomyResponse(amount, userData.getGems(), EconomyResponse.ResponseType.FAILURE, "Non hai abbastanza coins");
     }
 
     @Override
@@ -148,8 +148,8 @@ public class GemsVaultProvider implements Economy {
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         UserData userData = getUserData(playerName);
-        userData.setGems((int) (userData.getGems() + amount));
-        return new EconomyResponse(amount, userData.getGems(), EconomyResponse.ResponseType.SUCCESS, "Sono state aggiunte " + amount + " gemme al tuo conto.");
+        userData.setNetworkCoins((int) (userData.getNetworkCoins() + amount));
+        return new EconomyResponse(amount, userData.getNetworkCoins(), EconomyResponse.ResponseType.SUCCESS, "Sono stati aggiunti " + amount + " coins al tuo conto.");
     }
 
     @Override
