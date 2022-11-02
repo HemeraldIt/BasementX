@@ -1,6 +1,7 @@
 package it.hemerald.basementx.bukkit.player;
 
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
+import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
 import it.hemerald.basementx.api.locale.Locale;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.player.BasementPlayer;
@@ -19,6 +20,7 @@ public class BukkitBasementPlayer implements BasementPlayer {
 
     private final Player player;
     private final LocaleManager localeManager;
+    private final DisguiseModule disguiseModule;
     private final UserData userData;
     private final String streamName;
     private final Integer streamId;
@@ -27,6 +29,7 @@ public class BukkitBasementPlayer implements BasementPlayer {
     public BukkitBasementPlayer(Player player, BasementBukkit basement) {
         this.player = player;
         this.localeManager = basement.getLocaleManager();
+        this.disguiseModule = basement.getDisguiseModule();
         this.userData = basement.getUserData(player.getUniqueId());
         this.streamName = "Player" + (streamId = numbers.remove(0));
         this.version = MinecraftVersion.byProtocolVersion(basement.getRemoteVelocityService().playerVersion(player.getUniqueId()));
@@ -50,6 +53,12 @@ public class BukkitBasementPlayer implements BasementPlayer {
     @Override
     public boolean isInStreamMode() {
         return userData.getStreamMode();
+    }
+
+    @Override
+    public void disguise(boolean enabled) {
+        if(enabled) disguiseModule.disguise(player);
+        else disguiseModule.undisguise(player);
     }
 
     @Override

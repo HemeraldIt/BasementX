@@ -3,6 +3,8 @@ package it.hemerald.basementx.common.player;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
+import it.hemerald.basementx.api.player.disguise.DisguiseAction;
+import it.hemerald.basementx.api.redis.messages.implementation.DisguiseMessage;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.api.server.BukkitServer;
 import lombok.extern.slf4j.Slf4j;
@@ -51,11 +53,25 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void disguise(String name) {
         disguiseSet.add(name);
+
+        E player = playerMap.get(name);
+        if(player != null) {
+            player.disguise(true);
+        } else {
+            basement.getRedisManager().publishMessage(new DisguiseMessage(name, DisguiseAction.DISGUISE));
+        }
     }
 
     @Override
     public void undisguise(String name) {
         disguiseSet.remove(name);
+
+        E player = playerMap.get(name);
+        if(player != null) {
+            player.disguise(false);
+        } else {
+            basement.getRedisManager().publishMessage(new DisguiseMessage(name, DisguiseAction.UNDISGUISE));
+        }
     }
 
     @Override

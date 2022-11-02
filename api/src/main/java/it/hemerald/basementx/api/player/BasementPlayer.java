@@ -34,6 +34,12 @@ public interface BasementPlayer {
     boolean isInStreamMode();
 
     /**
+     * Turn on or off the disguise mode
+     * @param enabled true if enable disguise mode, false otherwise
+     */
+    void disguise(boolean enabled);
+
+    /**
      * Gets the player language
      * @return player language
      */
