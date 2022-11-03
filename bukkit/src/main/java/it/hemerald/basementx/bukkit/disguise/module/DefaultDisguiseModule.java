@@ -9,6 +9,8 @@ import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDataba
 import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import it.hemerald.basementx.bukkit.disguise.adapter.DefaultDisguiseAdapter;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
+import it.mineblock.cobusco.player.CobuscoSkin;
+import org.bukkit.Skin;
 import org.bukkit.entity.Player;
 
 public class DefaultDisguiseModule extends DisguiseModule {
@@ -53,7 +55,7 @@ public class DefaultDisguiseModule extends DisguiseModule {
         String name = getRandomUsername();
         this.names.remove(name);
 
-        player.setFakeName(name);
+        player.setFakeNameAndSkin(name, Skin.EMPTY);
 
         getBasement().getNameTagModule().update(player);
     }

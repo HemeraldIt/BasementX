@@ -59,9 +59,4 @@ public class DefaultNameTagAdapter extends NameTagAdapter {
     public int getPriority(Player player) {
         return module.getBasement().getDisguiseModule().isDisguised(player) ? 1000 : super.getPriority(player);
     }
-
-    @Override
-    public String getPlayerName(Player player) {
-        return player.getSafeFakeName();
-    }
 }

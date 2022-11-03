@@ -44,7 +44,7 @@ public abstract class NameTagAdapter extends Adapter<NameTagModule> {
     }
 
     public String getPlayerName(Player player) {
-        return player.getName();
+        return player.getSafeFakeName();
     }
 
     public void onCreateTeam(Player player, Team team) {
