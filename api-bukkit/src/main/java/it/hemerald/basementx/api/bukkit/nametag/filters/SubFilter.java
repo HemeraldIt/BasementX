@@ -15,6 +15,11 @@ public abstract class SubFilter extends PermissionFilter {
     }
 
     @Override
+    public boolean test(Player player) {
+        return player.getFakeName() == null && super.test(player);
+    }
+
+    @Override
     protected void fill() {
         this.permissions.add("sub.hemerald");
 
