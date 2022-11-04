@@ -71,10 +71,8 @@ public class InviteArgument extends CommandArgument {
         }
 
         partyService.getTogether().getInvitationService().createInvitation(party, invitedName);
-        partyService.sendMessage(invitedPlayer.get(), Component.text("Sei stato invitato da ").color(NamedTextColor.GRAY)
-                .append(Component.text(player.getUsername()).color(NamedTextColor.AQUA))
-                .append(Component.text(" nel party ").color(NamedTextColor.GRAY))
-                .append(Component.text("(Clicca Qui)").clickEvent(ClickEvent.runCommand("/party join " + player.getUsername()))));
+        partyService.sendMessage(invitedPlayer.get(), Component.text("§b" + player.getUsername() + " §7ti ha invitato nel party §a(Clicca Qui)")
+                        .clickEvent(ClickEvent.runCommand("/party join " + player.getUsername())));
         partyService.broadcastMessage(party, Component.text(player.getUsername()).color(NamedTextColor.AQUA)
                 .append(Component.text(" ha invitato ").color(NamedTextColor.GRAY))
                 .append(Component.text(invitedPlayer.get().getUsername()).color(NamedTextColor.GREEN))
