@@ -203,19 +203,19 @@ public class UserDataManager {
     }
 
     private void saveUserToDatabase(UserData data) {
-        queryUpdateUserData.patternClone()
+        queryUpdateUserData.patternClone().clearSet()
                 .setNQ("xp", data.getXp()).setNQ("level", data.getNetworkLevel()).setNQ("coins", data.getNetworkCoins())
                 .setNQ("gems", data.getGems()).set("language", data.getLanguage())
                 .where(WhereBuilder.builder().equals("uuid", data.getUuid()).close())
                 .build().exec();
         QueryBuilderSelect selectId = querySelectUserData.patternClone().columns("id").where(WhereBuilder.builder().equals("uuid", data.getUuid()).close());
         if (data.hasXpBoost()) {
-            queryInsertUserBoosters.patternClone()
+            queryInsertUserBoosters.patternClone().clearValues()
                     .values(data.getTableIndex() == -1 ? selectId : data.getTableIndex(),
                             0, NetworkBoosters.XP.ordinal(), data.getXpBoost(), data.getXpBoostTime());
         }
         if (data.hasCoinsBoost()) {
-            queryInsertUserBoosters.patternClone()
+            queryInsertUserBoosters.patternClone().clearValues()
                     .values(data.getTableIndex() == -1 ? selectId : data.getTableIndex(),
                             0, NetworkBoosters.COINS.ordinal(), data.getCoinsBoost(), data.getCoinsBoostTime());
         }

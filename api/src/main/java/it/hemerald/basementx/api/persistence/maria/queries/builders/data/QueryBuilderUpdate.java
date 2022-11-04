@@ -83,4 +83,6 @@ public interface QueryBuilderUpdate extends ExecutiveQuery<QueryBuilderUpdate> {
      * @return self Query Builder
      */
     QueryBuilderUpdate limit(int n);
+
+    QueryBuilderUpdate clearSet();
 }

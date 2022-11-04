@@ -152,4 +152,9 @@ public class QueryUpdate extends MariaQuery implements QueryBuilderUpdate {
         return super.sql;
     }
 
+    @Override
+    public QueryBuilderUpdate clearSet() {
+        set.clear();
+        return this;
+    }
 }

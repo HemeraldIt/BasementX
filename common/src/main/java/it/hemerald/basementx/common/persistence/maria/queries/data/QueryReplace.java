@@ -146,4 +146,9 @@ public class QueryReplace extends MariaQuery implements QueryBuilderReplace {
         return "(" + query + ")";
     }
 
+    @Override
+    public QueryBuilderReplace clearValues() {
+        values.clear();
+        return this;
+    }
 }

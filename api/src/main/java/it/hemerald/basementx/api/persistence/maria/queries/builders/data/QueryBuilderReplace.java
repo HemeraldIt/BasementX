@@ -12,4 +12,6 @@ public interface QueryBuilderReplace extends ExecutiveQuery<QueryBuilderReplace>
 
     QueryBuilderReplace valuesNQ(Object... values);
 
+    QueryBuilderReplace clearValues();
+
 }
