@@ -1,13 +1,16 @@
 package it.hemerald.basementx.api.bukkit.nametag.filters;
 
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import org.bukkit.entity.Player;
 
 
 public abstract class NameTagFilter {
 
+    protected final BasementBukkit basement;
     protected final String prefix;
 
-    protected NameTagFilter(String prefix) {
+    protected NameTagFilter(BasementBukkit basement, String prefix) {
+        this.basement = basement;
         this.prefix = prefix;
     }
 

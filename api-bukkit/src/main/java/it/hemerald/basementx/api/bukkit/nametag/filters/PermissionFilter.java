@@ -1,5 +1,6 @@
 package it.hemerald.basementx.api.bukkit.nametag.filters;
 
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -10,8 +11,8 @@ public abstract class PermissionFilter extends NameTagFilter {
 
     protected final List<String> permissions = new ArrayList<>();
 
-    protected PermissionFilter(String prefix) {
-        super(prefix);
+    protected PermissionFilter(BasementBukkit basement, String prefix) {
+        super(basement, prefix);
 
         fill();
     }

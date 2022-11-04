@@ -1,5 +1,6 @@
 package it.hemerald.basementx.api.bukkit.nametag.filters;
 
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -10,8 +11,8 @@ public abstract class SubFilter extends PermissionFilter {
 
     private List<String> streamerPermissions;
 
-    public SubFilter() {
-        super(ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + "SUB " + ChatColor.RESET);
+    public SubFilter(BasementBukkit basement) {
+        super(basement, ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + "SUB " + ChatColor.RESET);
     }
 
     @Override

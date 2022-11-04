@@ -1,5 +1,6 @@
 package it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters;
 
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.nametag.filters.SubFilter;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.protocol.game.PacketPlayOutPlayerInfo;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class NMSSubFilter extends SubFilter {
 
-    public NMSSubFilter() {
-        super();
+    public NMSSubFilter(BasementBukkit basement) {
+        super(basement);
     }
 
     @Override
@@ -25,7 +26,8 @@ public class NMSSubFilter extends SubFilter {
         for (String permission : permissions) {
             for (Player sub : getPlayers(permission)) {
                 CraftPlayer craftSub = (CraftPlayer) sub;
-                craftPlayer.getHandle().b.a(makePacket(craftSub));
+                if(!basement.getDisguiseModule().isDisguised(sub))
+                    craftPlayer.getHandle().b.a(makePacket(craftSub));
                 if(!ignoreMe) craftSub.getHandle().b.a(packet);
             }
         }
