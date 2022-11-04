@@ -1,0 +1,44 @@
+package it.hemerald.basementx.api.bukkit.nametag.filters;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public abstract class PermissionFilter extends NameTagFilter {
+
+    protected final List<String> permissions = new ArrayList<>();
+
+    protected PermissionFilter(String prefix) {
+        super(prefix);
+
+        fill();
+    }
+
+    protected abstract void fill();
+
+    @Override
+    public boolean test(Player player) {
+        for (String permission : permissions) {
+            if(player.hasPermission(permission)) return true;
+        }
+
+        return false;
+    }
+
+    public List<String> getPermissionOfPlayer(Player player) {
+        List<String> list = new ArrayList<>();
+        for (String permission : permissions) {
+            if(player.hasPermission(permission)) {
+                list.add(permission);
+            }
+        }
+
+        return list;
+    }
+
+    public Set<Player> getPlayers(String permission) {
+        return Bukkit.getOnlinePlayers().parallelStream().filter(player -> player.hasPermission(permission)).collect(Collectors.toSet());
+    }
+}

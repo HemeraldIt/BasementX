@@ -8,5 +8,5 @@ project.tasks.publishAllPublicationsToBytesafeRepository.enabled = false
 dependencies {
     api(project(':api-bukkit'))
 
-    api 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    api 'app.ashcon:sportpaper:1.8.8'
 }

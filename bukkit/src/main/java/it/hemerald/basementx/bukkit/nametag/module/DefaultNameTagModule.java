@@ -2,6 +2,7 @@ package it.hemerald.basementx.bukkit.nametag.module;
 
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
+import it.hemerald.basementx.api.bukkit.nametag.filters.NameTagFilter;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
 import it.hemerald.basementx.bukkit.nametag.tags.TagGUI;
@@ -20,10 +21,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.redisson.api.RMapCache;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,14 +35,22 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
     private final TeamUtils teamUtils;
 
+    private final List<NameTagFilter> filters = new ArrayList<>();
+
     public DefaultNameTagModule(BasementBukkit basement) {
         super(basement, BasementBukkitConfig.NAME_TAG, BasementBukkitConfig.TAGS);
 
         String version = basement.getPlugin().getServer().getClass().getPackage().getName().split("\\.")[3];
 
-        teamUtils = switch (version) {
-            case "v1_8_R3" -> new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils();
-            case "v1_19_R1" -> new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils();
+        switch (version) {
+            case "v1_8_R3" -> {
+                teamUtils = new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils();
+                filters.add(new it.hemerald.basementx.common.nms.v1_8_R3.nametag.filters.NMSSubFilter());
+            }
+            case "v1_19_R1" -> {
+                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils();
+                filters.add(new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter());
+            }
             default -> throw new IllegalStateException("Unsupported version: " + version);
         };
     }
@@ -187,6 +193,12 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
     @Override
     public void updateTab(Player player) {
         adapter.getTab(player).thenAccept(player::setPlayerListName);
+
+        applyFilters(player);
+    }
+
+    private void applyFilters(Player player) {
+        filters.parallelStream().forEach(filter -> filter.testThenApply(player));
     }
 
     @Override
@@ -230,6 +242,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         adapter.onPreJoin(event);
         update(event.getPlayer());
         adapter.onPostJoin(event);
+        basement.getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(basement.getPlugin(), () -> applyFilters(event.getPlayer()), 20);
     }
 
     @EventHandler
