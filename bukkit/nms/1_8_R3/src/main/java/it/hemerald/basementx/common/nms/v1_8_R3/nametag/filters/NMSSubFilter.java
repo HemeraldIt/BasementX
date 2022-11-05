@@ -32,12 +32,30 @@ public class NMSSubFilter extends SubFilter {
         }
     }
 
+    @Override
+    public void clear(Player player, String permission) {
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+
+        for (Player sub : getPlayers(permission)) {
+            craftPlayer.getHandle().playerConnection.sendPacket(makePacketClear((CraftPlayer) sub));
+        }
+    }
+
     private PacketPlayOutPlayerInfo makePacket(CraftPlayer player) {
         EntityPlayer entityPlayer = player.getHandle();
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME);
 
         packet.b.add(packet.constructData(entityPlayer.getProfile(), entityPlayer.ping, entityPlayer.playerInteractManager.getGameMode(),
                 CraftChatMessage.fromString(prefix + player.getPlayerListName())[0]));
+        return packet;
+    }
+
+    private PacketPlayOutPlayerInfo makePacketClear(CraftPlayer player) {
+        EntityPlayer entityPlayer = player.getHandle();
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME);
+
+        packet.b.add(packet.constructData(entityPlayer.getProfile(), entityPlayer.ping, entityPlayer.playerInteractManager.getGameMode(),
+                CraftChatMessage.fromString(player.getPlayerListName())[0]));
         return packet;
     }
 }

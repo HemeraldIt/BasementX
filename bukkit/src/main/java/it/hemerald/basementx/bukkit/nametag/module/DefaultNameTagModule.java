@@ -3,10 +3,14 @@ package it.hemerald.basementx.bukkit.nametag.module;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
 import it.hemerald.basementx.api.bukkit.nametag.filters.NameTagFilter;
+import it.hemerald.basementx.api.bukkit.nametag.filters.SubFilter;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
 import it.hemerald.basementx.bukkit.nametag.tags.TagGUI;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
+import net.luckperms.api.event.node.NodeRemoveEvent;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -53,6 +57,18 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
             }
             default -> throw new IllegalStateException("Unsupported version: " + version);
         };
+
+        basement.getLuckPerms().getEventBus().subscribe(basement.getPlugin(), NodeRemoveEvent.class, (event) -> {
+            if(!(event.getNode() instanceof PermissionNode node) || !event.isUser()) return;
+            Player player = Bukkit.getPlayer(((User)event.getTarget()).getUniqueId());
+            if(player == null) return;
+            for (NameTagFilter filter : filters) {
+                if(!(filter instanceof SubFilter subFilter)) continue;
+                if(subFilter.test(node.getPermission())) {
+                    subFilter.clear(player, node.getPermission());
+                }
+            }
+        });
     }
 
     @Override

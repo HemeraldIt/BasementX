@@ -20,6 +20,12 @@ public abstract class SubFilter extends PermissionFilter {
         return player.getFakeName() == null && super.test(player);
     }
 
+    public boolean test(String permission) {
+        return permissions.contains(permission);
+    }
+
+    public abstract void clear(Player player, String permission);
+
     @Override
     protected void fill() {
         this.permissions.add("sub.hemerald");

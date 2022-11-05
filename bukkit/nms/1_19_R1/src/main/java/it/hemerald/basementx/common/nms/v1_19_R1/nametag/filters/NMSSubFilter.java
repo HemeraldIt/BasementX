@@ -33,6 +33,15 @@ public class NMSSubFilter extends SubFilter {
         }
     }
 
+    @Override
+    public void clear(Player player, String permission) {
+        CraftPlayer craftPlayer = (CraftPlayer) player;
+
+        for (Player sub : getPlayers(permission)) {
+            craftPlayer.getHandle().b.a(makePacketClear((CraftPlayer) sub));
+        }
+    }
+
     private PacketPlayOutPlayerInfo makePacket(CraftPlayer player) {
         EntityPlayer entityPlayer = player.getHandle();
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.d);
@@ -40,6 +49,16 @@ public class NMSSubFilter extends SubFilter {
         ProfilePublicKey.a data = profilePublicKey != null ? profilePublicKey.b() : null;
         packet.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(entityPlayer.fy(), entityPlayer.e, entityPlayer.d.b(),
                 IChatBaseComponent.a(prefix + player.getPlayerListName()), data));
+        return packet;
+    }
+
+    private PacketPlayOutPlayerInfo makePacketClear(CraftPlayer player) {
+        EntityPlayer entityPlayer = player.getHandle();
+        PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.d);
+        ProfilePublicKey profilePublicKey = entityPlayer.fz();
+        ProfilePublicKey.a data = profilePublicKey != null ? profilePublicKey.b() : null;
+        packet.b().add(new PacketPlayOutPlayerInfo.PlayerInfoData(entityPlayer.fy(), entityPlayer.e, entityPlayer.d.b(),
+                IChatBaseComponent.a(player.getPlayerListName()), data));
         return packet;
     }
 }
