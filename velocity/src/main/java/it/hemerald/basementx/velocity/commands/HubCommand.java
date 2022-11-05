@@ -2,6 +2,7 @@ package it.hemerald.basementx.velocity.commands;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import it.hemerald.basementx.api.server.BukkitServer;
 import it.hemerald.basementx.velocity.BasementVelocity;
@@ -20,18 +21,29 @@ public class HubCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         if(!(invocation.source() instanceof Player player)) return;
-        Optional<BukkitServer> optionalBukkitServer = velocity.getBasement().getPlayerManager().bestServer("hub");
+        Optional<ServerConnection> optionalServerConnection = player.getCurrentServer();
+        if(optionalServerConnection.isEmpty()) {
+            player.sendMessage(Component.text()
+                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("C'è stato un problema con il proxy!").color(NamedTextColor.RED)));
+            return;
+        }
+        Optional<BukkitServer> optionalBukkitServer = velocity.getBasement().getPlayerManager()
+                .bestServer(optionalServerConnection.get().getServerInfo().getName().split("_")[0]);
+        if(optionalBukkitServer.isEmpty()) {
+            optionalBukkitServer = velocity.getBasement().getPlayerManager().bestServer("hub");
+        }
         if(optionalBukkitServer.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
-                    .append(Component.text("La hub non è online!").color(NamedTextColor.RED)));
+                    .append(Component.text("La lobby non è online!").color(NamedTextColor.RED)));
             return;
         }
         Optional<RegisteredServer> optionalRegisteredServer = velocity.getServer().getServer(optionalBukkitServer.get().getName());
         if(optionalRegisteredServer.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
-                    .append(Component.text("La hub non è online!").color(NamedTextColor.RED)));
+                    .append(Component.text("La lobby non è online!").color(NamedTextColor.RED)));
             return;
         }
         player.createConnectionRequest(optionalRegisteredServer.get()).fireAndForget();
