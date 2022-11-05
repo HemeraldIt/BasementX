@@ -35,19 +35,20 @@ public class StreamModeToggle implements CommandExecutor {
 
         StreamMode streamMode = basement.getStreamMode();
         BasementPlayer basementPlayer = basement.getPlayerManager().getBasementPlayer(player.getName());
-        if(!streamMode.isEnabled()) {
-            basementPlayer.getLocale("basement")
-                    .ifPresentOrElse(locale -> player.sendMessage(locale.getText("command-not-available")),
-                            () -> player.sendMessage(BasementMessages.COMMAND_NOT_AVAILABLE));
-            return true;
-        }
 
         boolean inStreamMode = !basementPlayer.isInStreamMode();
         basementPlayer.streamMode(inStreamMode);
-        if(inStreamMode) basement.getPlayerManager().disguise(player.getName());
-        else basement.getPlayerManager().undisguise(player.getName());
-        streamMode.sendPackets(new ArrayList<>(Bukkit.getOnlinePlayers()), player, inStreamMode);
-        player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") + "la streammode");
+
+        if(streamMode.isEnabled()) {
+            if(inStreamMode) basement.getPlayerManager().disguise(player.getName());
+            else basement.getPlayerManager().undisguise(player.getName());
+            streamMode.sendPackets(new ArrayList<>(Bukkit.getOnlinePlayers()), player, inStreamMode);
+            player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") + "la streammode");
+        } else {
+            player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") +
+                    "la streammode, ma in questo server è disabilitata, quindi nessun cambiamento visivo verrà applicato su questo server");
+        }
+
         return false;
     }
 }
