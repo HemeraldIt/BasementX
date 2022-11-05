@@ -132,11 +132,12 @@ public class BasementVelocity extends AbstractBasementPlugin {
         server.getEventManager().register(this, new PlayerListener(this));
         server.getEventManager().register(this, new DisguiseListener(getBasement()));
 
-        basement.getRedisManager().publishMessage(new VelocityNotifyMessage());
+        basement.getRedisManager().publishMessage(new VelocityNotifyMessage(false));
     }
 
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent event) {
+        basement.getRedisManager().publishMessage(new VelocityNotifyMessage(true));
         together.disable();
         userDataManager.shutdown();
         disable();
