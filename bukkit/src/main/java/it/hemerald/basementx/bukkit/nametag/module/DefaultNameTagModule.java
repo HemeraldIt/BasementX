@@ -56,7 +56,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
                 filters.add(new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement));
             }
             default -> throw new IllegalStateException("Unsupported version: " + version);
-        };
+        }
 
         basement.getLuckPerms().getEventBus().subscribe(basement.getPlugin(), NodeRemoveEvent.class, (event) -> {
             if(!(event.getNode() instanceof PermissionNode node) || !event.isUser()) return;
@@ -152,7 +152,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         }
 
         updateTeam(player, team);
-        team.addEntry(player.getName());
+        team.addEntry(player.getSafeFakeName());
         teams.put(player.getName(), team);
     }
 
@@ -230,7 +230,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
             priorityPrefix = String.valueOf(letter).repeat(repeat);
         }
 
-        return resize(UUID + priorityPrefix + player.getName());
+        return resize(UUID + priorityPrefix + player.getSafeFakeName());
     }
 
     @Override

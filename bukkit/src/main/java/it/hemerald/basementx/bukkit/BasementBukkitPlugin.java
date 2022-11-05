@@ -84,7 +84,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
         luckPerms.getEventBus().subscribe(UserDataRecalculateEvent.class, (event) -> {
             Player player = Bukkit.getPlayer(event.getUser().getUniqueId());
             if (player == null) return;
-            basement.getNameTagModule().update(player);
+            basement.getPlugin().getServer().getScheduler().runTask(basement.getPlugin(), () -> basement.getNameTagModule().update(player));
         });
     }
 
