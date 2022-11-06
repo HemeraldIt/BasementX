@@ -12,11 +12,11 @@ public class VelocityNotifyMessage extends BasementMessage {
 
     public VelocityNotifyMessage() {
         super(TOPIC);
-
         this.shutdown = false;
     }
 
     public VelocityNotifyMessage(boolean shutdown) {
+        super(TOPIC);
         this.shutdown = shutdown;
     }
 }
