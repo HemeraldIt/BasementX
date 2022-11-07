@@ -62,6 +62,9 @@ public class PlayerListener implements Listener {
         basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
         Bukkit.getScheduler().runTaskLater(basement.getPlugin(), () -> {
+            if(basement.getPlayerManager().isDisguised(event.getPlayer().getName())) {
+                basement.getDisguiseModule().disguise(event.getPlayer());
+            }
             StreamMode streamMode = basement.getStreamMode();
             if (streamMode.isEnabled()) {
                 if (basementPlayer.isInStreamMode()) {
