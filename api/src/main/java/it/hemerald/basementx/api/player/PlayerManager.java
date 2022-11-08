@@ -35,6 +35,12 @@ public interface PlayerManager<E extends BasementPlayer> {
     Collection<E> getBasementPlayers();
 
     /**
+     * Gets all {@link BasementPlayer}
+     * @return all basement players
+     */
+    Collection<E> getStreamers();
+
+    /**
      * Send a player to a server
      * @param player player name
      * @param server server name

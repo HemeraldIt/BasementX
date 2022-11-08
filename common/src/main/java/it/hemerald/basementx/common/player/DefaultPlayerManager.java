@@ -20,6 +20,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     private final RemoteVelocityService velocityService;
 
     private final Map<String, E> playerMap = new HashMap<>();
+    private final Set<E> streamers = new HashSet<>();
 
     public DefaultPlayerManager(Basement basement) {
         this.basement = basement;
@@ -30,6 +31,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void addBasementPlayer(String name, E basementPlayer) {
         playerMap.put(name, basementPlayer);
+        if(basementPlayer.isInStreamMode()) streamers.add(basementPlayer);
     }
 
     @Override
@@ -37,6 +39,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
         E player = playerMap.remove(name);
         if(player != null) {
             player.remove();
+            streamers.remove(player);
         }
     }
 
@@ -48,6 +51,11 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public Collection<E> getBasementPlayers() {
         return Collections.unmodifiableCollection(playerMap.values());
+    }
+
+    @Override
+    public Collection<E> getStreamers() {
+        return streamers;
     }
 
     @Override

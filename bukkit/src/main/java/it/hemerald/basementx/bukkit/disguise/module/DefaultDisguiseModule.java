@@ -7,17 +7,17 @@ import it.hemerald.basementx.api.persistence.generic.connection.Connector;
 import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
-import it.hemerald.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.player.PlayerManager;
 import it.hemerald.basementx.bukkit.disguise.adapter.DefaultDisguiseAdapter;
+import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
-import it.mineblock.cobusco.player.CobuscoSkin;
-import org.bukkit.Bukkit;
 import org.bukkit.Skin;
 import org.bukkit.entity.Player;
 
 public class DefaultDisguiseModule extends DisguiseModule {
 
     private final AbstractMariaDatabase database;
+    private final PlayerManager<BukkitBasementPlayer> playerManager;
 
     public DefaultDisguiseModule(BasementBukkit basement) {
         super(basement, BasementBukkitConfig.DISGUISE);
@@ -30,6 +30,8 @@ public class DefaultDisguiseModule extends DisguiseModule {
         database.createTable("disguise_names").ifNotExists(true)
                 .addColumn("name", MariaType.VARCHAR, 32)
                 .withPrimaryKeys("name").build().exec();
+
+        this.playerManager = basement.getPlayerManager();
     }
 
     @Override
@@ -63,8 +65,7 @@ public class DefaultDisguiseModule extends DisguiseModule {
 
         basement.getStreamMode().sendPackets(
                 player,
-                basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                        .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
+                playerManager.getStreamers().parallelStream().map(BukkitBasementPlayer::getPlayer).toArray(Player[]::new)
         );
     }
 
@@ -87,8 +88,7 @@ public class DefaultDisguiseModule extends DisguiseModule {
 
         basement.getStreamMode().sendPackets(
                 player,
-                basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                        .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
+                playerManager.getStreamers().parallelStream().map(BukkitBasementPlayer::getPlayer).toArray(Player[]::new)
         );
     }
 

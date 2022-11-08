@@ -52,6 +52,12 @@ public class StreamModeToggle implements CommandExecutor {
                     "la streammode, ma in questo server è disabilitata, quindi nessun cambiamento visivo verrà applicato su questo server");
         }
 
+        if(inStreamMode) {
+            basement.getPlayerManager().getStreamers().add(basementPlayer);
+        } else {
+            basement.getPlayerManager().getStreamers().remove(basementPlayer);
+        }
+
         return false;
     }
 }

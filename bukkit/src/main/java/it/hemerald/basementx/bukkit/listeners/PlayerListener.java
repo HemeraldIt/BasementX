@@ -4,9 +4,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
-import it.hemerald.basementx.api.player.BasementPlayer;
+import it.hemerald.basementx.api.player.PlayerManager;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
-import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -22,10 +21,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-@RequiredArgsConstructor
 public class PlayerListener implements Listener {
 
     private final BasementBukkit basement;
+    private final PlayerManager<BukkitBasementPlayer> playerManager;
+
+    public PlayerListener(BasementBukkit basement) {
+        this.basement = basement;
+        this.playerManager = basement.getPlayerManager();
+    }
 
     private Cache<String, String> tpToCache = CacheBuilder.newBuilder()
             .expireAfterWrite(1, TimeUnit.MINUTES)
@@ -73,8 +77,7 @@ public class PlayerListener implements Listener {
                 } else {
                     streamMode.sendPackets(
                             event.getPlayer(),
-                            basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                                    .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
+                            playerManager.getStreamers().parallelStream().map(BukkitBasementPlayer::getPlayer).toArray(Player[]::new)
                     );
                 }
             }
