@@ -114,4 +114,10 @@ public interface Basement {
     Connector getConnector(TypeConnector type);
 
     <T extends Holder> T getHolder(Class<?> key, Class<T> type);
+
+    /**
+     * Gets the process scheduler
+     * @return the process scheduler instance
+     */
+    ProcessScheduler getScheduler();
 }

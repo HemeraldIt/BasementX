@@ -6,6 +6,7 @@ import ch.jalu.configme.SettingsManagerBuilder;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.common.SelfExpiringHashMap;
 import it.hemerald.basementx.api.common.SelfExpiringMap;
+import it.hemerald.basementx.api.concurrent.process.ProcessScheduler;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
@@ -57,6 +58,8 @@ public class StandardBasement implements Basement {
 
     private final HashMap<Class<?>, Holder> holderBucket = new HashMap<>();
 
+    private ProcessScheduler processScheduler;
+
     public StandardBasement(BasementPlugin plugin) {
         this(plugin, null);
     }
@@ -84,6 +87,8 @@ public class StandardBasement implements Basement {
         velocityService = remoteService.get(RemoteVelocityService.class);
         cerebrumService = remoteService.get(RemoteCerebrumService.class);
         userDataService = remoteService.get(UserDataService.class);
+
+        processScheduler = new ProcessScheduler();
     }
 
     public void start() {}
@@ -189,5 +194,10 @@ public class StandardBasement implements Basement {
             }
         }
         return type.cast(holder);
+    }
+
+    @Override
+    public ProcessScheduler getScheduler() {
+        return processScheduler;
     }
 }
