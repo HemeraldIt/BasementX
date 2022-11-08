@@ -17,7 +17,6 @@ import it.hemerald.basementx.api.redis.messages.implementation.PartyWarpMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import it.hemerald.basementx.api.server.BukkitServer;
-import it.hemerald.basementx.bukkit.cooldown.BukkitCooldownFactory;
 import it.hemerald.basementx.bukkit.disguise.handler.DisguiseHandler;
 import it.hemerald.basementx.bukkit.disguise.module.DefaultDisguiseModule;
 import it.hemerald.basementx.bukkit.nametag.module.DefaultNameTagModule;
@@ -116,8 +115,6 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         this.itemDataManager = itemDataManager;
         this.streamMode = streamMode;
         this.streamMode.toggle(getSettingsManager().getProperty(BasementBukkitConfig.STREAM_MODE));
-
-        cooldownFactory = new BukkitCooldownFactory(plugin);
     }
 
     @Override

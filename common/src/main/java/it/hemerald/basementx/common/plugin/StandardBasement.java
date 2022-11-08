@@ -6,7 +6,6 @@ import ch.jalu.configme.SettingsManagerBuilder;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.common.SelfExpiringHashMap;
 import it.hemerald.basementx.api.common.SelfExpiringMap;
-import it.hemerald.basementx.api.cooldown.CooldownFactory;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
@@ -24,7 +23,6 @@ import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.api.remote.UserDataService;
 import it.hemerald.basementx.api.server.ServerManager;
 import it.hemerald.basementx.common.config.BasementConfig;
-import it.hemerald.basementx.common.cooldown.DefaultCooldownFactory;
 import it.hemerald.basementx.common.locale.DefaultLocaleManager;
 import it.hemerald.basementx.common.party.DefaultPartyManager;
 import it.hemerald.basementx.common.persistence.hikari.TypeHolder;
@@ -37,7 +35,6 @@ import org.redisson.api.condition.Conditions;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class StandardBasement implements Basement {
@@ -59,8 +56,6 @@ public class StandardBasement implements Basement {
     private final AbstractMariaDatabase database;
 
     private final HashMap<Class<?>, Holder> holderBucket = new HashMap<>();
-
-    protected CooldownFactory cooldownFactory;
 
     public StandardBasement(BasementPlugin plugin) {
         this(plugin, null);
@@ -89,8 +84,6 @@ public class StandardBasement implements Basement {
         velocityService = remoteService.get(RemoteVelocityService.class);
         cerebrumService = remoteService.get(RemoteCerebrumService.class);
         userDataService = remoteService.get(UserDataService.class);
-
-        cooldownFactory = new DefaultCooldownFactory();
     }
 
     public void start() {}
@@ -196,10 +189,5 @@ public class StandardBasement implements Basement {
             }
         }
         return type.cast(holder);
-    }
-
-    @Override
-    public CooldownFactory getCooldownFactory() {
-        return cooldownFactory;
     }
 }

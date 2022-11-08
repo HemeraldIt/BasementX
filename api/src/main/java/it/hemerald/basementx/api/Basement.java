@@ -1,7 +1,7 @@
 package it.hemerald.basementx.api;
 
 import ch.jalu.configme.SettingsManager;
-import it.hemerald.basementx.api.cooldown.CooldownFactory;
+import it.hemerald.basementx.api.concurrent.process.ProcessScheduler;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
@@ -114,10 +114,4 @@ public interface Basement {
     Connector getConnector(TypeConnector type);
 
     <T extends Holder> T getHolder(Class<?> key, Class<T> type);
-
-    /**
-     * Gets the cooldown factory
-     * @return the cooldown factory
-     */
-    CooldownFactory getCooldownFactory();
 }
