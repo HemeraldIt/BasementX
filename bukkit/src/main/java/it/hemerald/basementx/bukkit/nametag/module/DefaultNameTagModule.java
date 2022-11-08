@@ -3,6 +3,7 @@ package it.hemerald.basementx.bukkit.nametag.module;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
 import it.hemerald.basementx.api.bukkit.nametag.filters.NameTagFilter;
+import it.hemerald.basementx.api.bukkit.nametag.filters.StreamFilter;
 import it.hemerald.basementx.api.bukkit.nametag.filters.SubFilter;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
@@ -57,6 +58,8 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
             }
             default -> throw new IllegalStateException("Unsupported version: " + version);
         }
+
+        filters.add(new StreamFilter(basement));
 
         basement.getLuckPerms().getEventBus().subscribe(basement.getPlugin(), NodeRemoveEvent.class, (event) -> {
             if(!(event.getNode() instanceof PermissionNode node) || !event.isUser()) return;
