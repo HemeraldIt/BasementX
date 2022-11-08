@@ -29,6 +29,13 @@ public class ToggleDisguiseCommand implements SimpleCommand {
             return;
         }
 
+        if(velocity.getUserDataManager().getUserData(player.getUniqueId()).getStreamMode()) {
+            player.sendMessage(Component.text()
+                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Non puoi effettuare il comando mentre sei in StreamMode!").color(NamedTextColor.RED)));
+            return;
+        }
+
         cooldown.add(player.getUsername());
         velocity.getServer().getScheduler().buildTask(velocity, () -> cooldown.remove(player.getUsername())).delay(4, TimeUnit.SECONDS).schedule();
 

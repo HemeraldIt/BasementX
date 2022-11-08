@@ -33,6 +33,11 @@ public class StreamModeToggle implements CommandExecutor {
             return true;
         }
 
+        if(basement.getDisguiseModule().isDisguised(player)) {
+            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "ERRORE! " + ChatColor.RED + "Non puoi effettuare il comando mentre sei in disguise");
+            return true;
+        }
+
         StreamMode streamMode = basement.getStreamMode();
         BasementPlayer basementPlayer = basement.getPlayerManager().getBasementPlayer(player.getName());
 
