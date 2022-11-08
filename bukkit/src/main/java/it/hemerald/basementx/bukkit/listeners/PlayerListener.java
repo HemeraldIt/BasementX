@@ -70,12 +70,13 @@ public class PlayerListener implements Listener {
                 if (basementPlayer.isInStreamMode()) {
                     List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
                     streamMode.sendPackets(players, event.getPlayer(), true);
+                } else {
+                    streamMode.sendPackets(
+                            event.getPlayer(),
+                            basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
+                                    .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
+                    );
                 }
-                streamMode.sendPackets(
-                        event.getPlayer(),
-                        basement.getPlayerManager().getBasementPlayers().parallelStream().filter(BasementPlayer::isInStreamMode)
-                                .map(bp -> Bukkit.getPlayer(bp.getName())).toArray(Player[]::new)
-                );
             }
         }, 2L);
 

@@ -35,6 +35,7 @@ public class BukkitStreamMode extends StreamMode {
         for (Player who : players) {
             if (who.equals(streamer)) continue;
             BasementPlayer basementPlayer = playerManager.getBasementPlayer(who.getName());
+            if(basementPlayer.isInStreamMode()) continue;
             streamer.customizePlayer(
                     enable ? basementPlayer.getStreamName() : who.getSafeFakeName(),
                     enable ? STREAM : who.getSafeFakeSkin(),

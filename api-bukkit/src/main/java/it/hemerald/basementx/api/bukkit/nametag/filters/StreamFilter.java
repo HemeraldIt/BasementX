@@ -26,7 +26,8 @@ public class StreamFilter extends NameTagFilter {
     public void apply(Player player, boolean ignoreMe) {
         if(ignoreMe) {
             for (Player who : Bukkit.getOnlinePlayers()) {
-                who.customizePlayer(basement.getDisguiseModule().getRandomUsername(), Skin.EMPTY, player);
+                if(!ignoreMe(who))
+                    who.customizePlayer(basement.getDisguiseModule().getRandomUsername(), Skin.EMPTY, player);
             }
         } else {
             basement.getStreamMode().sendPackets(
