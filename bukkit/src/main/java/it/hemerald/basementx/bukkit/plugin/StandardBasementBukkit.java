@@ -75,7 +75,6 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         ItemDataManager itemDataManager = null;
         ScoreboardUtils scoreboardUtils = null;
-        StreamMode streamMode = new BukkitStreamMode(getPlayerManager());
 
         switch (version) {
             case "v1_8_R3" -> {
@@ -96,6 +95,8 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         this.staffModeModule = new DefaultStaffModeModule(this);
         this.nameTagModule = new DefaultNameTagModule(this);
         this.disguiseModule = new DefaultDisguiseModule(this);
+
+        StreamMode streamMode = new BukkitStreamMode(getPlayerManager(), getDisguiseModule());
 
         getRedisManager().registerTopicListener(DisguiseMessage.TOPIC, new DisguiseHandler(this));
         getRedisManager().registerTopicListener(VelocityNotifyMessage.TOPIC, new VelocityNotifyHandler(this));

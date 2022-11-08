@@ -1,16 +1,21 @@
 package it.hemerald.basementx.bukkit.player.stream;
 
+import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
 import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
+import org.bukkit.Skin;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class BukkitStreamMode extends StreamMode {
 
-    public BukkitStreamMode(PlayerManager<BasementPlayer> playerManager) {
+    private final DisguiseModule disguiseModule;
+
+    public BukkitStreamMode(PlayerManager<BasementPlayer> playerManager, DisguiseModule disguiseModule) {
         super(playerManager);
+        this.disguiseModule = disguiseModule;
     }
 
     @Override
@@ -34,6 +39,11 @@ public class BukkitStreamMode extends StreamMode {
                     enable ? basementPlayer.getStreamName() : who.getSafeFakeName(),
                     enable ? STREAM : who.getSafeFakeSkin(),
                     who
+            );
+            who.customizePlayer(
+                    enable ? disguiseModule.getRandomUsername() : streamer.getSafeFakeName(),
+                    enable ? Skin.EMPTY : streamer.getSafeFakeSkin(),
+                    streamer
             );
         }
     }
