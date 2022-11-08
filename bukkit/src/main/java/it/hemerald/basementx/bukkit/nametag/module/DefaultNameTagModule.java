@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -256,7 +257,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         else basement.getPlugin().getServer().getScheduler().runTask(basement.getPlugin(), runnable);
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         adapter.onPreJoin(event);
         update(event.getPlayer());
