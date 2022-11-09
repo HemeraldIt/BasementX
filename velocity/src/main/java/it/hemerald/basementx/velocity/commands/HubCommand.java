@@ -40,7 +40,7 @@ public class HubCommand implements SimpleCommand {
             if(serverNameParts[1].contains("lobby")) {
                 optionalBukkitServer = velocity.getBasement().getPlayerManager().bestServer("hub");
             } else {
-                optionalBukkitServer = velocity.getBasement().getPlayerManager().bestServer(serverNameParts[0]);
+                optionalBukkitServer = velocity.getBasement().getPlayerManager().bestServer(serverNameParts[0] + "_lobby");
                 if(optionalBukkitServer.isEmpty()) {
                     optionalBukkitServer = velocity.getBasement().getPlayerManager().bestServer("hub");
                 }
