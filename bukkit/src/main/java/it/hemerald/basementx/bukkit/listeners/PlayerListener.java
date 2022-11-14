@@ -69,6 +69,11 @@ public class PlayerListener implements Listener {
             if(basement.getPlayerManager().isDisguised(event.getPlayer().getName())) {
                 basement.getDisguiseModule().disguise(event.getPlayer());
             }
+            playerManager.disguised().stream().map(Bukkit::getPlayer).forEach(player -> {
+                if(!player.isOnline()) return;
+                basementPlayer.getPlayer().hidePlayer(player);
+                basementPlayer.getPlayer().showPlayer(player);
+            });
             StreamMode streamMode = basement.getStreamMode();
             if (streamMode.isEnabled()) {
                 if (basementPlayer.isInStreamMode()) {

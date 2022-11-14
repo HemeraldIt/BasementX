@@ -59,6 +59,11 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     }
 
     @Override
+    public Collection<String> disguised() {
+        return Collections.unmodifiableCollection(disguiseSet.readAll());
+    }
+
+    @Override
     public void disguise(String name) {
         disguiseSet.add(name);
 

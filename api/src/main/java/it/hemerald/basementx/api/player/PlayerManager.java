@@ -91,6 +91,12 @@ public interface PlayerManager<E extends BasementPlayer> {
     Optional<BukkitServer> bestServer(String ranch);
 
     /**
+     * Gets the names of disguised players
+     * @return a collection with the name of disguised players
+     */
+    Collection<String> disguised();
+
+    /**
      * Gets if the player is disguised
      * @param name player name
      */
