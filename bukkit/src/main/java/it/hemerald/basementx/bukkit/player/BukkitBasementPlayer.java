@@ -47,7 +47,7 @@ public class BukkitBasementPlayer implements BasementPlayer {
 
     @Override
     public void setStreamName(String streamName) {
-        this.streamName = streamName;
+        this.streamName = streamName == null ? "Player" + streamId : streamName;
     }
 
     @Override
