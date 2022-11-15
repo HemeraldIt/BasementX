@@ -45,7 +45,9 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         if(team == null) {
             createTeam(basementPlayer, newName);
         } else {
-            if (!team.getName().equals(newName)) {
+            if (team.getName().equals(newName)) {
+                updateTeam(basementPlayer, newName);
+            } else {
                 createTeam(basementPlayer, newName);
             }
         }
@@ -67,7 +69,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         PacketPlayOutScoreboardTeam packet;
 
         if(team == null) {
-            team = new ScoreboardTeam(scoreboard, name);
+            team = scoreboard.createTeam(name);
             team.setAllowFriendlyFire(true);
             packet = new PacketPlayOutScoreboardTeam(team, 0);
         } else {
@@ -80,6 +82,12 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         sendPacket(packet);
     }
 
+    public void updateTeam(BasementPlayer player, String name) {
+        ScoreboardTeam team = fakeTeams.get(name);
+        team.getPlayerNameSet().add(player.getStreamName());
+        sendPacket(new PacketPlayOutScoreboardTeam(team, 3));
+    }
+
     public void removePlayer(BasementPlayer player) {
         ScoreboardTeam team = fakeTeams.get(player.getName());
         if(team != null) {
@@ -87,6 +95,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
             fakeTeams.remove(player.getName());
             if(team.getPlayerNameSet().isEmpty()) {
                 sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
+                scoreboard.removeTeam(team);
             } else {
                 PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(new ScoreboardTeam(scoreboard, team.getName()), 4);
                 packet.g.add(player.getStreamName());

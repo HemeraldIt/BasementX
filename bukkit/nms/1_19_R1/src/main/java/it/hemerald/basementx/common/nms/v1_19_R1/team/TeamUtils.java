@@ -44,13 +44,16 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         if(!basementPlayer.isInStreamMode()) {
             updateTab(player, basementPlayer, false);
             return;
-        }        ScoreboardTeam team = fakeTeams.get(player.getName());
+        }
+        ScoreboardTeam team = fakeTeams.get(player.getName());
         String newName = getFakeTeamName(basementPlayer);
 
         if(team == null) {
             createTeam(basementPlayer, newName);
         } else {
-            if (!team.b().equals(newName)) {
+            if (team.b().equals(newName)) {
+                updateTeam(basementPlayer, newName);
+            } else {
                 createTeam(basementPlayer, newName);
             }
         }
@@ -72,7 +75,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         PacketPlayOutScoreboardTeam packet;
 
         if(team == null) {
-            team = new ScoreboardTeam(scoreboard, name);
+            team = scoreboard.g(name);
             team.a(true);
             team.g().add(player.getStreamName());
             packet = PacketPlayOutScoreboardTeam.a(team, true);
@@ -85,6 +88,11 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         sendPacket(packet);
     }
 
+    public void updateTeam(BasementPlayer player, String name) {
+        ScoreboardTeam team = fakeTeams.get(name);
+        sendPacket(PacketPlayOutScoreboardTeam.a(team, player.getStreamName(), PacketPlayOutScoreboardTeam.a.a));
+    }
+
     public void removePlayer(BasementPlayer player) {
         ScoreboardTeam team = fakeTeams.get(player.getName());
         if(team != null) {
@@ -92,6 +100,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
             fakeTeams.remove(player.getName());
             if(team.g().isEmpty()) {
                 sendPacket(PacketPlayOutScoreboardTeam.a(team));
+                scoreboard.d(team);
             } else {
                 sendPacket(PacketPlayOutScoreboardTeam.a(team, player.getStreamName(), PacketPlayOutScoreboardTeam.a.b));
             }
