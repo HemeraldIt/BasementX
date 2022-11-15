@@ -50,11 +50,11 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
         switch (version) {
             case "v1_8_R3" -> {
-                teamUtils = new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils(this, UUID);
+                teamUtils = new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils(basement, UUID);
                 filters.put("sub", new it.hemerald.basementx.common.nms.v1_8_R3.nametag.filters.NMSSubFilter(basement));
             }
             case "v1_19_R1" -> {
-                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils(this, UUID);
+                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils(basement, UUID);
                 filters.put("sub", new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement));
             }
             default -> throw new IllegalStateException("Unsupported version: " + version);

@@ -3,6 +3,7 @@ package it.hemerald.basementx.api.bukkit.nametag.adapter;
 import it.hemerald.basementx.api.bukkit.adapter.Adapter;
 import it.hemerald.basementx.api.bukkit.chat.Colorizer;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scoreboard.Team;
@@ -45,6 +46,10 @@ public abstract class NameTagAdapter extends Adapter<NameTagModule> {
 
     public String getPlayerName(Player player) {
         return player.getSafeFakeName();
+    }
+
+    public String getFakePrefix(Player player) {
+        return ChatColor.GRAY.toString();
     }
 
     public void onCreateTeam(Player player, Team team) {

@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
+import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerShowEntityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +103,20 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         basement.getPlayerManager().removeBasementPlayer(event.getPlayer().getName());
+    }
+
+    @EventHandler
+    public void onShow(PlayerShowEntityEvent event) {
+        if(!basement.getStreamMode().isEnabled() || !(event.getEntity() instanceof Player target)) return;
+
+        BukkitBasementPlayer basementPlayer = playerManager.getBasementPlayer(event.getPlayer().getName());
+        BukkitBasementPlayer basementTarget = playerManager.getBasementPlayer(target.getName());
+
+        if(basementPlayer.isInStreamMode()) {
+            if(!basementTarget.isInStreamMode()) basement.getStreamMode().sendPackets(target, event.getPlayer());
+        } else if(basementTarget.isInStreamMode()) {
+            basement.getStreamMode().sendPackets(event.getPlayer(), target);
+        }
     }
 
     public void tpTo(String playerName, String targetName) {

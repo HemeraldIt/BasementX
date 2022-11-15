@@ -1,5 +1,6 @@
 package it.hemerald.basementx.common.nms.v1_8_R3.team;
 
+import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TeamUtils implements NameTagModule.TeamUtils {
 
-    private final NameTagModule nameTagModule;
+    private final BasementBukkit basement;
     private final String UUID;
     private final Map<String, ScoreboardTeam> fakeTeams = new HashMap<>();
 
@@ -34,83 +35,84 @@ public class TeamUtils implements NameTagModule.TeamUtils {
 
     @Override
     public void updateFakeTeam(Player player) {
-        BasementPlayer basementPlayer = nameTagModule.getBasement().getPlayerManager().getBasementPlayer(player.getName());
-        if(!basementPlayer.isInStreamMode()) {
-            updateTab(player, basementPlayer, false);
-            return;
-        }
+        BasementPlayer basementPlayer = basement.getPlayerManager().getBasementPlayer(player.getName());
+        if(basementPlayer == null) return;
+        boolean status = basementPlayer.isInStreamMode();
+
         ScoreboardTeam team = fakeTeams.get(player.getName());
-        String newName = getFakeTeamName(basementPlayer);
+        String newName = getFakeTeamName(basementPlayer, status);
 
-        if(team == null) {
-            createTeam(basementPlayer, newName);
-        } else {
-            if (team.getName().equals(newName)) {
-                updateTeam(basementPlayer, newName);
-            } else {
-                createTeam(basementPlayer, newName);
-            }
+        createTeam(basementPlayer, newName, status);
+        if (team != null) {
+            updateTeam(basementPlayer, team, status);
         }
 
-        updateTab(player, basementPlayer, true);
+        updateTab(player, basementPlayer, status);
     }
 
-    private void updateTab(Player player, BasementPlayer basementPlayer, boolean streamer) {
+    private void updateTab(Player player, BasementPlayer basementPlayer, boolean status) {
         var packet = makePacket(player, basementPlayer);
 
-        if(streamer) sendPacket(packet);
+        if(status) sendPacket(packet);
         else sendPacketToStreamers(packet);
     }
 
-    private void createTeam(BasementPlayer player, String name) {
-        removePlayer(player);
+    private void createTeam(BasementPlayer player, String name, boolean status) {
+        removePlayer(player, status);
 
         ScoreboardTeam team = scoreboard.getTeam(name);
         PacketPlayOutScoreboardTeam packet;
 
         if(team == null) {
             team = scoreboard.createTeam(name);
+            team.setPrefix(ChatColor.GRAY.toString());
             team.setAllowFriendlyFire(true);
+            team.getPlayerNameSet().add(player.getStreamName());
             packet = new PacketPlayOutScoreboardTeam(team, 0);
         } else {
+            team.getPlayerNameSet().add(player.getStreamName());
             packet = new PacketPlayOutScoreboardTeam(team, 3);
         }
 
-        team.getPlayerNameSet().add(player.getStreamName());
         fakeTeams.put(player.getName(), team);
 
-        sendPacket(packet);
+        if(status) sendPacket(packet);
+        else sendPacketToStreamers(packet);
     }
 
-    public void updateTeam(BasementPlayer player, String name) {
-        ScoreboardTeam team = fakeTeams.get(name);
+    public void updateTeam(BasementPlayer player, ScoreboardTeam team, boolean status) {
         team.getPlayerNameSet().add(player.getStreamName());
-        sendPacket(new PacketPlayOutScoreboardTeam(team, 3));
+        var packet = new PacketPlayOutScoreboardTeam(team, 3);
+        if(status) sendPacket(packet);
+        else sendPacketToStreamers(packet);
     }
 
-    public void removePlayer(BasementPlayer player) {
+    public void removePlayer(BasementPlayer player, boolean status) {
         ScoreboardTeam team = fakeTeams.get(player.getName());
         if(team != null) {
             team.getPlayerNameSet().remove(player.getStreamName());
             fakeTeams.remove(player.getName());
             if(team.getPlayerNameSet().isEmpty()) {
-                sendPacket(new PacketPlayOutScoreboardTeam(team, 1));
+                var packet = new PacketPlayOutScoreboardTeam(team, 1);
+                if(status) sendPacket(packet);
+                else sendPacketToStreamers(packet);
                 scoreboard.removeTeam(team);
             } else {
                 PacketPlayOutScoreboardTeam packet = new PacketPlayOutScoreboardTeam(new ScoreboardTeam(scoreboard, team.getName()), 4);
                 packet.g.add(player.getStreamName());
-                sendPacket(packet);
+                if(status) sendPacket(packet);
+                else sendPacketToStreamers(packet);
             }
         }
     }
 
-    private String getFakeTeamName(BasementPlayer basementPlayer) {
-        return nameTagModule.resize(UUID + (char) (265) + basementPlayer.getStreamName());
+    private String getFakeTeamName(BasementPlayer basementPlayer, boolean status) {
+        return basement.getNameTagModule().resize(UUID + (char)(status ? 265 : 270) + basementPlayer.getStreamName());
     }
 
     private void sendPacket(Packet<?> packet) {
         Set<String> streamNames =
-                nameTagModule.getBasement().getPlayerManager().getStreamers().parallelStream().map(BasementPlayer::getName).collect(Collectors.toSet());
+                basement.getPlayerManager().getStreamers().parallelStream().map(BasementPlayer::getName).collect(Collectors.toSet());
         for (CraftPlayer onlinePlayer : craftServer.getOnlinePlayers()) {
             if(streamNames.contains(onlinePlayer.getName())) continue;
             onlinePlayer.getHandle().playerConnection.sendPacket(packet);
@@ -118,7 +120,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
     }
 
     private void sendPacketToStreamers(Packet<?> packet) {
-        nameTagModule.getBasement().getPlayerManager().getStreamers().parallelStream()
+        basement.getPlayerManager().getStreamers().parallelStream()
                 .map(basementPlayer -> (CraftPlayer)Bukkit.getPlayer(basementPlayer.getName()))
                 .forEach(player -> player.getHandle().playerConnection.sendPacket(packet));
     }
@@ -128,7 +130,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.UPDATE_DISPLAY_NAME);
 
         packet.b.add(packet.constructData(entityPlayer.getProfile(), entityPlayer.ping, entityPlayer.playerInteractManager.getGameMode(),
-                CraftChatMessage.fromString(basementPlayer.getStreamName())[0]));
+                CraftChatMessage.fromString(basement.getNameTagModule().getAdapter().getFakePrefix(player) + basementPlayer.getStreamName())[0]));
         return packet;
     }
 }

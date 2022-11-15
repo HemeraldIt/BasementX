@@ -28,13 +28,13 @@ public class BukkitStreamMode extends StreamMode {
                     who
             );
             who.customizePlayer(
-                    playerManager.getBasementPlayer(who.getName()).getStreamName(),
+                    playerManager.getBasementPlayer(streamer.getName()).getStreamName(),
                     Skin.EMPTY,
                     streamer
             );
-            nameTagModule.getTeamUtils().updateFakeTeam(streamer);
+            nameTagModule.update(streamer);
         }
-        nameTagModule.getTeamUtils().updateFakeTeam(who);
+        nameTagModule.update(who);
     }
 
     @Override
@@ -43,20 +43,26 @@ public class BukkitStreamMode extends StreamMode {
         for (Player who : players) {
             if (who.equals(streamer)) continue;
             BasementPlayer basementPlayer = playerManager.getBasementPlayer(who.getName());
-            if(basementPlayer.isInStreamMode()) continue;
-            streamer.customizePlayer(
-                    enable ? basementPlayer.getStreamName() : who.getSafeFakeName(),
-                    enable ? STREAM : who.getSafeFakeSkin(),
-                    who
-            );
-            who.customizePlayer(
-                    enable ? streamerPlayer.getStreamName() : streamer.getSafeFakeName(),
-                    enable ? Skin.EMPTY : streamer.getSafeFakeSkin(),
-                    streamer
-            );
-            nameTagModule.getTeamUtils().updateFakeTeam(who);
+            if(basementPlayer.isInStreamMode()) {
+                streamer.hidePlayer(who);
+                streamer.showPlayer(who);
+                who.hidePlayer(streamer);
+                who.showPlayer(streamer);
+            } else {
+                streamer.customizePlayer(
+                        enable ? basementPlayer.getStreamName() : who.getSafeFakeName(),
+                        enable ? STREAM : who.getSafeFakeSkin(),
+                        who
+                );
+                who.customizePlayer(
+                        enable ? streamerPlayer.getStreamName() : streamer.getSafeFakeName(),
+                        enable ? Skin.EMPTY : streamer.getSafeFakeSkin(),
+                        streamer
+                );
+            }
+            nameTagModule.update(who);
         }
-        nameTagModule.getTeamUtils().updateFakeTeam(streamer);
+        nameTagModule.update(streamer);
     }
 
 }
