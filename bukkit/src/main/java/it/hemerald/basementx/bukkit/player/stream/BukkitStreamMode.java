@@ -34,6 +34,7 @@ public class BukkitStreamMode extends StreamMode {
             );
             nameTagModule.getTeamUtils().updateFakeTeam(streamer);
         }
+        nameTagModule.getTeamUtils().updateFakeTeam(who);
     }
 
     @Override
@@ -53,6 +54,7 @@ public class BukkitStreamMode extends StreamMode {
                     enable ? Skin.EMPTY : streamer.getSafeFakeSkin(),
                     streamer
             );
+            nameTagModule.getTeamUtils().updateFakeTeam(who);
         }
         nameTagModule.getTeamUtils().updateFakeTeam(streamer);
     }
