@@ -22,6 +22,12 @@ public interface BasementPlayer {
     String getStreamName();
 
     /**
+     * Sets the player stream name
+     * @param streamName the new player stream name
+     */
+    void setStreamName(String streamName);
+
+    /**
      * Turn on or off the stream mode
      * @param enabled true if enable stream mode, false otherwise
      */

@@ -46,6 +46,7 @@ public class StreamModeToggle implements CommandExecutor {
 
         if(streamMode.isEnabled()) {
             streamMode.sendPackets(new ArrayList<>(Bukkit.getOnlinePlayers()), player, inStreamMode);
+            basementPlayer.setStreamName(basement.getDisguiseModule().getRandomUsername());
             player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") + "la streammode");
         } else {
             player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") +

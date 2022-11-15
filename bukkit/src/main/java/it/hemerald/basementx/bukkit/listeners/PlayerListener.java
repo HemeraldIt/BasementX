@@ -77,6 +77,7 @@ public class PlayerListener implements Listener {
             StreamMode streamMode = basement.getStreamMode();
             if (streamMode.isEnabled()) {
                 if (basementPlayer.isInStreamMode()) {
+                    basementPlayer.setStreamName(basement.getDisguiseModule().getRandomUsername());
                     List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
                     streamMode.sendPackets(players, event.getPlayer(), true);
                 } else {

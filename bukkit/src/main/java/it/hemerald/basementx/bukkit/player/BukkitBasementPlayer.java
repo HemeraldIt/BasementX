@@ -22,7 +22,7 @@ public class BukkitBasementPlayer implements BasementPlayer {
     private final LocaleManager localeManager;
     private final DisguiseModule disguiseModule;
     private final UserData userData;
-    private final String streamName;
+    private String streamName;
     private final Integer streamId;
     private final MinecraftVersion version;
 
@@ -43,6 +43,11 @@ public class BukkitBasementPlayer implements BasementPlayer {
     @Override
     public String getStreamName() {
         return streamName;
+    }
+
+    @Override
+    public void setStreamName(String streamName) {
+        this.streamName = streamName;
     }
 
     @Override

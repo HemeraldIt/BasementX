@@ -6,7 +6,6 @@ import it.hemerald.basementx.api.bukkit.nametag.filters.NameTagFilter;
 import it.hemerald.basementx.api.bukkit.nametag.filters.SubFilter;
 import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
-import it.hemerald.basementx.bukkit.nametag.filters.StreamFilter;
 import it.hemerald.basementx.bukkit.nametag.tags.TagGUI;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
 import net.luckperms.api.event.node.NodeRemoveEvent;
@@ -41,8 +40,6 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
     private final TeamUtils teamUtils;
 
-    private final List<NameTagFilter> filters = new ArrayList<>();
-
     public DefaultNameTagModule(BasementBukkit basement) {
         super(basement, BasementBukkitConfig.NAME_TAG, BasementBukkitConfig.TAGS);
 
@@ -50,27 +47,24 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
         switch (version) {
             case "v1_8_R3" -> {
-                teamUtils = new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils();
-                filters.add(new it.hemerald.basementx.common.nms.v1_8_R3.nametag.filters.NMSSubFilter(basement));
+                teamUtils = new it.hemerald.basementx.common.nms.v1_8_R3.team.TeamUtils(this, UUID);
+                filters.put("sub", new it.hemerald.basementx.common.nms.v1_8_R3.nametag.filters.NMSSubFilter(basement));
             }
             case "v1_19_R1" -> {
-                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils();
-                filters.add(new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement));
+                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils(this, UUID);
+                filters.put("sub", new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement));
             }
             default -> throw new IllegalStateException("Unsupported version: " + version);
         }
-
-        filters.add(new StreamFilter(basement));
 
         basement.getLuckPerms().getEventBus().subscribe(basement.getPlugin(), NodeRemoveEvent.class, (event) -> {
             if(!(event.getNode() instanceof PermissionNode node) || !event.isUser()) return;
             Player player = Bukkit.getPlayer(((User)event.getTarget()).getUniqueId());
             if(player == null) return;
-            for (NameTagFilter filter : filters) {
-                if(!(filter instanceof SubFilter subFilter)) continue;
-                if(subFilter.test(node.getPermission())) {
-                    subFilter.clear(player, node.getPermission());
-                }
+            NameTagFilter filter = filters.get("sub");
+            if(!(filter instanceof SubFilter subFilter)) return;
+            if(subFilter.test(node.getPermission())) {
+                subFilter.clear(player, node.getPermission());
             }
         });
     }
@@ -203,6 +197,8 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
         updateDisplayName(player);
         updateTab(player);
+
+        executeAsync(() -> teamUtils.updateFakeTeam(player));
     }
 
     @Override
@@ -218,7 +214,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
     }
 
     private void applyFilters(Player player) {
-        filters.parallelStream().forEach(filter -> filter.testThenApply(player));
+        filters.values().parallelStream().forEach(filter -> filter.testThenApply(player));
     }
 
     @Override
@@ -257,12 +253,17 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         else basement.getPlugin().getServer().getScheduler().runTask(basement.getPlugin(), runnable);
     }
 
+    private void executeAsync(Runnable runnable) {
+        if(Bukkit.isPrimaryThread()) basement.getPlugin().getServer().getScheduler().runTaskAsynchronously(basement.getPlugin(), runnable);
+        else runnable.run();
+    }
+
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         adapter.onPreJoin(event);
         update(event.getPlayer());
         adapter.onPostJoin(event);
-        basement.getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(basement.getPlugin(), () -> applyFilters(event.getPlayer()), 20);
+        basement.getPlugin().getServer().getScheduler().runTaskLaterAsynchronously(basement.getPlugin(), () -> applyFilters(event.getPlayer()), 5);
     }
 
     @EventHandler
@@ -332,5 +333,10 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         if(healthBar != null) {
             healthBar.unregister();
         }
+    }
+
+    @Override
+    public TeamUtils getTeamUtils() {
+        return teamUtils;
     }
 }

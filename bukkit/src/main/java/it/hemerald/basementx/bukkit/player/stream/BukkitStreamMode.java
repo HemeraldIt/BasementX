@@ -1,6 +1,6 @@
 package it.hemerald.basementx.bukkit.player.stream;
 
-import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
+import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
@@ -11,11 +11,11 @@ import java.util.List;
 
 public class BukkitStreamMode extends StreamMode {
 
-    private final DisguiseModule disguiseModule;
+    private final NameTagModule nameTagModule;
 
-    public BukkitStreamMode(PlayerManager<BasementPlayer> playerManager, DisguiseModule disguiseModule) {
+    public BukkitStreamMode(PlayerManager<BasementPlayer> playerManager, NameTagModule nameTagModule) {
         super(playerManager);
-        this.disguiseModule = disguiseModule;
+        this.nameTagModule = nameTagModule;
     }
 
     @Override
@@ -27,11 +27,18 @@ public class BukkitStreamMode extends StreamMode {
                     STREAM,
                     who
             );
+            who.customizePlayer(
+                    playerManager.getBasementPlayer(who.getName()).getStreamName(),
+                    Skin.EMPTY,
+                    streamer
+            );
+            nameTagModule.getTeamUtils().updateFakeTeam(streamer);
         }
     }
 
     @Override
     public void sendPackets(List<Player> players, Player streamer, boolean enable) {
+        BasementPlayer streamerPlayer = playerManager.getBasementPlayer(streamer.getName());
         for (Player who : players) {
             if (who.equals(streamer)) continue;
             BasementPlayer basementPlayer = playerManager.getBasementPlayer(who.getName());
@@ -42,11 +49,12 @@ public class BukkitStreamMode extends StreamMode {
                     who
             );
             who.customizePlayer(
-                    enable ? disguiseModule.getRandomUsername() : streamer.getSafeFakeName(),
+                    enable ? streamerPlayer.getStreamName() : streamer.getSafeFakeName(),
                     enable ? Skin.EMPTY : streamer.getSafeFakeSkin(),
                     streamer
             );
         }
+        nameTagModule.getTeamUtils().updateFakeTeam(streamer);
     }
 
 }

@@ -95,7 +95,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         this.nameTagModule = new DefaultNameTagModule(this);
         this.disguiseModule = new DefaultDisguiseModule(this);
 
-        StreamMode streamMode = new BukkitStreamMode(getPlayerManager(), getDisguiseModule());
+        StreamMode streamMode = new BukkitStreamMode(getPlayerManager(), getNameTagModule());
 
         getRedisManager().registerTopicListener(DisguiseMessage.TOPIC, new DisguiseHandler(this));
         getRedisManager().registerTopicListener(VelocityNotifyMessage.TOPIC, new VelocityNotifyHandler(this));

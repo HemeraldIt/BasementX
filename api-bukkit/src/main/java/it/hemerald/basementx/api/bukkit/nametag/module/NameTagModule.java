@@ -4,17 +4,21 @@ import ch.jalu.configme.properties.Property;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.module.Module;
 import it.hemerald.basementx.api.bukkit.nametag.adapter.NameTagAdapter;
+import it.hemerald.basementx.api.bukkit.nametag.filters.NameTagFilter;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class NameTagModule extends Module<NameTagAdapter> {
 
     protected Property<Boolean> tags;
+    protected final Map<String, NameTagFilter> filters = new HashMap<>();
 
     public NameTagModule(BasementBukkit basement, Property<Boolean> property, Property<Boolean> tags) {
         super(basement, property);
@@ -24,6 +28,10 @@ public abstract class NameTagModule extends Module<NameTagAdapter> {
 
     public boolean tagsEnabled() {
         return basement.getSettingsManager().getProperty(getProperty()) && basement.getSettingsManager().getProperty(tags);
+    }
+
+    public NameTagFilter filter(String name) {
+        return filters.get(name);
     }
 
     public abstract void openInventory(Player player);
@@ -68,7 +76,11 @@ public abstract class NameTagModule extends Module<NameTagAdapter> {
 
     public abstract void removeHealthTab(Player player);
 
+    public abstract TeamUtils getTeamUtils();
+
     public interface TeamUtils {
         void setColor(Team team, ChatColor color);
+
+        void updateFakeTeam(Player player);
     }
 }
