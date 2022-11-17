@@ -71,7 +71,7 @@ public final class ProbabilityCollection<E> {
      * @param probability share. Must be greater than 0.
      *
      * @throws IllegalArgumentException if object is null
-     * @throws IllegalArgumentException if probability <= 0
+     * @throws IllegalArgumentException if probability is less than or equal to 0
      */
     public void add(E object, int probability) {
         if (object == null) {
@@ -137,7 +137,7 @@ public final class ProbabilityCollection<E> {
     /**
      * Get a random object from this collection, based on probability.
      *
-     * @return <E> Random object
+     * @return Generic Random object
      *
      * @throws IllegalStateException if this collection is empty
      */
@@ -185,7 +185,7 @@ public final class ProbabilityCollection<E> {
         }
 
         /**
-         * @return <T> The actual object
+         * @return Generic actual object
          */
         public T getObject() {
             return this.object;
