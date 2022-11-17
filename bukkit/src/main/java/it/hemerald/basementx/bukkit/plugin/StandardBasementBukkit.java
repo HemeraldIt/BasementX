@@ -36,6 +36,7 @@ import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.redisson.remote.RemoteServiceAckTimeoutException;
 
 public class StandardBasementBukkit extends StandardBasement implements BasementBukkit {
 
@@ -69,7 +70,11 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         this.permissionManager = new DefaultPermissionManager(luckPerms);
 
         setServerID(plugin.getServer().getServerName());
-        getRemoteVelocityService().registerServer(plugin.getServer().getServerName(), plugin.getServer().getPort());
+        try {
+            getRemoteVelocityService().registerServer(plugin.getServer().getServerName(), plugin.getServer().getPort());
+        } catch(RemoteServiceAckTimeoutException e) {
+            plugin.getLogger().severe("Velocity is offline, server not registered");
+        }
 
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
         ItemDataManager itemDataManager = null;
