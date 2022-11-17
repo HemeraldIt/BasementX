@@ -28,7 +28,7 @@ public class StreamModeToggle implements CommandExecutor {
             return true;
         }
 
-        if (!player.hasPermission("hemerald.streammode")) {
+        if (!player.hasPermission("basement.streammode")) {
             player.sendMessage(SpigotConfig.unknownCommandMessage);
             return true;
         }

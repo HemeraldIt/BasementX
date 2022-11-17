@@ -80,6 +80,6 @@ public class GoToCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("hemerald.staff");
+        return invocation.source().hasPermission("basement.staff");
     }
 }

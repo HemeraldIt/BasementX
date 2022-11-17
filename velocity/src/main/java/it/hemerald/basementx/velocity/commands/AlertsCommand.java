@@ -22,7 +22,7 @@ public class AlertsCommand implements SimpleCommand {
 
         Player player = (Player) invocation.source();
 
-        if (!player.hasPermission("hemerald.alerts")) {
+        if (!player.hasPermission("basement.alerts")) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Non hai il permesso per eseguire quest'azione!").color(NamedTextColor.RED)));
@@ -40,6 +40,6 @@ public class AlertsCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("hemerald.alerts");
+        return invocation.source().hasPermission("basement.alerts");
     }
 }

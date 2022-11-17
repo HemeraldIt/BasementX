@@ -35,7 +35,7 @@ public class GlobalChatCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("hemerald.globalchat");
+        return invocation.source().hasPermission("basement.globalchat");
     }
 
     private void sendBroadcast(String username, String message) {
