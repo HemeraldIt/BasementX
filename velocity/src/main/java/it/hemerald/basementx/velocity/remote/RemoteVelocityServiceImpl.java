@@ -111,9 +111,9 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     }
 
     @Override
-    public void cheatAlert(String server, String alert, long ping) {
+    public void cheatAlert(String server, String playerName, String alert, long ping) {
         for (Player player : velocity.getServer().getAllPlayers()) {
-            if (!player.hasPermission("hemerald.alerts")) continue;
+            if (!player.hasPermission("basement.alerts")) continue;
 
 
             Optional<ServerConnection> currentServer = player.getCurrentServer();
@@ -135,16 +135,13 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
             TextComponent.Builder builder = Component.text();
 
-            builder.append(Component.text("[" + server + "] ")).color(NamedTextColor.DARK_AQUA);
-            builder.append(Component.text(alert));
+            builder.append(Component.text("[" + server + "] ").clickEvent(ClickEvent.runCommand("/goto " + server))).color(NamedTextColor.DARK_AQUA);
+            builder.append(Component.text(alert).clickEvent(ClickEvent.runCommand("/tpto " + playerName)));
 
             builder.hoverEvent(HoverEvent.showText(
                     Component.text()
                             .content("Ping: " + ping)
-                            .color(NamedTextColor.AQUA)))
-            ;
-
-            builder.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/goto " + server));
+                            .color(NamedTextColor.AQUA)));
 
             player.sendMessage(builder);
         }
@@ -153,21 +150,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void cheatBan(String server, String player) {
         velocity.getServer().getCommandManager().executeAsync(velocity.getServer().getConsoleCommandSource(), "ban " +
-                player + " 14d Cheating (AntiCheat)");
-
-        TextComponent.Builder component = Component.text();
-        component.append(Component.newline());
-        component.append(Component.text("✘ L'anticheat ha bannato ").color(NamedTextColor.RED));
-        component.append(Component.text(player).color(NamedTextColor.WHITE));
-        component.append(Component.text(" ✘").color(NamedTextColor.RED));
-        component.append(Component.newline());
-
-        for (Player velocityPlayer : velocity.getServer().getAllPlayers()) {
-            Optional<ServerConnection> playerServer = velocityPlayer.getCurrentServer();
-            if (velocityPlayer.hasPermission("hemerald.alerts") || playerServer.isPresent() && playerServer.get().getServerInfo().getName().equals(server)) {
-                velocityPlayer.sendMessage(component);
-            }
-        }
+                player + " 30d Cheating (AntiCheat)");
     }
 
     public int playerVersion(UUID uuid) {

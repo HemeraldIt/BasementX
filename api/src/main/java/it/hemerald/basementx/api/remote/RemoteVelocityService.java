@@ -66,10 +66,11 @@ public interface RemoteVelocityService {
     /**
      * Send a cheat alert message to all staff
      * @param server the server name
+     * @param player the player name
      * @param alert the alert type name
      * @param ping the player ping
      */
-    void cheatAlert(String server, String alert, long ping);
+    void cheatAlert(String server, String player, String alert, long ping);
 
     /**
      * Ban a player for cheat

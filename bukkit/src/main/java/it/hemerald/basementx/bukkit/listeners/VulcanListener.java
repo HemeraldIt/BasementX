@@ -46,7 +46,7 @@ public class VulcanListener implements Listener {
                         .replace("%player%", player.getName()))
                 .replace("%check%", check + " (" + type + ")");
 
-        basement.getRemoteVelocityService().cheatAlert(basement.getServerID(), violation, ping);
+        basement.getRemoteVelocityService().cheatAlert(basement.getServerID(), player.getName(), violation, ping);
     }
 
     public void ban(String player) {
