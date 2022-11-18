@@ -54,10 +54,12 @@ public class StreamModeToggle implements CommandExecutor {
 
         if(streamMode.isEnabled()) {
             streamMode.sendPackets(new ArrayList<>(Bukkit.getOnlinePlayers()), player, inStreamMode);
-            player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") + "la streammode");
+            player.sendMessage(ChatColor.YELLOW + "Hai " + (inStreamMode ? ChatColor.GREEN + "abilitato " : ChatColor.RED + "disabilitato ") +
+                    ChatColor.YELLOW + "la streammode");
         } else {
-            player.sendMessage("Hai " + (inStreamMode ? "abilitato " : "disabilitato ") +
-                    "la streammode, ma in questo server è disabilitata, quindi nessun cambiamento visivo verrà applicato su questo server");
+            player.sendMessage(ChatColor.YELLOW + "Hai " + (inStreamMode ? ChatColor.GREEN + "abilitato " : ChatColor.RED + "disabilitato ") +
+                    ChatColor.YELLOW +  "la streammode, ma in questo server è " + ChatColor.RED + "disabilitata" +
+                    ChatColor.YELLOW + ", quindi nessun cambiamento visivo verrà applicato su questo server");
         }
 
         return false;
