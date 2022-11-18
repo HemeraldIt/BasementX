@@ -42,6 +42,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
 
     @Override
     public void updateFakeTeam(Player player) {
+        if(!basement.getStreamMode().isEnabled()) return;
         BasementPlayer basementPlayer = basement.getPlayerManager().getBasementPlayer(player.getName());
         if(basementPlayer == null) return;
         boolean status = basementPlayer.isInStreamMode();
