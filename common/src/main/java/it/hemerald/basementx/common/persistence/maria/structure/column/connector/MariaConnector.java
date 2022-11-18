@@ -23,8 +23,8 @@ public class MariaConnector extends HikariConnector {
 
     protected HikariConfig getConfig() {
         HikariConfig config = new HikariConfig();
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(4);
+        config.setMaximumPoolSize(30);
+        config.setMinimumIdle(10);
         return config;
     }
 
