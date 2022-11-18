@@ -26,6 +26,10 @@ commands:
     permission: cheat.ban
   streammode:
     aliases: [sm]
+  bedwars:
+    aliases: [bw]
+  bridge:
+    aliases: [bg]
 
 permissions:
   hemerald.staff:
