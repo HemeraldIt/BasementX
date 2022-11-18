@@ -8,18 +8,18 @@ softdepend: [Vulcan, PlaceholderAPI, SkinsRestorer, Vault]
 commands:
   basementx:
     aliases: [basement]
-    permission: hemerald.staff
+    permission: basement.staff
   tabreload:
-    permission: hemerald.reloadtab
+    permission: basement.reloadtab
   staffmode:
-    permission: hemerald.staff
+    permission: basement.staff
     aliases:
       - staff
       - sf
       - smode
       - staffm
   vanish:
-    permission: hemerald.staff
+    permission: basement.staff
   tag:
     aliases: [tags, nametag, nametags]
   cheatban:
@@ -32,9 +32,9 @@ commands:
     aliases: [bg]
 
 permissions:
-  hemerald.staff:
+  basement.staff:
     default: op
-  hemerald.reloadtab:
+  basement.reloadtab:
     default: op
   cheat.ban:
     default: op
