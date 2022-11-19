@@ -208,16 +208,29 @@ public class UserDataManager {
                 .setNQ("gems", data.getGems()).set("language", data.getLanguage())
                 .where(WhereBuilder.builder().equals("uuid", data.getUuid()).close())
                 .build().exec();
-        QueryBuilderSelect selectId = querySelectUserData.patternClone().columns("id").where(WhereBuilder.builder().equals("uuid", data.getUuid()).close());
+
+        int tableIndex = data.getTableIndex();
+        if (tableIndex == -1) {
+            QueryData selectIdQueryData = querySelectUserData.patternClone()
+                    .columns("id")
+                    .where(WhereBuilder.builder().equals("uuid", data.getUuid()).close())
+                    .build().execReturn();
+            if (selectIdQueryData.first())
+                tableIndex = selectIdQueryData.getInt("id");
+            else return;
+        }
+
         if (data.hasXpBoost()) {
             queryInsertUserBoosters.patternClone().clearValues()
-                    .values(data.getTableIndex() == -1 ? selectId : data.getTableIndex(),
-                            0, NetworkBoosters.XP.ordinal(), data.getXpBoost(), data.getXpBoostTime());
+                    .values(tableIndex, 0, NetworkBoosters.XP.ordinal(),
+                            data.getXpBoost(), data.getXpBoostTime())
+                    .build().exec();
         }
         if (data.hasCoinsBoost()) {
             queryInsertUserBoosters.patternClone().clearValues()
-                    .values(data.getTableIndex() == -1 ? selectId : data.getTableIndex(),
-                            0, NetworkBoosters.COINS.ordinal(), data.getCoinsBoost(), data.getCoinsBoostTime());
+                    .values(tableIndex, 0, NetworkBoosters.COINS.ordinal(),
+                            data.getCoinsBoost(), data.getCoinsBoostTime())
+                    .build().exec();
         }
     }
 
