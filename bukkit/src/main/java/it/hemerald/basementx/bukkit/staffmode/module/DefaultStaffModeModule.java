@@ -56,8 +56,9 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
     @Override
     public void enableMode(Player player) {
-        localVanish(player);
         if(!localEnable(player)) return;
+
+        vanish(player);
 
         player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "StaffMode abilitata!");
     }
@@ -77,9 +78,9 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
     @Override
     public void disableMode(Player player) {
-        localUnvanish(player);
-
         if (!localDisable(player)) return;
+
+        unvanish(player);
 
         player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "StaffMode disabilitata!");
     }

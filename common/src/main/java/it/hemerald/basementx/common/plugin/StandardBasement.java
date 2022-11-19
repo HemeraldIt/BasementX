@@ -58,7 +58,7 @@ public class StandardBasement implements Basement {
 
     private final HashMap<Class<?>, Holder> holderBucket = new HashMap<>();
 
-    private ProcessScheduler processScheduler;
+    private final ProcessScheduler processScheduler;
 
     public StandardBasement(BasementPlugin plugin) {
         this(plugin, null);
