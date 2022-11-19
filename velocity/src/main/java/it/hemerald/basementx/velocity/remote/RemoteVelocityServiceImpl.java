@@ -62,8 +62,11 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
             velocity.getLogger().log(Level.WARNING, () -> "Tried to send " + player + "to an invalid server (" + server + ")");
             return;
         }
-        if (isOnRanch(player, server)) return;
-        optionalPlayer.get().createConnectionRequest(optionalServer.get()).fireAndForget();
+
+        Player realPlayer = optionalPlayer.get();
+        Optional<ServerConnection> currentServer = realPlayer.getCurrentServer();
+        if (currentServer.isEmpty() || currentServer.get().getServerInfo().getName().equalsIgnoreCase(server)) return;
+        realPlayer.createConnectionRequest(optionalServer.get()).fireAndForget();
     }
 
     @Override
@@ -75,8 +78,11 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
             velocity.getLogger().log(Level.WARNING, () -> "Tried to send " + uuid + "to an invalid server (" + server + ")");
             return;
         }
-        if (isOnRanch(uuid, server)) return;
-        optionalPlayer.get().createConnectionRequest(optionalServer.get()).fireAndForget();
+
+        Player realPlayer = optionalPlayer.get();
+        Optional<ServerConnection> currentServer = realPlayer.getCurrentServer();
+        if (currentServer.isEmpty() || currentServer.get().getServerInfo().getName().equalsIgnoreCase(server)) return;
+        realPlayer.createConnectionRequest(optionalServer.get()).fireAndForget();
     }
 
     @Override
