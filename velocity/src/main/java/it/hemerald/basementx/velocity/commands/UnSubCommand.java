@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.ConsoleCommandSource;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.PermissionNode;
 
 import java.util.UUID;
@@ -19,8 +20,13 @@ public class UnSubCommand implements SimpleCommand  {
         UUID uuid = UUID.fromString(invocation.arguments()[0]);
         String permission = invocation.arguments()[1];
 
-        luckPerms.getUserManager().modifyUser(uuid, user -> {
-            user.data().remove(PermissionNode.builder().permission(permission).build());
-        });
+        User user = luckPerms.getUserManager().getUser(uuid);
+        if(user == null) {
+            user = luckPerms.getUserManager().loadUser(uuid).join();
+        }
+
+        user.data().remove(PermissionNode.builder().permission(permission).build());
+
+        luckPerms.getUserManager().saveUser(user);
     }
 }
