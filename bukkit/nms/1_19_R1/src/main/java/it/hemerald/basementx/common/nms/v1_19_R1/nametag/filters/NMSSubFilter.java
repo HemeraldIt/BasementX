@@ -26,7 +26,7 @@ public class NMSSubFilter extends SubFilter {
         for (String permission : permissions) {
             for (Player sub : getPlayers(permission)) {
                 CraftPlayer craftSub = (CraftPlayer) sub;
-                if(!basement.getDisguiseModule().isDisguised(sub))
+                if(!basement.getDisguiseModule().isDisguised(sub) && !ignoreMe(sub))
                     craftPlayer.getHandle().b.a(makePacket(craftSub));
                 if(!ignoreMe) craftSub.getHandle().b.a(packet);
             }
@@ -36,9 +36,11 @@ public class NMSSubFilter extends SubFilter {
     @Override
     public void clear(Player player, String permission) {
         CraftPlayer craftPlayer = (CraftPlayer) player;
+        PacketPlayOutPlayerInfo packet = makePacketClear(craftPlayer);
 
         for (Player sub : getPlayers(permission)) {
             craftPlayer.getHandle().b.a(makePacketClear((CraftPlayer) sub));
+            ((CraftPlayer)sub).getHandle().b.a(packet);
         }
     }
 
