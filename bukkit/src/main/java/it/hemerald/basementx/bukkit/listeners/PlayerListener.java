@@ -100,7 +100,7 @@ public class PlayerListener implements Listener {
         tpToCache.invalidate(event.getPlayer().getName());
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
         basement.getPlayerManager().removeBasementPlayer(event.getPlayer().getName());
     }
