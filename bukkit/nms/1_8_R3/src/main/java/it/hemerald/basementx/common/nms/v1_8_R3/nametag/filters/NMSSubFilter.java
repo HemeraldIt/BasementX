@@ -25,7 +25,7 @@ public class NMSSubFilter extends SubFilter {
         for (String permission : permissions) {
             for (Player sub : getPlayers(permission)) {
                 CraftPlayer craftSub = (CraftPlayer) sub;
-                if(!basement.getDisguiseModule().isDisguised(sub))
+                if(!basement.getDisguiseModule().isDisguised(sub) && !ignoreMe(sub))
                     craftPlayer.getHandle().playerConnection.sendPacket(makePacket(craftSub));
                 if(!ignoreMe) craftSub.getHandle().playerConnection.sendPacket(packet);
             }
