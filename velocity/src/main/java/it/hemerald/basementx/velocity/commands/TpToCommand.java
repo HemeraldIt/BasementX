@@ -75,9 +75,7 @@ public class TpToCommand implements SimpleCommand {
         ServerConnection serverConnectionTo = optionalServerTo.get();
         ServerConnection serverConnectionFrom = optionalServerFrom.get();
         if(serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(serverConnectionTo.getServerInfo().getName())) {
-            source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
-                    .append(Component.text("Ti trovi già nel server di questo giocatore!").color(NamedTextColor.RED)));
+            velocity.getBasement().getRedisManager().publishMessage(new TpToMessage(from.getUsername(), to.getUsername()));
             return;
         }
 
