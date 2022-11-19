@@ -28,8 +28,8 @@ commands:
     aliases: [sm]
   bedwars:
     aliases: [bw]
-  bridge:
-    aliases: [bg]
+  thebridge:
+    aliases: [bridge, bg]
 
 permissions:
   basement.staff:

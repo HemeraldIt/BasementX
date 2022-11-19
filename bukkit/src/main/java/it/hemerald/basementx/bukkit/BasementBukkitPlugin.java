@@ -116,7 +116,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
         plugin.getCommand("tag").setExecutor(new TagCommand(basement));
         plugin.getCommand("streammode").setExecutor(new StreamModeToggle(basement));
         plugin.getCommand("bedwars").setExecutor(new BedwarsCommand(basement));
-        plugin.getCommand("bridge").setExecutor(new BridgeCommand(basement));
+        plugin.getCommand("thebridge").setExecutor(new BridgeCommand(basement));
     }
 
     @Override
