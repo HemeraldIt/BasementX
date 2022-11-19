@@ -62,6 +62,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
             velocity.getLogger().log(Level.WARNING, () -> "Tried to send " + player + "to an invalid server (" + server + ")");
             return;
         }
+        if(optionalServer.get().getServerInfo().getName().equals(server)) return;
         optionalPlayer.get().createConnectionRequest(optionalServer.get()).fireAndForget();
     }
 
@@ -74,6 +75,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
             velocity.getLogger().log(Level.WARNING, () -> "Tried to send " + uuid + "to an invalid server (" + server + ")");
             return;
         }
+        if(optionalServer.get().getServerInfo().getName().equals(server)) return;
         optionalPlayer.get().createConnectionRequest(optionalServer.get()).fireAndForget();
     }
 
