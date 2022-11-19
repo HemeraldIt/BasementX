@@ -5,7 +5,6 @@ import it.hemerald.basementx.api.party.Party;
 import it.hemerald.basementx.velocity.together.commands.CommandArgument;
 import it.hemerald.basementx.velocity.together.manager.PartyManager;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.HashSet;
 import java.util.Optional;

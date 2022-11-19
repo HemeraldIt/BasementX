@@ -31,6 +31,9 @@ shadowJar {
     dependencies {
         exclude(dependency(':lombok'))
         exclude 'net/kyori/**'
+        exclude 'com/google/**'
+        exclude 'it/unimi/**'
+        exclude 'io/netty/**'
     }
 }
 

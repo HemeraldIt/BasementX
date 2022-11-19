@@ -5,7 +5,6 @@ import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.api.party.Party;
 import it.hemerald.basementx.common.party.BasementParty;
 import it.hemerald.basementx.velocity.together.Together;
-import it.hemerald.basementx.velocity.together.commands.CommandArgument;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;

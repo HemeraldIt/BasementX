@@ -6,9 +6,6 @@ import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.velocity.together.manager.PartyManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 
 import java.util.List;
 

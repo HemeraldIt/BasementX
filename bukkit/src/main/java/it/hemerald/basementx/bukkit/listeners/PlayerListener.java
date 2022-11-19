@@ -4,7 +4,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.player.stream.StreamMode;
-import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import org.bukkit.Bukkit;

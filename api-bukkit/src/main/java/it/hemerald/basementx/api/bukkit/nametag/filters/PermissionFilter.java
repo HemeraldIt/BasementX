@@ -4,7 +4,9 @@ import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class PermissionFilter extends NameTagFilter {
