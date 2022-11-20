@@ -14,6 +14,8 @@ public abstract class NameTagFilter {
         this.prefix = prefix;
     }
 
+    public abstract boolean isEnabled();
+
     public abstract boolean test(Player player);
 
     public abstract boolean ignoreMe(Player player);
@@ -30,6 +32,7 @@ public abstract class NameTagFilter {
     }
 
     public void testThenApply(Player player) {
+        if(!isEnabled()) return;
         testThenApply(player, ignoreMe(player));
     }
 }

@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class NMSSubFilter extends SubFilter {
+public abstract class NMSSubFilter extends SubFilter {
 
     public NMSSubFilter(BasementBukkit basement) {
         super(basement);

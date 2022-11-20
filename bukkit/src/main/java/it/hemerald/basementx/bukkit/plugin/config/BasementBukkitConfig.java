@@ -17,5 +17,6 @@ public class BasementBukkitConfig extends BasementConfig {
     public static final Property<Boolean> STAFF_MODE = newProperty("modules.staff-mode.enabled", true);
     public static final Property<Boolean> NAME_TAG = newProperty("modules.name-tag.enabled", true);
     public static final Property<Boolean> TAGS = newProperty("modules.name-tag.tags", true);
+    public static final Property<Boolean> SUB_FILTER = newProperty("modules.name-tag.filters.sub", true);
     public static final Property<Boolean> DISGUISE = newProperty("modules.disguise.enabled", true);
 }
