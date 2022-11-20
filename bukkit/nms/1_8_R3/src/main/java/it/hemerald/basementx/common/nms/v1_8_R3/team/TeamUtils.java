@@ -66,7 +66,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
 
         if(team == null) {
             team = scoreboard.createTeam(name);
-            team.setPrefix(basement.getNameTagModule().getAdapter().getFakePrefix(Bukkit.getPlayer(player.getName())));
+            team.setPrefix(ChatColor.GRAY.toString());
             team.setAllowFriendlyFire(true);
             team.getPlayerNameSet().add(player.getStreamName());
             packet = new PacketPlayOutScoreboardTeam(team, 0);
@@ -106,44 +106,6 @@ public class TeamUtils implements NameTagModule.TeamUtils {
             }
         }
     }
-
-    /*public void updateHealth(Player player, double health, boolean tab) {
-        ScoreboardObjective healthBar = scoreboard.getObjective("health");
-        if (healthBar == null) {
-            healthBar = scoreboard.registerObjective("health", IScoreboardCriteria.b);
-            setDisplaySlot(healthBar);
-        }
-
-        healthBar.setDisplayName(ChatColor.RED + "\u2764");
-        scoreboard.getScoresForObjective()
-        healthBar.getScore(player.getSafeFakeName()).setScore(Math.max(0, (int) Math.round(health)));
-
-        if(tab) updateHealthTab(player, health);
-    }
-
-    public void updateHealthTab(Player player, double health) {
-        Objective healthBar = getScoreboard(player).getObjective("healthtab");
-        if (healthBar == null) {
-            healthBar = getScoreboard(player).registerNewObjective("healthtab", "dummy");
-            healthBar.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-        }
-
-        healthBar.setDisplayName(ChatColor.RED + "\u2764");
-        healthBar.getScore(player.getSafeFakeName()).setScore(Math.max(0, (int) Math.round(health)));
-    }
-
-    private void setDisplaySlot(ScoreboardObjective objective) {
-        Scoreboard board = scoreboard;
-
-        int slotNumber;
-        for(slotNumber = 0; slotNumber < 3; ++slotNumber) {
-            if (board.getObjectiveForSlot(slotNumber) == objective) {
-                board.setDisplaySlot(slotNumber, null);
-            }
-        }
-
-        board.setDisplaySlot(2, objective);
-    }*/
 
     private String getFakeTeamName(BasementPlayer basementPlayer, boolean status) {
         return basement.getNameTagModule().resize(UUID + (char)(status ? 265 : 270) + basementPlayer.getStreamName());
