@@ -4,8 +4,6 @@ import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import it.hemerald.basementx.api.Basement;
-import it.hemerald.basementx.api.common.SelfExpiringHashMap;
-import it.hemerald.basementx.api.common.SelfExpiringMap;
 import it.hemerald.basementx.api.concurrent.process.ProcessScheduler;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
@@ -51,8 +49,6 @@ public class StandardBasement implements Basement {
     private final RemoteVelocityService velocityService;
     private final RemoteCerebrumService cerebrumService;
     private final UserDataService userDataService;
-
-    private final SelfExpiringMap<UUID, UserData> userDataMap = new SelfExpiringHashMap<>(900000); // 15 minutes
 
     private final AbstractMariaDatabase database;
 
@@ -155,12 +151,7 @@ public class StandardBasement implements Basement {
 
     @Override
     public UserData getUserData(UUID uuid) {
-        UserData userData = userDataMap.get(uuid);
-        if(userData == null) {
-            userData = redisManager.getRedissonClient().getLiveObjectService().get(UserData.class, uuid.toString());
-            userDataMap.put(uuid, userData);
-        }
-        return userData;
+        return redisManager.getRedissonClient().getLiveObjectService().get(UserData.class, uuid.toString());
     }
 
     @Override
