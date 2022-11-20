@@ -20,15 +20,16 @@ public class BukkitStreamMode extends StreamMode {
 
     @Override
     public void sendPackets(Player who, Player... streamers) {
+        String whoFakeName = nameTagModule.getAdapter().getFakePrefix(who) + playerManager.getBasementPlayer(who.getName()).getStreamName();
         for (Player streamer : streamers) {
             if (streamer == who) continue;
             streamer.customizePlayer(
-                    playerManager.getBasementPlayer(who.getName()).getStreamName(),
+                    whoFakeName,
                     STREAM,
                     who
             );
             who.customizePlayer(
-                    playerManager.getBasementPlayer(streamer.getName()).getStreamName(),
+                    nameTagModule.getAdapter().getFakePrefix(streamer) + playerManager.getBasementPlayer(streamer.getName()).getStreamName(),
                     Skin.EMPTY,
                     streamer
             );
@@ -40,6 +41,7 @@ public class BukkitStreamMode extends StreamMode {
     @Override
     public void sendPackets(List<Player> players, Player streamer, boolean enable) {
         BasementPlayer streamerPlayer = playerManager.getBasementPlayer(streamer.getName());
+        String streamName = nameTagModule.getAdapter().getFakePrefix(streamer) + streamerPlayer.getStreamName();
         for (Player who : players) {
             if (who.equals(streamer)) continue;
             BasementPlayer basementPlayer = playerManager.getBasementPlayer(who.getName());
@@ -50,12 +52,12 @@ public class BukkitStreamMode extends StreamMode {
                 who.showPlayer(streamer);
             } else {
                 streamer.customizePlayer(
-                        enable ? basementPlayer.getStreamName() : who.getSafeFakeName(),
+                        enable ? nameTagModule.getAdapter().getFakePrefix(who) + basementPlayer.getStreamName() : who.getSafeFakeName(),
                         enable ? STREAM : who.getSafeFakeSkin(),
                         who
                 );
                 who.customizePlayer(
-                        enable ? streamerPlayer.getStreamName() : streamer.getSafeFakeName(),
+                        enable ? streamName : streamer.getSafeFakeName(),
                         enable ? Skin.EMPTY : streamer.getSafeFakeSkin(),
                         streamer
                 );

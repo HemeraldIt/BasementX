@@ -74,6 +74,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         if(team == null) {
             team = scoreboard.g(name);
             team.b(IChatBaseComponent.a(ChatColor.GRAY.toString()));
+            team.b(IChatBaseComponent.a(basement.getNameTagModule().getAdapter().getFakePrefix(Bukkit.getPlayer(player.getName()))));
             team.a(EnumChatFormat.h);
             team.a(true);
             team.g().add(player.getStreamName());
