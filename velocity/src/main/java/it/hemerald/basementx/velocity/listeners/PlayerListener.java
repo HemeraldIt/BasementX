@@ -24,7 +24,7 @@ public class PlayerListener {
         velocity.getUserDataManager().prepareUser(event.getPlayer());
     }
 
-    @Subscribe
+    @Subscribe(order = PostOrder.LAST)
     private void onQuit(DisconnectEvent event) {
         playersCount.set(velocity.getServer().getPlayerCount());
         velocity.getUserDataManager().cacheUser(event.getPlayer());

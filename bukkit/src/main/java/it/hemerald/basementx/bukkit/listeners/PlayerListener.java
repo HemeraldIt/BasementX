@@ -61,7 +61,7 @@ public class PlayerListener implements Listener {
         event.setFormat(format.get());
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
         basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
