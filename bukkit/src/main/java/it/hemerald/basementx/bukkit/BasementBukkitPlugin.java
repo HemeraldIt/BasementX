@@ -123,7 +123,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
     protected void registerListeners() {
         PlayerListener playerListener = new PlayerListener(basement);
         plugin.getServer().getPluginManager().registerEvents(playerListener, plugin);
-        getBasement().getRedisManager().registerTopicListener(TpToMessage.TOPIC, new TpToHandler(playerListener));
+        getBasement().getRedisManager().registerTopicListener(TpToMessage.TOPIC, new TpToHandler(plugin, playerListener::tpTo));
         if(basement.isHostable()) {
             plugin.getServer().getPluginManager().registerEvents(new HostListener(basement), plugin);
         }
