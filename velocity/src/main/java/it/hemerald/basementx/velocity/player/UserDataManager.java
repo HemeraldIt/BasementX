@@ -74,8 +74,13 @@ public class UserDataManager {
         UserData userData = userDataCache.getIfPresent(uuid);
         if (userData != null) {
             userDataCache.invalidate(uuid);
-            userDataMap.put(uuid, userData);
-            return;
+            try {
+                userData.getXp();
+                userDataMap.put(uuid, userData);
+                return;
+            } catch (Exception ignored) {
+                System.out.println("Error when trying to restore from cache UserData of " + player.getUsername() + ", creating a new one from database");
+            }
         }
 
         // User Data Select
