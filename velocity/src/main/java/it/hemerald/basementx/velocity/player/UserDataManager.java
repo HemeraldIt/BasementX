@@ -198,8 +198,13 @@ public class UserDataManager {
         System.out.println("Saving all UserData(s) & Boosters to disk. (batch size: " + users.size() + ")");
 
         try (PreparedStatement preparedStatement = queryUpdateUserData.patternClone().build().asPrepared()) {
-            for (UserData userData : users)
-                addBatchedUserData(preparedStatement, userData);
+            for (UserData userData : users) {
+                try {
+                    addBatchedUserData(preparedStatement, userData);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             preparedStatement.executeBatch();
             preparedStatement.getConnection().close();
         } catch (SQLException exception) {
@@ -207,8 +212,13 @@ public class UserDataManager {
         }
 
         try (PreparedStatement preparedStatement = queryInsertUserBoosters.patternClone().build().asPrepared()) {
-            for (UserData userData : users)
-                addBatchedUserBoosters(preparedStatement, userData);
+            for (UserData userData : users) {
+                try {
+                    addBatchedUserBoosters(preparedStatement, userData);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             preparedStatement.executeBatch();
             preparedStatement.getConnection().close();
         } catch (SQLException exception) {
