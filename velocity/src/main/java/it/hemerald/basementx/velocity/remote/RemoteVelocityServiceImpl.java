@@ -10,6 +10,7 @@ import it.hemerald.basementx.velocity.BasementVelocity;
 import it.hemerald.basementx.velocity.alert.AlertType;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -119,7 +120,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     }
 
     @Override
-    public void cheatAlert(String server, String playerName, String alert, long ping) {
+    public void cheatAlert(String server, String playerName, String category, String type, String desc, int level, int maxLevel, long cps, long ping) {
         for (Player player : velocity.getServer().getAllPlayers()) {
             if (!player.hasPermission("basement.alerts")) continue;
 
@@ -143,13 +144,23 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
             TextComponent.Builder builder = Component.text();
 
-            builder.append(Component.text("[" + server + "] ").clickEvent(ClickEvent.runCommand("/goto " + server))).color(NamedTextColor.DARK_AQUA);
-            builder.append(Component.text(alert).clickEvent(ClickEvent.runCommand("/tpto " + playerName)));
+            builder.append(Component.text("[" + server + "] ").clickEvent(ClickEvent.runCommand("/goto " + server))).color(NamedTextColor.RED);
+            builder.append(Component.text("§8» §a" + playerName + " §7flagged §e" + category + " (" + type + ") §7(" + level + "/" + maxLevel + ")")
+                    .clickEvent(ClickEvent.runCommand("/tpto " + playerName)));
 
             builder.hoverEvent(HoverEvent.showText(
-                    Component.text()
-                            .content("Ping: " + ping)
-                            .color(NamedTextColor.AQUA)));
+                    Component.join(JoinConfiguration.newlines(),
+                                    Component.text("Categoria: ", NamedTextColor.GRAY).append(Component.text(category, NamedTextColor.YELLOW)),
+                                    Component.text("Tipo: ", NamedTextColor.GRAY).append(Component.text(type, NamedTextColor.AQUA)),
+                                    Component.text("Info: ", NamedTextColor.GRAY).append(Component.text(desc, NamedTextColor.GREEN)),
+                                    Component.text("Livello: ", NamedTextColor.GRAY)
+                                            .append(Component.text(level, NamedTextColor.RED))
+                                            .append(Component.text("/", NamedTextColor.GRAY)
+                                            .append(Component.text(maxLevel, NamedTextColor.RED))),
+                                    Component.text("CPS: ", NamedTextColor.GRAY).append(Component.text(cps, formatCps(cps))),
+                                    Component.text("Ping: ", NamedTextColor.GRAY).append(Component.text(ping, formatPing(ping)))
+                    )
+            ));
 
             player.sendMessage(builder);
         }
@@ -163,5 +174,31 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     public int playerVersion(UUID uuid) {
         return Via.getAPI().getPlayerVersion(uuid);
+    }
+
+    public static NamedTextColor formatPing(long ping) {
+        if (ping >= 0 && ping < 70) {
+            return NamedTextColor.GREEN;
+        } else if (ping >= 70 && ping < 100) {
+            return NamedTextColor.YELLOW;
+        } else if (ping >= 100 && ping < 150) {
+            return NamedTextColor.GOLD;
+        } else if (ping >= 150) {
+            return NamedTextColor.RED;
+        }
+        return NamedTextColor.WHITE;
+    }
+
+    public static NamedTextColor formatCps(long cps) {
+        if (cps >= 0 && cps < 10) {
+            return NamedTextColor.GREEN;
+        } else if (cps >= 10 && cps < 15) {
+            return NamedTextColor.YELLOW;
+        } else if (cps >= 15 && cps < 20) {
+            return NamedTextColor.GOLD;
+        } else if (cps >= 20) {
+            return NamedTextColor.RED;
+        }
+        return NamedTextColor.WHITE;
     }
 }
