@@ -26,8 +26,8 @@ public class VulcanListener implements Listener {
 
         alert(
                 event.getPlayer(),
-                event.getCheck().getName().substring(0, 1).toUpperCase() + event.getCheck().getName().substring(1),
                 event.getCheck().getDescription(),
+                event.getCheck().getName().substring(0, 1).toUpperCase() + event.getCheck().getName().substring(1),
                 String.valueOf(Character.toUpperCase(event.getCheck().getType())),
                 event.getCheck().getVl(), event.getCheck().getMaxVl());
     }
