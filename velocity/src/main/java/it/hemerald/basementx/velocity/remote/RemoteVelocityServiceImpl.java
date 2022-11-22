@@ -145,11 +145,12 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
             TextComponent.Builder builder = Component.text();
 
             builder.append(Component.text("[" + server + "] ").clickEvent(ClickEvent.runCommand("/goto " + server))).color(NamedTextColor.RED);
-            builder.append(Component.text("§8» §a" + playerName + " §7flagged §e" + category + " (" + type + ") §7(" + level + "/" + maxLevel + ")")
+            builder.append(Component.text("§8» §b" + playerName + " §7flagged §e" + category + " (" + type + ") §7(" + level + "/" + maxLevel + ")")
                     .clickEvent(ClickEvent.runCommand("/tpto " + playerName)));
 
             builder.hoverEvent(HoverEvent.showText(
                     Component.join(JoinConfiguration.newlines(),
+                                    Component.text(),
                                     Component.text("Categoria: ", NamedTextColor.GRAY).append(Component.text(category, NamedTextColor.YELLOW)),
                                     Component.text("Tipo: ", NamedTextColor.GRAY).append(Component.text(type, NamedTextColor.AQUA)),
                                     Component.text("Info: ", NamedTextColor.GRAY).append(Component.text(desc, NamedTextColor.GREEN)),
@@ -158,7 +159,8 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
                                             .append(Component.text("/", NamedTextColor.GRAY)
                                             .append(Component.text(maxLevel, NamedTextColor.RED))),
                                     Component.text("CPS: ", NamedTextColor.GRAY).append(Component.text(cps, formatCps(cps))),
-                                    Component.text("Ping: ", NamedTextColor.GRAY).append(Component.text(ping, formatPing(ping)))
+                                    Component.text("Ping: ", NamedTextColor.GRAY).append(Component.text(ping, formatPing(ping))),
+                                    Component.text()
                     )
             ));
 
