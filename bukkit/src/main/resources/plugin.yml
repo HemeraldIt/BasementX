@@ -27,7 +27,6 @@ commands:
   streammode:
     aliases: [sm]
   bedwars:
-    aliases: [bw]
   thebridge:
     aliases: [bridge, bg]
 
