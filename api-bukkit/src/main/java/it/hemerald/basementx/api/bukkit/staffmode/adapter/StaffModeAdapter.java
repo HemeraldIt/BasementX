@@ -15,8 +15,9 @@ import java.util.*;
 public abstract class StaffModeAdapter extends Adapter<StaffModeModule> {
 
     @Getter(AccessLevel.NONE) private final Map<String, InteractiveItem> listeners = new HashMap<>();
-    private final Set<Player> vanished = new HashSet<>();
+    private final Set<Player> vanished = Collections.newSetFromMap(new WeakHashMap<>());
     private final Map<Player, ItemStack[]> inventories = new HashMap<>();
+    private final Set<Player> wasFlying = Collections.newSetFromMap(new WeakHashMap<>());
 
     public StaffModeAdapter(StaffModeModule module) {
         super(module);

@@ -28,6 +28,7 @@ import java.util.List;
 public class DefaultStaffModeModule extends StaffModeModule implements Listener {
 
     private RSetCache<String> vanishSet;
+    private RSetCache<String> staffModeSet;
 
     public DefaultStaffModeModule(BasementBukkit basement) {
         super(basement, BasementBukkitConfig.STAFF_MODE);
@@ -42,6 +43,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
     public void onStart() {
         basement.getPlugin().getServer().getPluginManager().registerEvents(this, basement.getPlugin());
         vanishSet = basement.getRedisManager().getRedissonClient().getSetCache("vanish");
+        staffModeSet = basement.getRedisManager().getRedissonClient().getSetCache("staffMode");
     }
 
     @Override
@@ -60,12 +62,15 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         vanish(player);
 
+        staffModeSet.addAsync(player.getName());
+
         player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "StaffMode abilitata!");
     }
 
     private boolean localEnable(Player player) {
         if(!isEnabled() || isMode(player) || !adapter.onEnterMode(player)) return false;
 
+        if(player.getAllowFlight()) adapter.getWasFlying().add(player);
         player.setAllowFlight(true);
         player.setFlying(true);
 
@@ -82,14 +87,17 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         unvanish(player);
 
+        staffModeSet.removeAsync(player.getName());
+
         player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "StaffMode disabilitata!");
     }
 
     private boolean localDisable(Player player) {
         if(!isEnabled() || !isMode(player) || !adapter.onExitMode(player)) return false;
 
-        player.setFlying(false);
-        player.setAllowFlight(false);
+        boolean fly = adapter.getWasFlying().remove(player);
+        player.setFlying(fly);
+        player.setAllowFlight(fly);
 
         player.getInventory().setContents(adapter.getInventories().get(player));
 
@@ -253,9 +261,16 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
             return;
         }
 
+        if(staffModeSet.contains(player.getName())) {
+            basement.getPlugin().getServer().getScheduler().runTaskLater(basement.getPlugin(), () -> {
+                if(localEnable(player)) {
+                    player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "StaffMode abilitata!");
+                }
+            }, 1L);
+        }
         if(vanishSet.contains(player.getName())) {
-            localVanish(player);
-            player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "Sei invisibile!");
+            if(localVanish(player))
+                player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "Sei invisibile!");
         }
     }
 
