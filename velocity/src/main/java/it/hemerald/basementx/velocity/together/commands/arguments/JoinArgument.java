@@ -1,6 +1,7 @@
 package it.hemerald.basementx.velocity.together.commands.arguments;
 
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ServerConnection;
 import it.hemerald.basementx.api.party.Party;
 import it.hemerald.basementx.velocity.together.commands.CommandArgument;
 import it.hemerald.basementx.velocity.together.invitation.Invitation;
@@ -67,5 +68,14 @@ public class JoinArgument extends CommandArgument {
         toJoin.getMembers().add(name);
         partyService.saveParty(toJoin);
         partyService.sendMessage(player, Component.text("§7Sei entrato nel party di ").append(Component.text(toJoin.getLeader()).color(NamedTextColor.AQUA)));
+
+        Optional<Player> optLeader = partyService.getTogether().getServer().getPlayer(toJoin.getLeader());
+        if(optLeader.isEmpty()) return;
+        Optional<ServerConnection> optionalServerConnection = optLeader.get().getCurrentServer();
+        if(optionalServerConnection.isEmpty()) return;
+        ServerConnection serverConnection = optionalServerConnection.get();
+        if(!serverConnection.getServerInfo().getName().contains("_lobby")) return;
+
+        player.createConnectionRequest(serverConnection.getServer()).fireAndForget();
     }
 }

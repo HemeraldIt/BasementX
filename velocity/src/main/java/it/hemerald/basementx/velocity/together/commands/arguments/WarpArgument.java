@@ -38,6 +38,10 @@ public class WarpArgument extends CommandArgument {
         }
 
         String serverName = serverConnectionOptional.get().getServer().getServerInfo().getName();
+        if(serverName.contains("_instance_") || serverName.contains("_server_")) {
+            partyService.sendMessage(player, "Non puoi effettuare il party warp in questo server!");
+            return;
+        }
 
         for (String memberName : party.getMembers()) {
             partyService.getTogether().getBasement().getRedisManager().publishMessage(new PartyWarpMessage(memberName, serverName));
