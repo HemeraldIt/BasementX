@@ -96,8 +96,8 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
         if(!isEnabled() || !isMode(player) || !adapter.onExitMode(player)) return false;
 
         boolean fly = adapter.getWasFlying().remove(player);
-        player.setFlying(fly);
         player.setAllowFlight(fly);
+        player.setFlying(fly);
 
         player.getInventory().setContents(adapter.getInventories().get(player));
 
