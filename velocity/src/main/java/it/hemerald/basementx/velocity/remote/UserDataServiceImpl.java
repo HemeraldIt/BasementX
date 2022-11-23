@@ -5,6 +5,7 @@ import it.hemerald.basementx.api.remote.UserDataService;
 import it.hemerald.basementx.velocity.player.UserDataManager;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -14,7 +15,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public int getNetworkLevel(UUID uuid) {
-        return userDataManager.getUserData(uuid).getNetworkLevel();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return 0;
+        return optionalUserData.get().getNetworkLevel();
     }
 
     @Override
@@ -24,7 +27,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public int getXP(UUID uuid) {
-        return userDataManager.getUserData(uuid).getXp();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return 0;
+        return optionalUserData.get().getXp();
     }
 
     @Override
@@ -34,7 +39,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public int getNetworkCoin(UUID uuid) {
-        return userDataManager.getUserData(uuid).getNetworkCoins();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return 0;
+        return optionalUserData.get().getNetworkCoins();
     }
 
     @Override
@@ -44,7 +51,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public int getGems(UUID uuid) {
-        return userDataManager.getUserData(uuid).getGems();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return 0;
+        return optionalUserData.get().getGems();
     }
 
     @Override
@@ -54,7 +63,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public boolean isPremium(UUID uuid) {
-        return userDataManager.getUserData(uuid).getPremium();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return false;
+        return optionalUserData.get().getPremium();
     }
 
     @Override
@@ -64,7 +75,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public int getProtocolVersion(UUID uuid) {
-        return userDataManager.getUserData(uuid).getProtocolVersion();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return 0;
+        return optionalUserData.get().getProtocolVersion();
     }
 
     @Override
@@ -74,7 +87,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public String getLanguage(UUID uuid) {
-        return userDataManager.getUserData(uuid).getLanguage();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return "it-it";
+        return optionalUserData.get().getLanguage();
     }
 
     @Override
@@ -84,7 +99,9 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public boolean isInStreamMode(UUID uuid) {
-        return userDataManager.getUserData(uuid).getStreamMode();
+        Optional<UserData> optionalUserData = userDataManager.getUserData(uuid);
+        if(optionalUserData.isEmpty()) return false;
+        return optionalUserData.get().getStreamMode();
     }
 
     @Override
@@ -94,7 +111,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setNetworkLevel(UUID uuid, int level) {
-        userDataManager.getUserData(uuid).setNetworkLevel(level);
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setNetworkLevel(level));
     }
 
     @Override
@@ -104,9 +121,10 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setXP(UUID uuid, int xp) {
-        UserData userData = userDataManager.getUserData(uuid);
-        userData.setXp(xp);
-        userData.tryLevelUp();
+        userDataManager.getUserData(uuid).ifPresent(userData -> {
+            userData.setXp(xp);
+            userData.tryLevelUp();
+        });
     }
 
     @Override
@@ -118,7 +136,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setNetworkCoin(UUID uuid, int coin) {
-        userDataManager.getUserData(uuid).setNetworkCoins(coin);
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setNetworkCoins(coin));
     }
 
     @Override
@@ -128,7 +146,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setGems(UUID uuid, int gems) {
-        userDataManager.getUserData(uuid).setGems(gems);
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setGems(gems));
     }
 
     @Override
@@ -138,7 +156,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setLanguage(UUID uuid, String lang) {
-        userDataManager.getUserData(uuid).setLanguage(lang);
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setLanguage(lang));
     }
 
     @Override
@@ -148,7 +166,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void setStreamMode(UUID uuid, boolean streamMode) {
-        userDataManager.getUserData(uuid).setStreamMode(streamMode);
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setStreamMode(streamMode));
     }
 
     @Override
@@ -158,8 +176,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void addNetworkLevel(UUID uuid, int level) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkLevel(Math.max(0, data.getNetworkLevel()+level));
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setNetworkLevel(Math.max(0, userData.getNetworkLevel()+level)));
     }
 
     @Override
@@ -170,9 +187,10 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void addXP(UUID uuid, int xp, boolean applyBoost) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setXp(data.getXp()+(applyBoost && data.hasXpBoost() ? xp * data.getXpBoost() : xp));
-        data.tryLevelUp();
+        userDataManager.getUserData(uuid).ifPresent(userData -> {
+            userData.setXp(userData.getXp()+(applyBoost && userData.hasXpBoost() ? xp * userData.getXpBoost() : xp));
+            userData.tryLevelUp();
+        });
     }
 
     @Override
@@ -184,8 +202,8 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void addNetworkCoin(UUID uuid, int coin, boolean applyBoost) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkCoins(data.getNetworkCoins()+(applyBoost && data.hasCoinsBoost() ? coin * data.getCoinsBoost() : coin));
+        userDataManager.getUserData(uuid).ifPresent(userData ->
+                userData.setNetworkCoins(userData.getNetworkCoins()+(applyBoost && userData.hasCoinsBoost() ? coin * userData.getCoinsBoost() : coin)));
     }
 
     @Override
@@ -196,8 +214,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void addGems(UUID uuid, int gems) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setGems(data.getGems()+gems);
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setGems(Math.max(0, userData.getGems()+gems)));
     }
 
     @Override
@@ -208,8 +225,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void removeNetworkLevel(UUID uuid, int level) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkLevel(Math.max(0, data.getNetworkLevel()-level));
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setNetworkLevel(Math.max(0, userData.getNetworkLevel()-level)));
     }
 
     @Override
@@ -220,8 +236,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void removeXP(UUID uuid, int xp) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setXp(Math.max(0, data.getXp()-xp));
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setXp(Math.max(0, userData.getXp()-xp)));
     }
 
     @Override
@@ -232,8 +247,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void removeNetworkCoin(UUID uuid, int coin) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setNetworkCoins(Math.max(0, data.getNetworkCoins()-coin));
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setNetworkCoins(Math.max(0, userData.getNetworkCoins()-coin)));
     }
 
     @Override
@@ -244,8 +258,7 @@ public class UserDataServiceImpl implements UserDataService {
 
     @Override
     public void removeGems(UUID uuid, int gems) {
-        UserData data = userDataManager.getUserData(uuid);
-        data.setGems(Math.max(0, data.getGems()-gems));
+        userDataManager.getUserData(uuid).ifPresent(userData -> userData.setGems(Math.max(0, userData.getGems()-gems)));
     }
 
     @Override

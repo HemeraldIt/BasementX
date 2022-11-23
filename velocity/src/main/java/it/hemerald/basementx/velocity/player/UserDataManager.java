@@ -71,7 +71,7 @@ public class UserDataManager {
     public void prepareUser(Player player) {
         UUID uuid = player.getUniqueId();
 
-        UserData userData = userDataCache.getIfPresent(uuid);
+        /*UserData userData = userDataCache.getIfPresent(uuid);
         if (userData != null) {
             userDataCache.invalidate(uuid);
             try {
@@ -81,11 +81,11 @@ public class UserDataManager {
             } catch (Exception ignored) {
                 System.out.println("Error when trying to restore from cache UserData of " + player.getUsername() + ", creating a new one from database");
             }
-        }
+        }*/
 
         // User Data Select
         QueryData data = querySelectUserData.patternClone().where(WhereBuilder.builder().equals("uuid", uuid.toString()).close()).build().execReturn();
-        userData = new UserData(uuid.toString(), player.getUsername());
+        UserData userData = new UserData(uuid.toString(), player.getUsername());
         userData.setProtocolVersion(player.getProtocolVersion().getProtocol());
         userData.setPremium(player.isOnlineMode());
 
@@ -131,13 +131,15 @@ public class UserDataManager {
 
     public void cacheUser(Player player) {
         UUID uuid = player.getUniqueId();
-        UserData userData = userDataMap.remove(uuid);
+        /*UserData userData = userDataMap.remove(uuid);
         if (userData == null) return;
-        userDataCache.put(uuid, userData);
+        userDataCache.put(uuid, userData);*/
+        userDataMap.remove(uuid);
     }
 
-    public UserData getUserData(UUID uuid) {
-        return userDataCache.asMap().getOrDefault(uuid, userDataMap.get(uuid));
+    public Optional<UserData> getUserData(UUID uuid) {
+        //return userDataCache.asMap().getOrDefault(uuid, userDataMap.get(uuid));
+        return Optional.ofNullable(userDataMap.get(uuid));
     }
 
     public UserData getUserData(String username) {
