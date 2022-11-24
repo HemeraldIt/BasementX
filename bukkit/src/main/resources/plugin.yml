@@ -20,8 +20,8 @@ commands:
       - staffm
   vanish:
     permission: basement.staff
-  tag:
-    aliases: [tags, nametag, nametags]
+#  tag:
+#    aliases: [tags, nametag, nametags]
   cheatban:
     permission: cheat.ban
   streammode:
