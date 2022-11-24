@@ -31,6 +31,21 @@ public final class ProbabilityCollection<E> {
     }
 
     /**
+     * Construct a new Probability Collection copied
+     * @param probabilityCollection the probability collection to be copied
+     * @throws IllegalArgumentException if object is null
+     */
+    public ProbabilityCollection(ProbabilityCollection<E> probabilityCollection) {
+        if(probabilityCollection == null) {
+            throw new IllegalArgumentException("Cannot copy null collection");
+        }
+
+        this.collection = new TreeSet<>(Comparator.comparingInt(ProbabilitySetElement::getIndex));
+        collection.addAll(probabilityCollection.collection);
+        this.totalProbability = probabilityCollection.totalProbability;
+    }
+
+    /**
      * @return Number of objects inside the collection
      */
     public int size() {
