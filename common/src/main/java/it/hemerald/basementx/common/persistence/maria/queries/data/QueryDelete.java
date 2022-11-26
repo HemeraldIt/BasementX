@@ -26,7 +26,13 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     }
 
     @Override
-    public QueryBuilderDelete from(String... from) {
+    public QueryBuilderDelete from(String tableName) {
+        this.tableName = databaseName + "." + tableName;
+        return this;
+    }
+
+    @Override
+    public QueryBuilderDelete multiFrom(String... from) {
         StringBuilder builder = new StringBuilder();
         boolean first = true;
         for (String table : from) {
@@ -66,7 +72,7 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     }
 
     @Override
-    public QueryBuilderDelete multi(String... selector) {
+    public QueryBuilderDelete multiTable(String... selector) {
         StringBuilder builder = new StringBuilder();
         boolean first = true;
         for (String table : selector) {
@@ -84,8 +90,11 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     @Override
     public QueryBuilderDelete build() {
         StringBuilder builder = new StringBuilder("DELETE ");
-        if (multi == null) builder.append("FROM ").append(tableName);
-        else builder.append(multi).append(" FROM ").append(tableName);
+        if (multi == null) {
+            builder.append("FROM ").append(tableName);
+        } else {
+            builder.append(multi).append(" FROM ").append(tableName);
+        }
         if (where != null)
             builder.append(" WHERE ").append(where);
         if (orderBy != null)
@@ -115,6 +124,7 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
         copy.limit = limit;
         copy.orderBy = orderBy;
         copy.tableName = tableName;
+        copy.multi = multi;
         copy.where = where;
         copy.returning = returning;
         return copy;

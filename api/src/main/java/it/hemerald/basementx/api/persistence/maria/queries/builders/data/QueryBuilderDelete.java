@@ -13,7 +13,8 @@ public interface QueryBuilderDelete extends ReturningQuery<QueryBuilderDelete, Q
      * @param tableName table's name
      * @return self Query Builder
      */
-    QueryBuilderDelete from(String... tableName);
+    QueryBuilderDelete from(String tableName);
+    QueryBuilderDelete multiFrom(String... tableName);
 
     /**
      * Specifies the full condition
@@ -41,6 +42,6 @@ public interface QueryBuilderDelete extends ReturningQuery<QueryBuilderDelete, Q
 
     QueryBuilderDelete returning(String expression);
 
-    QueryBuilderDelete multi(String... selector);
+    QueryBuilderDelete multiTable(String... selector);
 
 }
