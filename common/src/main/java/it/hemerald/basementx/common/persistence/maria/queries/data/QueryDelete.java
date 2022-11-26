@@ -78,7 +78,7 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
             builder.append(", ").append(databaseName).append(".").append(table);
         }
         multi = builder.toString();
-        return null;
+        return this;
     }
 
     @Override
