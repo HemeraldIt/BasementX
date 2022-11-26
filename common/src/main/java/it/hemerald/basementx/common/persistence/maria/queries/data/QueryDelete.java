@@ -13,6 +13,7 @@ import java.util.function.UnaryOperator;
 public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
 
     private String tableName;
+    private String multi;
     private String where;
     private String orderBy;
     private String returning;
@@ -25,8 +26,18 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     }
 
     @Override
-    public QueryBuilderDelete from(String from) {
-        tableName = from;
+    public QueryBuilderDelete from(String... from) {
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        for (String table : from) {
+            if (first) {
+                first = false;
+                builder.append(databaseName).append(".").append(table);
+                continue;
+            }
+            builder.append(", ").append(databaseName).append(".").append(table);
+        }
+        tableName = builder.toString();
         return this;
     }
 
@@ -55,9 +66,26 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     }
 
     @Override
+    public QueryBuilderDelete multi(String... selector) {
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        for (String table : selector) {
+            if (first) {
+                first = false;
+                builder.append(databaseName).append(".").append(table);
+                continue;
+            }
+            builder.append(", ").append(databaseName).append(".").append(table);
+        }
+        multi = builder.toString();
+        return null;
+    }
+
+    @Override
     public QueryBuilderDelete build() {
-        StringBuilder builder = new StringBuilder("DELETE FROM")
-                .append(" ").append(databaseName).append(".").append(tableName);
+        StringBuilder builder = new StringBuilder("DELETE ");
+        if (multi == null) builder.append("FROM ").append(tableName);
+        else builder.append(multi).append(" FROM ").append(tableName);
         if (where != null)
             builder.append(" WHERE ").append(where);
         if (orderBy != null)
