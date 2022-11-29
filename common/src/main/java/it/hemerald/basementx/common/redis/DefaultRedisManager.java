@@ -10,7 +10,9 @@ import org.redisson.Redisson;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.TypedJsonJacksonCodec;
+import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
+import org.redisson.config.ReadMode;
 import org.redisson.config.SingleServerConfig;
 
 import java.util.HashMap;
@@ -22,21 +24,18 @@ public class DefaultRedisManager implements RedisManager {
     private final Map<String, RTopic> topicMap;
 
     public DefaultRedisManager(SettingsManager settingsManager) {
-        RedisCredentials credentials = new RedisCredentials(
-                settingsManager.getProperty(BasementConfig.REDIS_HOST),
-                settingsManager.getProperty(BasementConfig.REDIS_PORT),
-                settingsManager.getProperty(BasementConfig.REDIS_USERNAME),
-                settingsManager.getProperty(BasementConfig.REDIS_PASSWORD));
+        RedisCredentials credentials = new RedisCredentials(settingsManager.getProperty(BasementConfig.REDIS_HOSTS));
         Config config = new Config();
         config.setUseThreadClassLoader(false);
         config.setCodec(TypedJsonJacksonCodec.INSTANCE);
         config.setNettyThreads(64);
         config.setThreads(24);
-        SingleServerConfig singleConfig = config.useSingleServer().setAddress("redis://" + credentials.getHost() + ":" + credentials.getPort());
-        if (!credentials.getUsername().isEmpty())
-            singleConfig.setUsername(credentials.getUsername());
-        if (!credentials.getPassword().isEmpty())
-            singleConfig.setPassword(credentials.getPassword());
+        ClusterServersConfig clusterServersConfig = config.useClusterServers()
+                .setScanInterval(2000)
+                .setReadMode(ReadMode.MASTER_SLAVE);
+        for (String host : credentials.getHosts()) {
+            clusterServersConfig.addNodeAddress("redis://" + host + ":6379");
+        }
         redissonClient = Redisson.create(config);
         topicMap = new HashMap<>();
     }
