@@ -36,7 +36,6 @@ import it.hemerald.basementx.velocity.remote.RemoteVelocityServiceImpl;
 import it.hemerald.basementx.velocity.remote.UserDataServiceImpl;
 import it.hemerald.basementx.velocity.together.Together;
 import lombok.Getter;
-import net.luckperms.api.LuckPermsProvider;
 import org.redisson.api.RRemoteService;
 
 import java.io.File;
@@ -95,6 +94,17 @@ public class BasementVelocity extends AbstractBasementPlugin {
                 .addForeignKeyConstraint("user_id", "players", "id", "ON DELETE CASCADE ON UPDATE CASCADE")
                 .build().exec();
 
+        database.createTable("staff_notes").ifNotExists(true)
+                .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
+                .addColumn("staff_id", MariaType.INT)
+                .addColumn("player_id", MariaType.INT)
+                .addColumn("note_id", MariaType.INT)
+                .addColumn("note", MariaType.VARCHAR, 256)
+                .withPrimaryKeys("id")
+                .addForeignKeyConstraint("staff_id", "players", "id", "ON UPDATE CASCADE ON DELETE CASCADE")
+                .addForeignKeyConstraint("player_id", "players", "id", "ON UPDATE CASCADE ON DELETE CASCADE")
+                .build().exec();
+
        //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
        //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
        //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
@@ -131,6 +141,8 @@ public class BasementVelocity extends AbstractBasementPlugin {
         server.getCommandManager().register(server.getCommandManager().metaBuilder("globalchat").aliases("gc").build(), new GlobalChatCommand(this));
         server.getCommandManager().register(server.getCommandManager().metaBuilder("basementsub").build(), new SubCommand());
         server.getCommandManager().register(server.getCommandManager().metaBuilder("basementunsub").build(), new UnSubCommand());
+        server.getCommandManager().register(server.getCommandManager().metaBuilder("staffnotes").aliases("staffnote").aliases("sn").aliases("sns").build(),
+                new StaffNoteCommand(this));
 
         server.getEventManager().register(this, new PlayerListener(this));
         server.getEventManager().register(this, new DisguiseListener(getBasement()));
