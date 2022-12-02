@@ -107,7 +107,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         getRedisManager().registerTopicListener(PartyWarpMessage.TOPIC, new PartyWarpHandler(this));
         getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(this));
 
-        if(Bukkit.getPluginManager().getPlugin("Vault") != null) {
+        if(Bukkit.getPluginManager().getPlugin("Vault") != null && getSettingsManager().getProperty(BasementBukkitConfig.COINS_PROVIDER)) {
             Bukkit.getServicesManager().register(
                     net.milkbowl.vault.economy.Economy.class,
                     new CoinsVaultProvider(getPlayerManager()),

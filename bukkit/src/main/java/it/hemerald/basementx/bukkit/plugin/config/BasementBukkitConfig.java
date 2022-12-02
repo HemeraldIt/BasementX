@@ -12,6 +12,8 @@ public class BasementBukkitConfig extends BasementConfig {
 
     public static final Property<Boolean> HOSTABLE = newProperty("hostable", false);
 
+    public static final Property<Boolean> COINS_PROVIDER = newProperty("coins-provider.enabled", false);
+
     public static final Property<Boolean> STREAM_MODE = newProperty("stream-mode.enabled", false);
 
     public static final Property<Boolean> STAFF_MODE = newProperty("modules.staff-mode.enabled", true);
