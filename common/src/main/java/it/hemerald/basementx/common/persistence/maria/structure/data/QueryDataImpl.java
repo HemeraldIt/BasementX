@@ -1,6 +1,8 @@
 package it.hemerald.basementx.common.persistence.maria.structure.data;
 
 import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -12,21 +14,21 @@ import java.util.Map;
 public class QueryDataImpl implements QueryData {
 
     private final List<Map<String, Object>> dataByName = new ArrayList<>();
-    private final List<Map<Integer, Object>> dataById = new ArrayList<>();
+    private final List<Int2ObjectMap<Object>> dataById = new ArrayList<>();
 
     private int index = -1;
 
     public QueryDataImpl(ResultSet resultSet) {
         try (resultSet) {
             Map<String, Object> rowByName;
-            Map<Integer, Object> rowById;
+            Int2ObjectMap<Object> rowById;
 
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columnCount = metaData.getColumnCount();
 
             while (resultSet.next()) {
                 rowByName = new HashMap<>();
-                rowById = new HashMap<>();
+                rowById = new Int2ObjectOpenHashMap<>();
                 for (int i = 1; i <= columnCount; i++) {
                     Object element = resultSet.getObject(i);
                     rowByName.put(metaData.getColumnName(i), element);
