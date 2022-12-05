@@ -29,6 +29,7 @@ public abstract class SubFilter extends PermissionFilter {
     @Override
     protected void fill() {
         this.permissions.add("sub.hemerald");
+        this.permissions.add("sub.ragesss");
 
         this.streamerPermissions = new ArrayList<>();
         for (String permission : this.permissions) {
