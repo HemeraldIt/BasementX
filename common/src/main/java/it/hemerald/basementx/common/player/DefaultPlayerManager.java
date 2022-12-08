@@ -150,20 +150,20 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public Optional<BukkitServer> bestServer(String ranch) {
         List<BukkitServer> bestServers = basement.getServerManager().getOnlineServers(ranch)
-                .parallelStream().sorted(Comparator.comparingInt(BukkitServer::getOnline)).limit(2).toList();
+                .parallelStream().sorted(Comparator.comparingInt(BukkitServer::getOnline)).toList();
         if(bestServers.isEmpty()) {
             return Optional.empty();
         }
         if(bestServers.size() == 1) {
             return Optional.of(bestServers.get(0));
         }
-        BukkitServer first = bestServers.get(0);
-        BukkitServer second = bestServers.get(1);
-        if(second.getOnline() - first.getOnline() > 10) {
-            return Optional.of(first);
-        } else {
-            return Optional.of(bestServers.get(Math.random() < 0.5 ? 0 : 1));
+        for (int i = bestServers.size()-1; i >= 0; i--) {
+            BukkitServer bukkitServer = bestServers.get(i);
+            if(bukkitServer.getOnline() < bukkitServer.getMax()/2) {
+                return Optional.of(bukkitServer);
+            }
         }
+        return Optional.of(bestServers.get(0));
     }
 
     @Override
