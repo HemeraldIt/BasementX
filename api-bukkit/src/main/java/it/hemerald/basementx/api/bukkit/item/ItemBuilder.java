@@ -12,6 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
+import org.bukkit.potion.PotionType;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -144,6 +145,10 @@ public class ItemBuilder {
         return new BookItemMeta();
     }
 
+    public PotionItemMeta potion() {
+        return new PotionItemMeta();
+    }
+
     public ItemStack build() {
         item.setItemMeta(meta);
         return item;
@@ -178,8 +183,28 @@ public class ItemBuilder {
         }
     }
 
+    public class PotionItemMeta {
+        private final PotionMeta meta = (PotionMeta) ItemBuilder.this.meta;
+
+        public PotionItemMeta setBasePotionData(PotionType type) {
+            return setBasePotionData(type, false, false);
+        }
+
+        public PotionItemMeta setBasePotionData(PotionType type, boolean extended, boolean upgraded) {
+            nms.setBasePotionData(meta, type, extended, upgraded);
+            return this;
+        }
+
+        public ItemBuilder build() {
+            ItemBuilder.this.item.setItemMeta(meta);
+            return ItemBuilder.this;
+        }
+    }
+
     public interface NMS {
 
         void setUnbreakable(ItemMeta meta, boolean state);
+
+        void setBasePotionData(PotionMeta meta, PotionType type, boolean extended, boolean upgraded);
     }
 }
