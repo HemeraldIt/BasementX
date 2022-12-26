@@ -1,5 +1,6 @@
 package it.hemerald.basementx.velocity.remote;
 
+import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
@@ -7,6 +8,7 @@ import com.velocitypowered.api.proxy.server.ServerInfo;
 import com.viaversion.viaversion.api.Via;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.velocity.BasementVelocity;
+import it.hemerald.basementx.velocity.alert.AlertEvent;
 import it.hemerald.basementx.velocity.alert.AlertType;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
@@ -18,6 +20,8 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -121,25 +125,32 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     @Override
     public void cheatAlert(String server, String playerName, String category, String type, String desc, int level, int maxLevel, long cps, long ping) {
-        for (Player player : velocity.getServer().getAllPlayers()) {
-            if (!player.hasPermission("basement.alerts")) continue;
+        this.velocity.getServer().getEventManager().fire(new AlertEvent(server, playerName, category, type, desc, level, maxLevel, cps, ping)).thenAccept(alertEvent -> {
+           if(!alertEvent.getResult().isAllowed()) return;
+
+            List<Player> toAlert = new ArrayList<>();
+            for (Player player : velocity.getServer().getAllPlayers()) {
+                if (!player.hasPermission("basement.alerts")) continue;
 
 
-            Optional<ServerConnection> currentServer = player.getCurrentServer();
-            if (currentServer.isPresent() && currentServer.get().getServerInfo().getName().equals("server_screenshare")) {
-                continue;
-            }
+                Optional<ServerConnection> currentServer = player.getCurrentServer();
+                if (currentServer.isPresent() && currentServer.get().getServerInfo().getName().equals("server_screenshare")) {
+                    continue;
+                }
 
-            AlertType alertType = velocity.getToggled().get(player.getUsername());
-            if (alertType != null) {
-                if (alertType == AlertType.NONE) continue;
-                if (alertType == AlertType.SERVER) {
-                    Optional<ServerConnection> optional = player.getCurrentServer();
-                    if (optional.isPresent()) {
-                        if (!optional.get().getServerInfo().getName().equalsIgnoreCase(server))
-                            continue;
+                AlertType alertType = velocity.getToggled().get(player.getUsername());
+                if (alertType != null) {
+                    if (alertType == AlertType.NONE) continue;
+                    if (alertType == AlertType.SERVER) {
+                        Optional<ServerConnection> optional = player.getCurrentServer();
+                        if (optional.isPresent()) {
+                            if (!optional.get().getServerInfo().getName().equalsIgnoreCase(server))
+                                continue;
+                        }
                     }
                 }
+
+                toAlert.add(player);
             }
 
             TextComponent.Builder builder = Component.text();
@@ -150,22 +161,26 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
             builder.hoverEvent(HoverEvent.showText(
                     Component.join(JoinConfiguration.newlines(),
-                                    Component.text(),
-                                    Component.text("Categoria: ", NamedTextColor.GRAY).append(Component.text(category, NamedTextColor.YELLOW)),
-                                    Component.text("Tipo: ", NamedTextColor.GRAY).append(Component.text(type, NamedTextColor.AQUA)),
-                                    Component.text("Info: ", NamedTextColor.GRAY).append(Component.text(desc, NamedTextColor.GREEN)),
-                                    Component.text("Livello: ", NamedTextColor.GRAY)
-                                            .append(Component.text(level, NamedTextColor.RED))
-                                            .append(Component.text("/", NamedTextColor.GRAY)
+                            Component.text(),
+                            Component.text("Categoria: ", NamedTextColor.GRAY).append(Component.text(category, NamedTextColor.YELLOW)),
+                            Component.text("Tipo: ", NamedTextColor.GRAY).append(Component.text(type, NamedTextColor.AQUA)),
+                            Component.text("Info: ", NamedTextColor.GRAY).append(Component.text(desc, NamedTextColor.GREEN)),
+                            Component.text("Livello: ", NamedTextColor.GRAY)
+                                    .append(Component.text(level, NamedTextColor.RED))
+                                    .append(Component.text("/", NamedTextColor.GRAY)
                                             .append(Component.text(maxLevel, NamedTextColor.RED))),
-                                    Component.text("CPS: ", NamedTextColor.GRAY).append(Component.text(cps, formatCps(cps))),
-                                    Component.text("Ping: ", NamedTextColor.GRAY).append(Component.text(ping, formatPing(ping))),
-                                    Component.text()
+                            Component.text("CPS: ", NamedTextColor.GRAY).append(Component.text(cps, formatCps(cps))),
+                            Component.text("Ping: ", NamedTextColor.GRAY).append(Component.text(ping, formatPing(ping))),
+                            Component.text()
                     )
             ));
 
-            player.sendMessage(builder);
-        }
+            TextComponent alert = builder.build();
+
+            for (Player player : toAlert) {
+                player.sendMessage(alert);
+            }
+        });
     }
 
     @Override
