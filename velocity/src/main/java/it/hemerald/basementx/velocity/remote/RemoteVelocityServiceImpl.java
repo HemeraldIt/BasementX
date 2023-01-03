@@ -17,6 +17,7 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.net.InetSocketAddress;
@@ -28,6 +29,8 @@ import java.util.logging.Level;
 
 @RequiredArgsConstructor
 public class RemoteVelocityServiceImpl implements RemoteVelocityService {
+
+    private final GsonComponentSerializer componentSerializer = GsonComponentSerializer.colorDownsamplingGson();
 
     private final BasementVelocity velocity;
 
@@ -108,6 +111,16 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
         if(!velocityPlayer.hasPermission(permissionNode)) return;
         for (String message : messages) {
             velocityPlayer.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
+        }
+    }
+
+    @Override
+    public void sendMessageComponent(String player, String... messages) {
+        Optional<Player> optionalPlayer = this.velocity.getServer().getPlayer(player);
+        if(optionalPlayer.isEmpty()) return;
+        Player velocityPlayer = optionalPlayer.get();
+        for (String message : messages) {
+            velocityPlayer.sendMessage(componentSerializer.deserialize(message));
         }
     }
 

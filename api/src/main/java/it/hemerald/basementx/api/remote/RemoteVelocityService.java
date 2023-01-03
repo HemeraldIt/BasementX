@@ -57,6 +57,13 @@ public interface RemoteVelocityService {
     void sendMessageWithPermission(String player, String permissionNode, String... messages);
 
     /**
+     * Send same messages to a player, serialized in json string {@link net.kyori.adventure.text.Component}
+     * @param player player name
+     * @param messages the messages to send to the player serialized in Json String
+     */
+    void sendMessageComponent(String player, String... messages);
+
+    /**
      * Register a new server to velocity
      * @param serverName the server name
      * @param port the server port

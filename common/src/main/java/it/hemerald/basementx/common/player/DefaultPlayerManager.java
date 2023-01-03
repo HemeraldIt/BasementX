@@ -8,12 +8,16 @@ import it.hemerald.basementx.api.redis.messages.implementation.DisguiseMessage;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.api.server.BukkitServer;
 import lombok.extern.slf4j.Slf4j;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.redisson.api.RSetCache;
 
 import java.util.*;
 
 @Slf4j(topic = "basement")
 public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerManager<E> {
+
+    private static final GsonComponentSerializer componentSerializer = GsonComponentSerializer.colorDownsamplingGson();
 
     private final Basement basement;
     private final RSetCache<String> disguiseSet;
@@ -103,6 +107,19 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void sendMessageWithPermission(String player, String permissionNode, String... messages) {
         velocityService.sendMessageWithPermission(player, permissionNode, messages);
+    }
+
+    @Override
+    public void sendMessage(String player, Component... messages) {
+        if(messages.length == 1) {
+            velocityService.sendMessageComponent(player, componentSerializer.serialize(messages[0]));
+            return;
+        }
+        String[] serializedMessages = new String[messages.length];
+        for (int i = 0; i < messages.length; i++) {
+            serializedMessages[i] = componentSerializer.serialize(messages[i]);
+        }
+        velocityService.sendMessageComponent(player, serializedMessages);
     }
 
     @Override

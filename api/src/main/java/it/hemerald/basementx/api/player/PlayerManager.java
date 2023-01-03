@@ -1,6 +1,7 @@
 package it.hemerald.basementx.api.player;
 
 import it.hemerald.basementx.api.server.BukkitServer;
+import net.kyori.adventure.text.Component;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -135,4 +136,11 @@ public interface PlayerManager<E extends BasementPlayer> {
      * @param messages the messages to send to the player
      */
     void sendMessageWithPermission(String player, String permissionNode, String... messages);
+
+    /**
+     * Send same messages to a player
+     * @param player player name
+     * @param messages the messages to send to the player
+     */
+    void sendMessage(String player, Component... messages);
 }
