@@ -58,10 +58,7 @@ public class DefaultPermissionManager implements PermissionManager {
         User user = getUser(player);
         if(user == null) return 1000;
 
-        Optional<QueryOptions> queryOptions = luckPerms.getContextManager().getQueryOptions(user);
-        if (queryOptions.isEmpty()) return 1000;
-
-        Collection<Group> groups = user.getInheritedGroups(queryOptions.get());
+        Collection<Group> groups = user.getInheritedGroups(user.getQueryOptions());
         for (Group group : groups) {
             if (group.getWeight().isPresent()) return 1000 - group.getWeight().getAsInt();
         }
