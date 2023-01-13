@@ -44,13 +44,21 @@ public class QueryUpdate extends MariaQuery implements QueryBuilderUpdate {
     private final List<String> set = new ArrayList<>();
     @Override
     public QueryBuilderUpdate set(String str, Object value) {
-        set.add(str + "='" + value + "'");
+        if(value == null) {
+            set.add(str + "=NULL");
+        } else {
+            set.add(str + "='" + value + "'");
+        }
         return this;
     }
 
     @Override
     public QueryBuilderUpdate setNQ(String str, Object value) {
-        set.add(str + "=" + value);
+        if(value == null) {
+            set.add(str + "=NULL");
+        } else {
+            set.add(str + "=" + value);
+        }
         return this;
     }
 

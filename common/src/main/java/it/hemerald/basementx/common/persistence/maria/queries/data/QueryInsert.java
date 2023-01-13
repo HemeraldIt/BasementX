@@ -80,10 +80,18 @@ public class QueryInsert extends MariaQuery implements QueryBuilderInsert {
             } else {
                 if (first) {
                     first = false;
-                    builder.append(quoted ? getQuoted(value) : value);
+                    if(value == null) {
+                        builder.append("NULL");
+                    } else {
+                        builder.append(quoted ? getQuoted(value) : value);
+                    }
                     continue;
                 }
-                builder.append(", ").append(quoted ? getQuoted(value) : value);
+                if(value == null) {
+                    builder.append(", NULL");
+                } else {
+                    builder.append(", ").append(quoted ? getQuoted(value) : value);
+                }
             }
         }
         builder.append(")");
