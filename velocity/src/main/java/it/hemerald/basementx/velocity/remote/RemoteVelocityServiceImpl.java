@@ -139,12 +139,11 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void cheatAlert(String server, String playerName, String category, String type, String desc, int level, int maxLevel, long cps, long ping) {
         this.velocity.getServer().getEventManager().fire(new AlertEvent(server, playerName, category, type, desc, level, maxLevel, cps, ping)).thenAccept(alertEvent -> {
-           if(!alertEvent.getResult().isAllowed()) return;
+            if(!alertEvent.getResult().isAllowed()) return;
 
             List<Player> toAlert = new ArrayList<>();
             for (Player player : velocity.getServer().getAllPlayers()) {
                 if (!player.hasPermission("basement.alerts")) continue;
-
 
                 Optional<ServerConnection> currentServer = player.getCurrentServer();
                 if (currentServer.isPresent() && currentServer.get().getServerInfo().getName().equals("server_screenshare")) {

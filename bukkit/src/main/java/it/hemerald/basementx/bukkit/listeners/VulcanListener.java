@@ -38,6 +38,8 @@ public class VulcanListener implements Listener {
         int ping = VulcanAPI.Factory.getApi().getPing(player);
         double cps = VulcanAPI.Factory.getApi().getCps(player);
 
+        if (ping == 0) return;
+
         basement.getRemoteVelocityService().cheatAlert(basement.getServerID(), player.getName(), check, type, desc, vl, maxVL, (long) cps, ping);
     }
 
@@ -46,9 +48,21 @@ public class VulcanListener implements Listener {
 
         bannedPlayers.add(player);
         Bukkit.getScheduler().runTaskLaterAsynchronously(basement.getPlugin(), () -> bannedPlayers.remove(player), 40L);
-        basement.getRemoteVelocityService().cheatBan(basement.getServerID(), player);
 
         Player onlinePlayer = Bukkit.getPlayer(player);
-        if (onlinePlayer != null) onlinePlayer.kickPlayer("AntiCheat Detection (Cheating)");
+        alert(onlinePlayer,
+                "Banning player...",
+                "Cheating",
+                "A",
+                1, 1);
+        onlinePlayer.kickPlayer("AntiCheat Detection (Cheating)");
+
+        int ping = VulcanAPI.Factory.getApi().getPing(onlinePlayer);
+        if (ping == 0) {
+            return;
+        }
+
+        basement.getRemoteVelocityService().cheatBan(basement.getServerID(), player);
+
     }
 }
