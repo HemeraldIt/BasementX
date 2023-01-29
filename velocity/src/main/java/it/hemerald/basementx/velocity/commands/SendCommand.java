@@ -35,6 +35,36 @@ public class SendCommand implements SimpleCommand {
 
         Optional<Player> optionalPlayer = velocity.getServer().getPlayer(args[0]);
         if(optionalPlayer.isEmpty()) {
+            if (args[0].equalsIgnoreCase("current")) {
+                if (source instanceof Player sender) {
+                    sender.getCurrentServer().ifPresent(server -> {
+
+                        Optional<RegisteredServer> optionalServerTo = velocity.getServer().getServer(args[1]);
+                        if(optionalServerTo.isEmpty()) {
+                            source.sendMessage(Component.text()
+                                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                                    .append(Component.text("Non è stato possibile mandare nessun giocatore in questo server!").color(NamedTextColor.RED)));
+                            return;
+                        }
+
+                        RegisteredServer registeredServer = optionalServerTo.get();
+                        if(server.getServerInfo().getName().equalsIgnoreCase(registeredServer.getServerInfo().getName())) {
+                            source.sendMessage(Component.text()
+                                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                                    .append(Component.text("I giocatori si trovano già in quel nel server!").color(NamedTextColor.RED)));
+                            return;
+                        }
+
+                        server.getServer().getPlayersConnected().forEach(player -> player.createConnectionRequest(registeredServer).fireAndForget());
+                    });
+                } else {
+                    source.sendMessage(Component.text()
+                            .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                            .append(Component.text("Non puoi usare questo comando da console!").color(NamedTextColor.RED)));
+                }
+                return;
+            }
+
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));

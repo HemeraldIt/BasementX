@@ -138,7 +138,6 @@ public class BasementVelocity extends AbstractBasementPlugin {
         server.getCommandManager().register(server.getCommandManager().metaBuilder("hub").aliases("lobby").build(), new HubCommand(this));
         server.getCommandManager().register(server.getCommandManager().metaBuilder("find").build(), new FindCommand(this));
         server.getCommandManager().register(server.getCommandManager().metaBuilder("send").build(), new SendCommand(this));
-        server.getCommandManager().register(server.getCommandManager().metaBuilder("globalchat").aliases("gc").build(), new GlobalChatCommand(this));
         server.getCommandManager().register(server.getCommandManager().metaBuilder("basementsub").build(), new SubCommand());
         server.getCommandManager().register(server.getCommandManager().metaBuilder("basementunsub").build(), new UnSubCommand());
         server.getCommandManager().register(server.getCommandManager().metaBuilder("staffnotes").aliases("staffnote").aliases("sn").aliases("sns").build(),
