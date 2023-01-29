@@ -32,7 +32,7 @@ public class PlayerListener {
     @Subscribe(order = PostOrder.LAST)
     private void onQuit(DisconnectEvent event) {
         playersCount.set(velocity.getServer().getPlayerCount());
-        velocity.getUserDataManager().cacheUser(event.getPlayer());
+        velocity.getUserDataManager().saveUser(event.getPlayer());
     }
 
     @Subscribe

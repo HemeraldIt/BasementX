@@ -1,12 +1,7 @@
 package it.hemerald.basementx.velocity.player;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.RemovalCause;
-import com.google.common.cache.RemovalListener;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.scheduler.ScheduledTask;
-import com.velocitypowered.api.scheduler.Scheduler;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.WhereBuilder;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderDelete;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderReplace;
@@ -28,7 +23,6 @@ import java.util.function.BiConsumer;
 
 public class UserDataManager {
 
-    private final Cache<UUID, UserData> userDataCache;
     private final Map<UUID, UserData> userDataMap = new HashMap<>();
     private final RedissonClient redissonClient;
 
@@ -39,8 +33,10 @@ public class UserDataManager {
     private final QueryBuilderReplace queryInsertUserBoosters;
 
     private final ScheduledTask task;
+    private final BasementVelocity velocity;
 
     public UserDataManager(BasementVelocity velocity, AbstractMariaDatabase database) {
+        this.velocity = velocity;
         this.redissonClient = velocity.getBasement().getRedisManager().getRedissonClient();
 
         querySelectUserData = database.select().from("players").columns("id", "username", "xp", "level", "coins", "gems", "premium", "language");
@@ -55,33 +51,11 @@ public class UserDataManager {
                 .columnSchema("user_id", "mode", "type", "value", "time")
                 .valuesNQ("?", "?", "?", "?", "?");
 
-        userDataCache = CacheBuilder.newBuilder().removalListener((RemovalListener<UUID, UserData>) notification -> {
-            if(notification.getCause() == RemovalCause.EXPIRED) {
-                saveUserToDatabase(notification.getValue());
-                redissonClient.getLiveObjectService().delete(notification.getValue());
-            }
-        }).expireAfterAccess(3, TimeUnit.MINUTES).build();
-
-
-        Scheduler scheduler = velocity.getServer().getScheduler();
-        scheduler.buildTask(velocity, userDataCache::cleanUp).repeat(183, TimeUnit.SECONDS).schedule();
-        task = scheduler.buildTask(velocity, this::saveAllToDisk).repeat(5, TimeUnit.MINUTES).schedule();
+        task = velocity.getServer().getScheduler().buildTask(velocity, this::saveAllToDisk).repeat(5, TimeUnit.MINUTES).schedule();
     }
 
     public void prepareUser(Player player) {
         UUID uuid = player.getUniqueId();
-
-        /*UserData userData = userDataCache.getIfPresent(uuid);
-        if (userData != null) {
-            userDataCache.invalidate(uuid);
-            try {
-                userData.getXp();
-                userDataMap.put(uuid, userData);
-                return;
-            } catch (Exception ignored) {
-                System.out.println("Error when trying to restore from cache UserData of " + player.getUsername() + ", creating a new one from database");
-            }
-        }*/
 
         // User Data Select
         QueryData data = querySelectUserData.patternClone().where(WhereBuilder.builder().equals("uuid", uuid.toString()).close()).build().execReturn();
@@ -129,16 +103,21 @@ public class UserDataManager {
         private final BiConsumer<UserData, Long> setTime;
     }
 
-    public void cacheUser(Player player) {
-        UUID uuid = player.getUniqueId();
-        /*UserData userData = userDataMap.remove(uuid);
-        if (userData == null) return;
-        userDataCache.put(uuid, userData);*/
-        userDataMap.remove(uuid);
+    public void saveUser(Player player) {
+        UserData userData = userDataMap.remove(player.getUniqueId());
+        if (userData == null) {
+            System.out.println("[SAVE-USER : QUIT] User data not found for " + player.getUsername() + " (" + player.getUniqueId() + ")");
+            return;
+        }
+        saveUserToDatabase(userData);
+    //    redissonClient.getLiveObjectService().delete(userData);
+    }
+
+    private Set<UserData> getUsers() {
+        return new HashSet<>(userDataMap.values());
     }
 
     public Optional<UserData> getUserData(UUID uuid) {
-        //return userDataCache.asMap().getOrDefault(uuid, userDataMap.get(uuid));
         return Optional.ofNullable(userDataMap.get(uuid));
     }
 
@@ -197,7 +176,7 @@ public class UserDataManager {
     public void saveAllToDisk() {
 
         Set<UserData> users = getUsers();
-        System.out.println("Saving all UserData(s) & Boosters to disk. (batch size: " + users.size() + ")");
+        System.out.println("Saving Online UserData(s) & Boosters to disk. (batch size: " + users.size() + ")");
 
         try (PreparedStatement preparedStatement = queryUpdateUserData.patternClone().build().asPrepared()) {
             for (UserData userData : users) {
@@ -230,7 +209,7 @@ public class UserDataManager {
     }
 
     private void saveUserToDatabase(UserData data) {
-        System.out.println("Saving on disk expired offline player " + data.getUsername());
+        System.out.println("Saving on disk for offline player " + data.getUsername());
         queryUpdateUserData.patternClone().clearSet()
                 .setNQ("xp", data.getXp()).setNQ("level", data.getNetworkLevel()).setNQ("coins", data.getNetworkCoins())
                 .setNQ("gems", data.getGems()).set("language", data.getLanguage())
@@ -260,10 +239,6 @@ public class UserDataManager {
                             data.getCoinsBoost(), data.getCoinsBoostTime())
                     .build().exec();
         }
-    }
-
-    private Set<UserData> getUsers() {
-        return new HashSet<>(userDataMap.values());
     }
 
 }
