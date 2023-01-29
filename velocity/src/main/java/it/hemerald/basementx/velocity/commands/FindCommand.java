@@ -49,8 +49,8 @@ public class FindCommand implements SimpleCommand {
             return;
         }
 
-        source.sendMessage(Component.text("Il giocatore " + player.getUsername() + " si trova nel server " + optionalServer.get().getServerInfo().getName())
-                .color(NamedTextColor.DARK_AQUA).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE));
+        source.sendMessage(Component.text("Il giocatore " + player.getUsername() + " è nel server " + optionalServer.get().getServerInfo().getName())
+                .color(NamedTextColor.GOLD));
     }
 
     @Override
