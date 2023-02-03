@@ -22,6 +22,7 @@ public class BedwarsCommand implements CommandExecutor {
         Basement basement = BasementProvider.get();
         if (basement.getRemoteVelocityService().isOnRanch(player.getUniqueId(), "bedwars_lobby")) {
             player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "ERRORE! Sei già connesso nelle bedwars");
+            return true;
         }
         basement.getPlayerManager().sendToGameLobby(player.getUniqueId(), "bedwars_lobby");
         return false;
