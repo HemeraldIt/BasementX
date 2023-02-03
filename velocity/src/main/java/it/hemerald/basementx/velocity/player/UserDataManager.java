@@ -56,33 +56,37 @@ public class UserDataManager {
 
     public void prepareUser(Player player) {
         UUID uuid = player.getUniqueId();
+        UserData userData = velocity.getBasement().getUserData(uuid);
 
-        // User Data Select
-        QueryData data = querySelectUserData.patternClone().where(WhereBuilder.builder().equals("uuid", uuid.toString()).close()).build().execReturn();
-        UserData userData = new UserData(uuid.toString(), player.getUsername());
-        userData.setProtocolVersion(player.getProtocolVersion().getProtocol());
-        userData.setPremium(player.isOnlineMode());
+        if (userData == null) {
+            // User Data Select
+            QueryData data = querySelectUserData.patternClone().where(WhereBuilder.builder().equals("uuid", uuid.toString()).close()).build().execReturn();
+            userData = new UserData(uuid.toString(), player.getUsername());
 
-        if (data.first()) {
-            userData.setTableIndex(data.getInt("id"));
-            userData.setXp(data.getInt("xp"));
-            userData.setNetworkLevel(data.getInt("level"));
-            userData.setNetworkCoins(data.getInt("coins"));
-            userData.setGems(data.getInt("gems"));
-            userData.setLanguage(data.getString("language"));
+            if (data.first()) {
+                userData.setTableIndex(data.getInt("id"));
+                userData.setXp(data.getInt("xp"));
+                userData.setNetworkLevel(data.getInt("level"));
+                userData.setNetworkCoins(data.getInt("coins"));
+                userData.setGems(data.getInt("gems"));
+                userData.setLanguage(data.getString("language"));
 
-            // User Boosters Eviction
-            data = querySelectUserBoosters.patternClone()
-                    .where(WhereBuilder.builder().equalsNQ("user_id", userData.getTableIndex()).and().equalsNQ("mode", 0).close())
-                    .build().execReturn();
-            if (data.isBeforeFirst()) {
-                while (data.next()) {
-                    NetworkBoosters type = NetworkBoosters.values()[data.getInt("type")];
-                    type.setBuff.accept(userData, data.getInt("value"));
-                    type.setTime.accept(userData, data.getLong("time"));
+                // User Boosters Eviction
+                data = querySelectUserBoosters.patternClone()
+                        .where(WhereBuilder.builder().equalsNQ("user_id", userData.getTableIndex()).and().equalsNQ("mode", 0).close())
+                        .build().execReturn();
+                if (data.isBeforeFirst()) {
+                    while (data.next()) {
+                        NetworkBoosters type = NetworkBoosters.values()[data.getInt("type")];
+                        type.setBuff.accept(userData, data.getInt("value"));
+                        type.setTime.accept(userData, data.getLong("time"));
+                    }
                 }
             }
         }
+
+        userData.setProtocolVersion(player.getProtocolVersion().getProtocol());
+        userData.setPremium(player.isOnlineMode());
 
         userDataMap.put(uuid, redissonClient.getLiveObjectService().merge(userData));
     }
