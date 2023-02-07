@@ -67,7 +67,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
         if(optionalPlayer.isEmpty()) return;
         Optional<RegisteredServer> optionalServer = this.velocity.getServer().getServer(server);
         if (optionalServer.isEmpty()) {
-            velocity.getLogger().log(Level.WARNING, () -> "Tried to send " + player + "to an invalid server (" + server + ")");
+            optionalPlayer.ifPresent(p -> p.sendMessage(Component.text("Il server a cui stai provando ad accedere è offline!", NamedTextColor.RED)));
             return;
         }
 
@@ -83,7 +83,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
         if(optionalPlayer.isEmpty()) return;
         Optional<RegisteredServer> optionalServer = this.velocity.getServer().getServer(server);
         if (optionalServer.isEmpty()) {
-            velocity.getLogger().log(Level.WARNING, () -> "Tried to send " + uuid + "to an invalid server (" + server + ")");
+            optionalPlayer.ifPresent(p -> p.sendMessage(Component.text("Il server a cui stai provando ad accedere è offline!", NamedTextColor.RED)));
             return;
         }
 
@@ -138,6 +138,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     @Override
     public void cheatAlert(String server, String playerName, String category, String type, String desc, int level, int maxLevel, long cps, long ping) {
+        if (ping == 0) return;
         this.velocity.getServer().getEventManager().fire(new AlertEvent(server, playerName, category, type, desc, level, maxLevel, cps, ping)).thenAccept(alertEvent -> {
             if(!alertEvent.getResult().isAllowed()) return;
 
@@ -197,8 +198,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     @Override
     public void cheatBan(String server, String player) {
-        velocity.getServer().getCommandManager().executeAsync(velocity.getServer().getConsoleCommandSource(), "ban " +
-                player + " 30d Cheating (AntiCheat)");
+        velocity.getServer().getCommandManager().executeAsync(velocity.getServer().getConsoleCommandSource(), "ban " + player + " 30d Cheating (AntiCheat)");
     }
 
     public int playerVersion(UUID uuid) {

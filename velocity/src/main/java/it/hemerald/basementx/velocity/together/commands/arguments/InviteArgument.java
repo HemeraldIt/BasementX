@@ -35,7 +35,7 @@ public class InviteArgument extends CommandArgument {
             return;
         }
 
-        if (partyService.getParty(invitedPlayer.get()).isPresent()) {
+        if (partyService.getParty(invitedPlayer.get()).isPresent() || (invitedPlayer.get().hasPermission("basement.party.cannotinvite") && !player.hasPermission("basement.party.cannotinvite"))) {
             partyService.sendMessage(player, "Questo giocatore è già in un party.");
             return;
         }
