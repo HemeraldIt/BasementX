@@ -5,6 +5,7 @@ import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import it.hemerald.basementx.api.Basement;
 import it.hemerald.basementx.api.concurrent.process.ProcessScheduler;
+import it.hemerald.basementx.api.friends.FriendsManager;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
@@ -22,6 +23,7 @@ import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.api.remote.UserDataService;
 import it.hemerald.basementx.api.server.ServerManager;
 import it.hemerald.basementx.common.config.BasementConfig;
+import it.hemerald.basementx.common.friends.DefaultFriendsManager;
 import it.hemerald.basementx.common.locale.DefaultLocaleManager;
 import it.hemerald.basementx.common.party.DefaultPartyManager;
 import it.hemerald.basementx.common.persistence.hikari.TypeHolder;
@@ -45,6 +47,7 @@ public class StandardBasement implements Basement {
     private final ServerManager serverManager;
     private final PlayerManager<? extends BasementPlayer> playerManager;
     private final PartyManager partyManager;
+    private final FriendsManager friendManager;
     private final LocaleManager localeManager;
     private final RemoteVelocityService velocityService;
     private final RemoteCerebrumService cerebrumService;
@@ -77,6 +80,7 @@ public class StandardBasement implements Basement {
         serverManager = new DefaultServerManager(this);
         playerManager = new DefaultPlayerManager<>(this);
         partyManager = new DefaultPartyManager(redisManager);
+        friendManager = new DefaultFriendsManager(redisManager);
         localeManager = new DefaultLocaleManager();
 
         RRemoteService remoteService = redisManager.getRedissonClient().getRemoteService();
@@ -127,6 +131,11 @@ public class StandardBasement implements Basement {
     @Override
     public PartyManager getPartyManager() {
         return partyManager;
+    }
+
+    @Override
+    public FriendsManager getFriendsManager() {
+        return friendManager;
     }
 
     @Override

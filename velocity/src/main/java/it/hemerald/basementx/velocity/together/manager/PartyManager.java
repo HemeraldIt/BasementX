@@ -44,7 +44,7 @@ public class PartyManager {
     }
 
     public void saveParty(Party party) {
-        party.getMembers().forEach(member -> parties.fastPut(member, party));
+        party.getFriends().forEach(member -> parties.fastPut(member, party));
     }
 
     public Party createParty(Player leader) {
@@ -57,7 +57,7 @@ public class PartyManager {
         partyChats.remove(player.getUsername());
 
         getParty(player).ifPresent(party -> {
-            if(party.getLeader().equalsIgnoreCase(player.getUsername()) || party.getMembers().size() == 1) {
+            if(party.getLeader().equalsIgnoreCase(player.getUsername()) || party.getFriends().size() == 1) {
                 disband(party);
                 return;
             }
@@ -68,7 +68,7 @@ public class PartyManager {
     }
 
     public void leave(Party party, Player player) {
-        party.getMembers().remove(player.getUsername());
+        party.getFriends().remove(player.getUsername());
         deleteParty(player.getUsername());
         saveParty(party);
     }
@@ -76,9 +76,9 @@ public class PartyManager {
     public void disband(Party party) {
         broadcastMessage(party, Component.text("Il tuo party è stato sciolto").color(NamedTextColor.RED));
         partyChats.remove(party.getLeader());
-        party.getMembers().forEach(partyChats::remove);
+        party.getFriends().forEach(partyChats::remove);
         together.getInvitationService().disband(party);
-        party.getMembers().forEach(parties::fastRemove);
+        party.getFriends().forEach(parties::fastRemove);
     }
 
     public void toggleChat(Player player) {
@@ -105,7 +105,7 @@ public class PartyManager {
     }
 
     public void broadcastMessage(Party party, Component component) {
-        party.getMembers().forEach(name -> consume(name, player -> sendMessage(player, component)));
+        party.getFriends().forEach(name -> consume(name, player -> sendMessage(player, component)));
     }
 
     private void consume(String name, Consumer<Player> consumer) {

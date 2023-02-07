@@ -35,8 +35,7 @@ public class BasementParty implements Party {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BasementParty)) return false;
-        BasementParty that = (BasementParty) o;
+        if (!(o instanceof BasementParty that)) return false;
         return that.getUuid().equals(uuid);
     }
 
@@ -51,7 +50,7 @@ public class BasementParty implements Party {
     }
 
     @Override
-    public Set<String> getMembers() {
+    public Set<String> getFriends() {
         return members;
     }
 

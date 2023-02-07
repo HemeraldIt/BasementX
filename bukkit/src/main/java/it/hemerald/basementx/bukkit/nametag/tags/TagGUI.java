@@ -77,12 +77,12 @@ public class TagGUI implements InventoryProvider {
                     if (tagItems.size() > 27) {
                         contents.set(5, 3, ClickableItem.of(new ItemBuilder(Material.ARROW).setName(ChatColor.GRAY + "Indietro").build(), e -> {
                             inventory.open(player, pagination.previous().getPage());
-                            player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+                            //player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1, 1);
                         }));
 
                         contents.set(5, 5, ClickableItem.of(new ItemBuilder(Material.ARROW).setName(ChatColor.GRAY + "Avanti").build(), e -> {
                             inventory.open(player, pagination.next().getPage());
-                            player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+                         //   player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1, 1);
                         }));
                     }
                 }

@@ -43,7 +43,7 @@ public class WarpArgument extends CommandArgument {
             return;
         }
 
-        for (String memberName : party.getMembers()) {
+        for (String memberName : party.getFriends()) {
             partyService.getTogether().getBasement().getRedisManager().publishMessage(new PartyWarpMessage(memberName, serverName));
         }
     }

@@ -2,6 +2,7 @@ package it.hemerald.basementx.api;
 
 import ch.jalu.configme.SettingsManager;
 import it.hemerald.basementx.api.concurrent.process.ProcessScheduler;
+import it.hemerald.basementx.api.friends.FriendsManager;
 import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
@@ -62,6 +63,8 @@ public interface Basement {
      * @return Party Manager
      */
     PartyManager getPartyManager();
+
+    FriendsManager getFriendsManager();
 
     /**
      * Gets the Locale Manager

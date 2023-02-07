@@ -27,6 +27,7 @@ dependencies {
     implementation project(':common')
     implementation project(':api-bukkit')
 
+    compileOnly files('lib/purpur-api-1.19.2-R0.1-SNAPSHOT.jar')
     compileOnly 'app.ashcon:sportpaper:1.8.8'
     compileOnly 'it.vulcan:vulcan-api:2.5.2'
     compileOnly 'me.clip:placeholderapi:2.11.1'

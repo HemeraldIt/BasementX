@@ -12,10 +12,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import org.redisson.api.RSetCache;
 
-import java.io.Serializable;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.ToIntFunction;
 
 @Slf4j(topic = "basement")
 public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerManager<E> {
@@ -171,9 +168,9 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     public Optional<BukkitServer> bestServer(String ranch) {
         List<BukkitServer> bestServers = basement.getServerManager().getOnlineServers(ranch)
                 .parallelStream()
-                .sorted(Comparator.comparingInt(s -> {
+                .sorted(((o1, o2) -> {
                     try {
-                        return Integer.parseInt(s.getName().substring(s.getName().length() - 1));
+                        return Integer.parseInt(o1.getName().substring(o2.getName().length() - 1));
                     } catch (NumberFormatException ignored) {}
                     return 0;
                 }))

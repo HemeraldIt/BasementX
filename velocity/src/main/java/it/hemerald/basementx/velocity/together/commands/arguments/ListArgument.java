@@ -25,10 +25,10 @@ public class ListArgument extends CommandArgument {
             return;
         }
 
-        partyService.sendMessage(player, Component.text("§7Leader: §a" + targetParty.get().getLeader() + " §7(§e" + (targetParty.get().getMembers().size()) + "§7)"));
+        partyService.sendMessage(player, Component.text("§7Leader: §a" + targetParty.get().getLeader() + " §7(§e" + (targetParty.get().getFriends().size()) + "§7)"));
 
-        if (targetParty.get().getMembers().size() > 1) {
-            Set<String> members = new HashSet<>(targetParty.get().getMembers());
+        if (targetParty.get().getFriends().size() > 1) {
+            Set<String> members = new HashSet<>(targetParty.get().getFriends());
             members.remove(targetParty.get().getLeader());
             partyService.sendMessage(player, Component.text("§7Membri: §b" + String.join("§7, §b", members)));
         }
