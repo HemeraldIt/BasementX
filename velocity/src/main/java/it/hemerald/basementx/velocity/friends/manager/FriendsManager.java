@@ -2,18 +2,14 @@ package it.hemerald.basementx.velocity.friends.manager;
 
 import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.api.friends.Friend;
-import it.hemerald.basementx.api.party.Party;
-import it.hemerald.basementx.common.friends.BasementFriend;
 import it.hemerald.basementx.velocity.together.Together;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.redisson.api.LocalCachedMapOptions;
 import org.redisson.api.RLocalCachedMap;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 public class FriendsManager {

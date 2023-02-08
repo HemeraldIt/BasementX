@@ -8,17 +8,14 @@ import java.util.UUID;
 
 public class BasementFriend implements Friend {
 
-    private final String player;
     private final UUID uuid;
     private final Set<String> friends = new HashSet<>();
 
     private BasementFriend() {
-        this.player = null;
         this.uuid = null;
     }
 
-    public BasementFriend(String player, UUID uuid) {
-        this.player = player;
+    public BasementFriend(UUID uuid) {
         this.uuid = uuid;
     }
 

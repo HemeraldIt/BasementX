@@ -22,12 +22,15 @@ public class FriendCommand implements SimpleCommand {
     public FriendCommand(FriendsManager friendsService) {
         this.friendsService = friendsService;
         this.together = friendsService.getTogether();
-      //  unknownArgument = new UnknownArgument(friendsService);
-        unknownArgument = null;
+        unknownArgument = new UnknownArgument(friendsService);
     }
 
     public void registerArguments() {
-      //  registerArgument();
+        registerArgument(); // HelpArgument
+        registerArgument(); // RemoveArgument
+        registerArgument(); // AddArgument
+        registerArgument(); // AcceptArgument
+        registerArgument(); // ListArgument
     }
 
     public void registerArgument(CommandArgument argument) {
@@ -46,7 +49,7 @@ public class FriendCommand implements SimpleCommand {
         CommandArgument argument = arguments.get(invocation.arguments()[0]);
 
         if (argument == null) {
-            arguments.get("invite").execute(player, new String[] {"", invocation.arguments()[0]});
+            arguments.get("add").execute(player, new String[] {"", invocation.arguments()[0]});
             return;
         }
 
