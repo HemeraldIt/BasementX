@@ -198,7 +198,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     @Override
     public void cheatBan(String server, String player) {
-        velocity.getServer().getCommandManager().executeAsync(velocity.getServer().getConsoleCommandSource(), "ban " + player + " 30d Cheating (AntiCheat)");
+        velocity.getServer().getCommandManager().executeAsync(velocity.getServer().getConsoleCommandSource(), "ipban " + player + " 30d Cheating (AntiCheat)");
     }
 
     public int playerVersion(UUID uuid) {
