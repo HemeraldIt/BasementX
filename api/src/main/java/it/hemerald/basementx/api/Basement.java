@@ -64,6 +64,10 @@ public interface Basement {
      */
     PartyManager getPartyManager();
 
+    /**
+     * Gets the Friend Manager
+     * @return Friend Manager
+     */
     FriendsManager getFriendsManager();
 
     /**

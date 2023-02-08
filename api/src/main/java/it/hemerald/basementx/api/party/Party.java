@@ -39,7 +39,7 @@ public interface Party {
      * Gets the members of the party
      * @return party members
      */
-    Set<String> getFriends();
+    Set<String> getMembers();
 
     /**
      * Gets if a player is member of this party

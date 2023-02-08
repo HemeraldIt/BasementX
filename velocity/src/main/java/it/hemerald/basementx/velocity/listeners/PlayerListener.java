@@ -43,7 +43,7 @@ public class PlayerListener {
         Party party = optional.get();
         if(!party.getLeader().equals(event.getPlayer().getUsername())) return;
 
-        for (String memberName : party.getFriends()) {
+        for (String memberName : party.getMembers()) {
             Optional<Player> optionalMember = velocity.getServer().getPlayer(memberName);
             if(optionalMember.isEmpty()) continue;
             optionalMember.get().createConnectionRequest(event.getServer()).fireAndForget();

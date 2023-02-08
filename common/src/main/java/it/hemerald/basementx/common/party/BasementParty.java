@@ -50,7 +50,7 @@ public class BasementParty implements Party {
     }
 
     @Override
-    public Set<String> getFriends() {
+    public Set<String> getMembers() {
         return members;
     }
 

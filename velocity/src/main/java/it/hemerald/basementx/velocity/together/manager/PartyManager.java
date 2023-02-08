@@ -44,7 +44,7 @@ public class PartyManager {
     }
 
     public void saveParty(Party party) {
-        party.getFriends().forEach(member -> parties.fastPut(member, party));
+        party.getMembers().forEach(member -> parties.fastPut(member, party));
     }
 
     public Party createParty(Player leader) {
@@ -57,7 +57,7 @@ public class PartyManager {
         partyChats.remove(player.getUsername());
 
         getParty(player).ifPresent(party -> {
-            if(party.getLeader().equalsIgnoreCase(player.getUsername()) || party.getFriends().size() == 1) {
+            if(party.getLeader().equalsIgnoreCase(player.getUsername()) || party.getMembers().size() == 1) {
                 disband(party);
                 return;
             }
