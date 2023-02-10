@@ -18,14 +18,14 @@ public interface Connector {
      *
      * @param host connection url
      */
-    void connect(String host);
+    HikariDataSource connect(String host);
 
     /**
      * @param host     connection url
      * @param username username used for the authentication
      *                 TYPE LOGIN : USING PASSWORD NO
      */
-    void connect(String host, String username);
+    HikariDataSource connect(String host, String username);
 
     /**
      * @param host     connection url
@@ -33,7 +33,7 @@ public interface Connector {
      * @param password password used for the authentication
      *                 TYPE LOGIN : USING PASSWORD YES
      */
-    void connect(String host, String username, String password);
+    HikariDataSource connect(String host, String username, String password);
 
     /**
      * Executes a query
