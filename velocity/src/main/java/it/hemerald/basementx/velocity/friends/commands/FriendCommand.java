@@ -22,15 +22,15 @@ public class FriendCommand implements SimpleCommand {
     public FriendCommand(FriendsManager friendsService) {
         this.friendsService = friendsService;
         this.together = friendsService.getTogether();
-        unknownArgument = new UnknownArgument(friendsService);
+        unknownArgument = new HelpArgument(friendsService);
     }
 
     public void registerArguments() {
-        registerArgument(); // HelpArgument
-        registerArgument(); // RemoveArgument
-        registerArgument(); // AddArgument
-        registerArgument(); // AcceptArgument
-        registerArgument(); // ListArgument
+        registerArgument(new RemoveArgument(friendService));
+        registerArgument(new AddArgument(friendService));
+        registerArgument(new AcceptArgument(friendService));
+        registerArgument(new AcceptArgument(friendService));
+        registerArgument(new ListArgument(friendService));
     }
 
     public void registerArgument(CommandArgument argument) {
