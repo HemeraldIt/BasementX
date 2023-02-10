@@ -8,7 +8,7 @@ import net.kyori.adventure.text.event.HoverEvent;
 public class ListArgument extends CommandArgument {
 
     public ListArgument(FriendsManager friendManager) {
-        super(friendManager, "", 0);
+        super(friendManager, "list", 0);
     }
 
     @Override
