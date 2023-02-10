@@ -25,9 +25,9 @@ public abstract class NMSSubFilter extends SubFilter {
         for (String permission : permissions) {
             for (Player sub : getPlayers(permission)) {
                 CraftPlayer craftSub = (CraftPlayer) sub;
-                if(!basement.getDisguiseModule().isDisguised(sub) && !ignoreMe(sub))
+                if (!basement.getDisguiseModule().isDisguised(sub) && !ignoreMe(sub))
                     craftPlayer.getHandle().playerConnection.sendPacket(makePacket(craftSub));
-                if(!ignoreMe) craftSub.getHandle().playerConnection.sendPacket(packet);
+                if (!ignoreMe) craftSub.getHandle().playerConnection.sendPacket(packet);
             }
         }
     }
@@ -39,7 +39,7 @@ public abstract class NMSSubFilter extends SubFilter {
 
         for (Player sub : getPlayers(permission)) {
             craftPlayer.getHandle().playerConnection.sendPacket(makePacketClear((CraftPlayer) sub));
-            ((CraftPlayer)sub).getHandle().playerConnection.sendPacket(packet);
+            ((CraftPlayer) sub).getHandle().playerConnection.sendPacket(packet);
         }
     }
 

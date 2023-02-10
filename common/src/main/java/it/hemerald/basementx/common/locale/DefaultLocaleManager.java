@@ -19,7 +19,7 @@ public class DefaultLocaleManager implements LocaleManager {
     @Override
     public Optional<Locale> getLocale(String context, BasementPlayer player) {
         Map<String, Locale> locales = localesByContext.get(context);
-        if(locales == null) return Optional.empty();
+        if (locales == null) return Optional.empty();
         return Optional.ofNullable(locales.get(player.getLanguage()));
     }
 
@@ -35,7 +35,7 @@ public class DefaultLocaleManager implements LocaleManager {
             map.remove(language);
             return map;
         });
-        if(locales != null && locales.isEmpty())
+        if (locales != null && locales.isEmpty())
             localesByContext.remove(context);
     }
 }

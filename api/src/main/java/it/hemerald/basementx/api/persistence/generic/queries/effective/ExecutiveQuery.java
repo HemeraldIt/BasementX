@@ -7,12 +7,14 @@ import java.util.concurrent.CompletableFuture;
  * represents an object that constructs and executes
  * operations only towards the database,
  * without expecting a return value
+ *
  * @param <T> The type of QueryBuilder used
  */
 public interface ExecutiveQuery<T> {
 
     /**
      * constructs the query to a String
+     *
      * @return the QueryBuilder
      */
     T build();
@@ -21,6 +23,7 @@ public interface ExecutiveQuery<T> {
 
     /**
      * executes the string query through a Connector
+     *
      * @return the QueryBuilder
      */
     T exec();
@@ -32,6 +35,7 @@ public interface ExecutiveQuery<T> {
 
     /**
      * executes the string query through a Connector in asynchronous
+     *
      * @return the QueryBuilder
      */
     CompletableFuture<T> execAsync();

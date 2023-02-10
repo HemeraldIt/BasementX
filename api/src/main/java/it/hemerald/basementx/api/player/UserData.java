@@ -16,20 +16,12 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor
 public class UserData {
 
-    public UserData() {
-        uuid = null;
-        username = null;
-    }
-
     @RId
     private final String uuid;
-
     @RIndex
     private final String username;
-
     @RIndex
     private int tableIndex = -1;
-
     private int networkLevel = 1;
     private int xp = 0;
     private int networkCoins = 0;
@@ -42,16 +34,20 @@ public class UserData {
     private long xpBoostTime = 0; // Instant.plus(now, duration) then specify the end time of boost
     private int coinsBoost = 1;
     private long coinsBoostTime = 0; // Instant.plus(now, duration) then specify the end time of boost
+    public UserData() {
+        uuid = null;
+        username = null;
+    }
 
     public void addXp(int amount) {
-        setXp(xp+amount);
+        setXp(xp + amount);
         tryLevelUp();
     }
 
     public void tryLevelUp() {
-        while (getXp()/(1200*getNetworkLevel()) > 0) {
+        while (getXp() / (1200 * getNetworkLevel()) > 0) {
             setNetworkLevel(getNetworkLevel() + 1);
-            setXp(getXp()/(1200*getNetworkLevel()));
+            setXp(getXp() / (1200 * getNetworkLevel()));
         }
     }
 

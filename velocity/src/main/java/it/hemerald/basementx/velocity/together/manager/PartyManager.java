@@ -21,7 +21,8 @@ public class PartyManager {
 
     public static final Component PREFIX = Component.text("§d§lParty §8§l› ");
 
-    @Getter private final Together together;
+    @Getter
+    private final Together together;
     private final RLocalCachedMap<String, Party> parties;
     private final Set<String> partyChats = Sets.newConcurrentHashSet();
 
@@ -57,7 +58,7 @@ public class PartyManager {
         partyChats.remove(player.getUsername());
 
         getParty(player).ifPresent(party -> {
-            if(party.getLeader().equalsIgnoreCase(player.getUsername()) || party.getMembers().size() == 1) {
+            if (party.getLeader().equalsIgnoreCase(player.getUsername()) || party.getMembers().size() == 1) {
                 disband(party);
                 return;
             }
@@ -68,7 +69,7 @@ public class PartyManager {
     }
 
     public void leave(Party party, Player player) {
-        party.getFriends().remove(player.getUsername());
+        party.getMembers().remove(player.getUsername());
         deleteParty(player.getUsername());
         saveParty(party);
     }
@@ -76,13 +77,13 @@ public class PartyManager {
     public void disband(Party party) {
         broadcastMessage(party, Component.text("Il tuo party è stato sciolto").color(NamedTextColor.RED));
         partyChats.remove(party.getLeader());
-        party.getFriends().forEach(partyChats::remove);
+        party.getMembers().forEach(partyChats::remove);
         together.getInvitationService().disband(party);
-        party.getFriends().forEach(parties::fastRemove);
+        party.getMembers().forEach(parties::fastRemove);
     }
 
     public void toggleChat(Player player) {
-        if(partyChats.contains(player.getUsername())) {
+        if (partyChats.contains(player.getUsername())) {
             partyChats.remove(player.getUsername());
             sendMessage(player, Component.text("Ora scriverai in chat pubblica").color(NamedTextColor.GREEN));
             return;
@@ -105,11 +106,11 @@ public class PartyManager {
     }
 
     public void broadcastMessage(Party party, Component component) {
-        party.getFriends().forEach(name -> consume(name, player -> sendMessage(player, component)));
+        party.getMembers().forEach(name -> consume(name, player -> sendMessage(player, component)));
     }
 
     private void consume(String name, Consumer<Player> consumer) {
-        if(name != null) together.getServer().getPlayer(name).ifPresent(consumer);
+        if (name != null) together.getServer().getPlayer(name).ifPresent(consumer);
     }
 
     public void deleteParty(String playerName) {

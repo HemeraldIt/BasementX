@@ -11,7 +11,7 @@ public abstract class AbstractScoreboardBuilder<T extends Scoreboard> {
 
     public abstract AbstractScoreboardBuilder<T> addLine(String content);
 
-    public AbstractScoreboardBuilder<T> setLine(int row, String content){
+    public AbstractScoreboardBuilder<T> setLine(int row, String content) {
         return setLine(row, content, -1, null);
     }
 

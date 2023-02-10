@@ -8,12 +8,24 @@ import java.util.function.Consumer;
 
 public class ProcessesCompletion {
 
+    private final CountDownLatch latch;
+    private final Executor asyncExecutor;
+    private Set<ProcessException> errors;
+
+    // ======================================
+
+    ProcessesCompletion(int processCount, Executor asyncExecutor) {
+        this.latch = new CountDownLatch(processCount);
+        this.asyncExecutor = asyncExecutor;
+        this.errors = ConcurrentHashMap.newKeySet();
+    }
+
     /**
      * Runs the specified {@code callback} when all the specified {@code completions} complete.
      *
-     * @param async whether this method to be called asynchronously or not
-     * @param callback a {@link Consumer} of the errors (if any). if there are no errors, the value
-     *     will be an empty set.
+     * @param async       whether this method to be called asynchronously or not
+     * @param callback    a {@link Consumer} of the errors (if any). if there are no errors, the value
+     *                    will be an empty set.
      * @param completions completions to wait for
      */
     public static void whenAllDone(
@@ -54,7 +66,7 @@ public class ProcessesCompletion {
      * <p><b>WARNING: THREAD BLOCKING METHOD.</b>
      *
      * @param callback a {@link Consumer} of the errors (if any). if there are no errors, the value
-     *     will be an empty set.
+     *                 will be an empty set.
      */
     public void whenDone(Consumer<Set<ProcessException>> callback) {
         if (this.latch.getCount() == 0) {
@@ -78,18 +90,6 @@ public class ProcessesCompletion {
      */
     public void whenDoneAsync(final Consumer<Set<ProcessException>> callback) {
         this.asyncExecutor.execute(() -> this.whenDone(callback));
-    }
-
-    // ======================================
-
-    private final CountDownLatch latch;
-    private final Executor asyncExecutor;
-    private Set<ProcessException> errors;
-
-    ProcessesCompletion(int processCount, Executor asyncExecutor) {
-        this.latch = new CountDownLatch(processCount);
-        this.asyncExecutor = asyncExecutor;
-        this.errors = ConcurrentHashMap.newKeySet();
     }
 
     void countDown() {

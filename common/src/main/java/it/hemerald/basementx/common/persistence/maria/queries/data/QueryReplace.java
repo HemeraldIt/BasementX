@@ -13,11 +13,12 @@ import java.util.concurrent.CompletableFuture;
 
 public class QueryReplace extends MariaQuery implements QueryBuilderReplace {
 
+    private final List<String> values = new ArrayList<>();
     private String tableName;
     private StringBuilder schema;
-    private final List<String> values = new ArrayList<>();
 
-    public QueryReplace() {}
+    public QueryReplace() {
+    }
 
     public QueryReplace(AbstractMariaHolder holder, String database) {
         super(holder, database);
@@ -113,7 +114,7 @@ public class QueryReplace extends MariaQuery implements QueryBuilderReplace {
         builder.append("(");
         boolean first = true;
         for (Object value : values) {
-            if(value instanceof ReturningQuery) {
+            if (value instanceof ReturningQuery) {
                 ReturningQuery<? extends ExecutiveQuery<?>, ?> castedValue = (ReturningQuery<? extends ExecutiveQuery<?>, ?>) value;
                 if (first) {
                     first = false;
@@ -136,8 +137,8 @@ public class QueryReplace extends MariaQuery implements QueryBuilderReplace {
     }
 
     private String getQuoted(Object value) {
-        if(value instanceof Boolean) {
-            return (boolean)value ? "1" : "0";
+        if (value instanceof Boolean) {
+            return (boolean) value ? "1" : "0";
         }
         return "'" + value + "'";
     }

@@ -8,6 +8,17 @@ import java.util.function.Consumer;
 
 public final class ResultedProcessesCompletion<T> {
 
+    private final CountDownLatch latch;
+    private final Executor asyncExecutor;
+
+    // ======================================
+    private Map<String, ProcessResult<T>> resultMap;
+    ResultedProcessesCompletion(int processCount, Executor asyncExecutor) {
+        this.latch = new CountDownLatch(processCount);
+        this.asyncExecutor = asyncExecutor;
+        this.resultMap = new ConcurrentHashMap<>();
+    }
+
     /**
      * Called when all {@link ResultedProcess Proccesses} are done.
      * <p><b>WARNING: THREAD BLOCKING METHOD.</b>
@@ -36,18 +47,6 @@ public final class ResultedProcessesCompletion<T> {
      */
     public void whenDoneAsync(Consumer<Map<String, ProcessResult<T>>> callback) {
         this.asyncExecutor.execute(() -> this.whenDone(callback));
-    }
-
-    // ======================================
-
-    private final CountDownLatch latch;
-    private final Executor asyncExecutor;
-    private Map<String, ProcessResult<T>> resultMap;
-
-    ResultedProcessesCompletion(int processCount, Executor asyncExecutor) {
-        this.latch = new CountDownLatch(processCount);
-        this.asyncExecutor = asyncExecutor;
-        this.resultMap = new ConcurrentHashMap<>();
     }
 
     void countDown(String identifier, ProcessResult<T> result) {

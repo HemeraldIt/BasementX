@@ -5,13 +5,25 @@ import java.util.function.Supplier;
 
 public abstract class ResultedProcess<T> {
 
+    private final String identifier;
+
+    /**
+     * Base constructor for all {@code ResultedProcess} implementations.
+     *
+     * @param identifier the identifier of this resulted process. It is good to set it every time
+     *                   implementation class(es) are created in order to properly defer results.
+     */
+    public ResultedProcess(String identifier) {
+        this.identifier = Objects.requireNonNull(identifier, "identifier");
+    }
+
     /**
      * Creates a new {@code ResultedProcess} from a {@link Supplier}
      *
      * @param identifier resulted process identifier
-     * @param supplier input supplier
+     * @param supplier   input supplier
+     * @param <T>        result value type parameter
      * @return resulted process
-     * @param <T> result value type parameter
      */
     public static <T> ResultedProcess<T> fromSupplier(String identifier, Supplier<T> supplier) {
         return new ResultedProcess<T>(identifier) {
@@ -20,18 +32,6 @@ public abstract class ResultedProcess<T> {
                 return supplier.get();
             }
         };
-    }
-
-    private final String identifier;
-
-    /**
-     * Base constructor for all {@code ResultedProcess} implementations.
-     *
-     * @param identifier the identifier of this resulted process. It is good to set it every time
-     *     implementation class(es) are created in order to properly defer results.
-     */
-    public ResultedProcess(String identifier) {
-        this.identifier = Objects.requireNonNull(identifier, "identifier");
     }
 
     /**

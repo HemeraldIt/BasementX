@@ -21,7 +21,7 @@ public interface ScoreboardUtils {
 
     Object createScorePacket(String name, String line, int score);
 
-    default Object destroyScorePacket(String line){
+    default Object destroyScorePacket(String line) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public interface ScoreboardUtils {
     }
 
     default Object getDestroyTeamPacket(String name) {
-        return createTeamPacket(1, name,null, null);
+        return createTeamPacket(1, name, null, null);
     }
 
     default Object getUpdateTeamPacket(String name, @Nullable String prefix, @Nullable String suffix) {
@@ -49,7 +49,7 @@ public interface ScoreboardUtils {
             Class<?> classObject = object.getClass();
             KeyField keyField = new KeyField(classObject, fieldName);
             Field field = cacheField.get(keyField);
-            if(field == null) {
+            if (field == null) {
                 field = classObject.getDeclaredField(fieldName);
                 field.setAccessible(true);
                 cacheField.put(keyField, field);

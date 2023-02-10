@@ -16,27 +16,26 @@ public abstract class MariaQuery {
      */
     @Getter
     protected AbstractMariaHolder holder;
-
-    protected Connector getConnector() {
-        return holder.getConnector();
-    }
-
     /**
      * Name of the present of future database
      */
     @Getter
     protected String databaseName;
+    /**
+     * The actual query
+     */
+    protected String sql;
 
-    public MariaQuery() {}
+    public MariaQuery() {
+    }
 
     public MariaQuery(AbstractMariaHolder holder, String databaseName) {
         this.holder = holder;
         this.databaseName = databaseName;
     }
 
-    /**
-     * The actual query
-     */
-    protected String sql;
+    protected Connector getConnector() {
+        return holder.getConnector();
+    }
 
 }

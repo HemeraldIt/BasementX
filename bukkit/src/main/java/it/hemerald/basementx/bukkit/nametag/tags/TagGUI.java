@@ -13,7 +13,6 @@ import it.hemerald.basementx.api.bukkit.item.ItemBuilder;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -82,7 +81,7 @@ public class TagGUI implements InventoryProvider {
 
                         contents.set(5, 5, ClickableItem.of(new ItemBuilder(Material.ARROW).setName(ChatColor.GRAY + "Avanti").build(), e -> {
                             inventory.open(player, pagination.next().getPage());
-                         //   player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1, 1);
+                            //   player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 1, 1);
                         }));
                     }
                 }

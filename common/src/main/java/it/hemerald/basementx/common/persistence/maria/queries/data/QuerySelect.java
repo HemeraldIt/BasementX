@@ -12,17 +12,25 @@ import java.util.function.UnaryOperator;
 
 public class QuerySelect extends MariaQuery implements QueryBuilderSelect {
 
-    public QuerySelect() {}
-
-    public QuerySelect(AbstractMariaHolder holder, String database) {
-        super(holder, database);
-    }
+    private String columns;
+    private String from;
 
     /*
         Building
      */
+    private String fromExternal;
+    private String where;
+    private String groupBy;
+    private String having;
+    private String orderBy;
+    private String limit;
 
-    private String columns;
+    public QuerySelect() {
+    }
+
+    public QuerySelect(AbstractMariaHolder holder, String database) {
+        super(holder, database);
+    }
 
     @Override
     public QueryBuilderSelect columns(String... columns) {
@@ -46,7 +54,6 @@ public class QuerySelect extends MariaQuery implements QueryBuilderSelect {
         return this;
     }
 
-    private String from;
     @Override
     public QueryBuilderSelect from(String... tables) {
         StringBuilder builder = new StringBuilder();
@@ -63,7 +70,6 @@ public class QuerySelect extends MariaQuery implements QueryBuilderSelect {
         return this;
     }
 
-    private String fromExternal;
     @Override
     public QueryBuilderSelect fromExternal(String... fullyTableName) {
         StringBuilder builder = new StringBuilder();
@@ -80,35 +86,30 @@ public class QuerySelect extends MariaQuery implements QueryBuilderSelect {
         return this;
     }
 
-    private String where;
     @Override
     public QueryBuilderSelect where(String conditions) {
         where = conditions;
         return this;
     }
 
-    private String groupBy;
     @Override
     public QueryBuilderSelect groupBy(String statement) {
         groupBy = statement;
         return this;
     }
 
-    private String having;
     @Override
     public QueryBuilderSelect having(String conditions) {
         having = conditions;
         return this;
     }
 
-    private String orderBy;
     @Override
     public QueryBuilderSelect orderBy(String statement) {
         this.orderBy = statement;
         return this;
     }
 
-    private String limit;
     @Override
     public QueryBuilderSelect limit(int limit, int offset) {
         this.limit = offset + ", " + limit;

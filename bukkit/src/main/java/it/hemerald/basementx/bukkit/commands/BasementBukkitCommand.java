@@ -22,7 +22,7 @@ public class BasementBukkitCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!sender.hasPermission(BasementMessages.STAFF_PERMISSION)) {
+        if (!sender.hasPermission(BasementMessages.STAFF_PERMISSION)) {
             sender.sendMessage(SpigotConfig.unknownCommandMessage);
             return true;
         }
@@ -46,7 +46,7 @@ public class BasementBukkitCommand implements CommandExecutor {
         } else if (args[0].equalsIgnoreCase("reload")) {
             basement.reloadConfig();
             sender.sendMessage(ChatColor.DARK_AQUA + "Config riavviato!");
-        } else  if (args[0].equalsIgnoreCase("info")) {
+        } else if (args[0].equalsIgnoreCase("info")) {
             sender.sendMessage(ChatColor.DARK_AQUA + "Server: " + ChatColor.AQUA + basement.getServerID());
         } else {
             sender.sendMessage(ChatColor.RED + "Argomento non valido");

@@ -31,18 +31,20 @@ public interface Connector {
      * @param host     connection url
      * @param username username used for the authentication
      * @param password password used for the authentication
-     * TYPE LOGIN : USING PASSWORD YES
+     *                 TYPE LOGIN : USING PASSWORD YES
      */
     HikariDataSource connect(String host, String username, String password);
 
     /**
      * Executes a query
+     *
      * @param query the query
      */
     void execute(String query);
 
     /**
      * Get prepared statement for batching operations
+     *
      * @param query the query statement batched
      */
     PreparedStatement asPrepared(String query);
@@ -50,6 +52,7 @@ public interface Connector {
     /**
      * executes a query
      * expecting a return value
+     *
      * @param query the query
      * @return the return set of the query
      */

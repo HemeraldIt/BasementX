@@ -17,14 +17,12 @@ import java.util.function.Consumer;
 
 public class ScoreboardBuilder<T extends Scoreboard> extends AbstractScoreboardBuilder<Scoreboard> {
 
-    private ScoreboardAdapter adapter;
-
     private final Class<T> type;
     private final String title;
     private final Player viewer;
-
-    private int index = 0;
     private final List<ScoreboardLine> lines = new ArrayList<>();
+    private ScoreboardAdapter adapter;
+    private int index = 0;
 
     protected ScoreboardBuilder(ScoreboardAdapter adapter, Class<T> type, String title, Player viewer) {
         this.adapter = adapter;
@@ -33,10 +31,14 @@ public class ScoreboardBuilder<T extends Scoreboard> extends AbstractScoreboardB
         this.viewer = viewer;
     }
 
+    public static DefaultBuilder builder(ScoreboardAdapter scoreboardAdapter, String title, Player viewer) {
+        return new DefaultBuilder(scoreboardAdapter, title, viewer);
+    }
+
     @Override
     public AbstractScoreboardBuilder<Scoreboard> addLine(String content) {
         for (ScoreboardLine line : lines) {
-            if(line.getRow() == index) {
+            if (line.getRow() == index) {
                 index++;
                 addLine(content);
             }
@@ -46,7 +48,7 @@ public class ScoreboardBuilder<T extends Scoreboard> extends AbstractScoreboardB
 
     @Override
     public ScoreboardBuilder<T> setLine(int row, String content) {
-        return setLine(row, content, -1,null);
+        return setLine(row, content, -1, null);
     }
 
     @Override
@@ -79,7 +81,8 @@ public class ScoreboardBuilder<T extends Scoreboard> extends AbstractScoreboardB
         T board;
         try {
             board = type.getConstructor(ScoreboardAdapter.class, String.class, Player.class).newInstance(adapter, title, viewer);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
             throw new RuntimeException("Something went wrong during build of the view", e);
         }
 
@@ -88,10 +91,6 @@ public class ScoreboardBuilder<T extends Scoreboard> extends AbstractScoreboardB
             board.getLines().add(line);
 
         return board;
-    }
-
-    public static DefaultBuilder builder(ScoreboardAdapter scoreboardAdapter, String title, Player viewer) {
-        return new DefaultBuilder(scoreboardAdapter, title, viewer);
     }
 
     public static class DefaultBuilder extends ScoreboardBuilder<ScoreboardImpl> {

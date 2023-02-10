@@ -1,6 +1,5 @@
 package it.hemerald.basementx.velocity.remote;
 
-import com.velocitypowered.api.event.ResultedEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Level;
 
 @RequiredArgsConstructor
 public class RemoteVelocityServiceImpl implements RemoteVelocityService {
@@ -34,13 +32,38 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     private final BasementVelocity velocity;
 
+    public static NamedTextColor formatPing(long ping) {
+        if (ping >= 0 && ping < 70) {
+            return NamedTextColor.GREEN;
+        } else if (ping >= 70 && ping < 100) {
+            return NamedTextColor.YELLOW;
+        } else if (ping >= 100 && ping < 150) {
+            return NamedTextColor.GOLD;
+        } else if (ping >= 150) {
+            return NamedTextColor.RED;
+        }
+        return NamedTextColor.WHITE;
+    }
+
+    public static NamedTextColor formatCps(long cps) {
+        if (cps >= 0 && cps < 10) {
+            return NamedTextColor.GREEN;
+        } else if (cps >= 10 && cps < 15) {
+            return NamedTextColor.YELLOW;
+        } else if (cps >= 15 && cps < 20) {
+            return NamedTextColor.GOLD;
+        } else if (cps >= 20) {
+            return NamedTextColor.RED;
+        }
+        return NamedTextColor.WHITE;
+    }
+
     @Override
     public boolean isOnRanch(String player, String server) {
         Optional<Player> proxyPlayer = velocity.getServer().getPlayer(player);
         if (proxyPlayer.isEmpty()) return false;
         Optional<ServerConnection> connection = proxyPlayer.get().getCurrentServer();
-        if (connection.isEmpty()) return false;
-        return connection.get().getServerInfo().getName().startsWith(server);
+        return connection.map(serverConnection -> serverConnection.getServerInfo().getName().startsWith(server)).orElse(false);
     }
 
     @Override
@@ -48,8 +71,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
         Optional<Player> proxyPlayer = velocity.getServer().getPlayer(player);
         if (proxyPlayer.isEmpty()) return false;
         Optional<ServerConnection> connection = proxyPlayer.get().getCurrentServer();
-        if (connection.isEmpty()) return false;
-        return connection.get().getServerInfo().getName().startsWith(server);
+        return connection.map(serverConnection -> serverConnection.getServerInfo().getName().startsWith(server)).orElse(false);
     }
 
     @Override
@@ -57,17 +79,16 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
         Optional<Player> proxyPlayer = velocity.getServer().getPlayer(player);
         if (proxyPlayer.isEmpty()) return null;
         Optional<ServerConnection> connection = proxyPlayer.get().getCurrentServer();
-        if (connection.isEmpty()) return null;
-        return connection.get().getServerInfo().getName();
+        return connection.map(serverConnection -> serverConnection.getServerInfo().getName()).orElse(null);
     }
 
     @Override
     public void sendToServer(String player, String server) {
         Optional<Player> optionalPlayer = this.velocity.getServer().getPlayer(player);
-        if(optionalPlayer.isEmpty()) return;
+        if (optionalPlayer.isEmpty()) return;
         Optional<RegisteredServer> optionalServer = this.velocity.getServer().getServer(server);
         if (optionalServer.isEmpty()) {
-            optionalPlayer.ifPresent(p -> p.sendMessage(Component.text("Il server a cui stai provando ad accedere è offline!", NamedTextColor.RED)));
+            optionalPlayer.get().sendMessage(Component.text("Il server a cui stai provando ad accedere è offline!", NamedTextColor.RED));
             return;
         }
 
@@ -80,10 +101,10 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void sendToServer(UUID uuid, String server) {
         Optional<Player> optionalPlayer = this.velocity.getServer().getPlayer(uuid);
-        if(optionalPlayer.isEmpty()) return;
+        if (optionalPlayer.isEmpty()) return;
         Optional<RegisteredServer> optionalServer = this.velocity.getServer().getServer(server);
         if (optionalServer.isEmpty()) {
-            optionalPlayer.ifPresent(p -> p.sendMessage(Component.text("Il server a cui stai provando ad accedere è offline!", NamedTextColor.RED)));
+            optionalPlayer.get().sendMessage(Component.text("Il server a cui stai provando ad accedere è offline!", NamedTextColor.RED));
             return;
         }
 
@@ -96,7 +117,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void sendMessage(String player, String... messages) {
         Optional<Player> optionalPlayer = this.velocity.getServer().getPlayer(player);
-        if(optionalPlayer.isEmpty()) return;
+        if (optionalPlayer.isEmpty()) return;
         Player velocityPlayer = optionalPlayer.get();
         for (String message : messages) {
             velocityPlayer.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
@@ -106,9 +127,9 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void sendMessageWithPermission(String player, String permissionNode, String... messages) {
         Optional<Player> optionalPlayer = this.velocity.getServer().getPlayer(player);
-        if(optionalPlayer.isEmpty()) return;
+        if (optionalPlayer.isEmpty()) return;
         Player velocityPlayer = optionalPlayer.get();
-        if(!velocityPlayer.hasPermission(permissionNode)) return;
+        if (!velocityPlayer.hasPermission(permissionNode)) return;
         for (String message : messages) {
             velocityPlayer.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
         }
@@ -117,7 +138,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     @Override
     public void sendMessageComponent(String player, String... messages) {
         Optional<Player> optionalPlayer = this.velocity.getServer().getPlayer(player);
-        if(optionalPlayer.isEmpty()) return;
+        if (optionalPlayer.isEmpty()) return;
         Player velocityPlayer = optionalPlayer.get();
         for (String message : messages) {
             velocityPlayer.sendMessage(componentSerializer.deserialize(message));
@@ -128,7 +149,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     public void registerServer(String serverName, int port) {
         Optional<RegisteredServer> serverOptional = velocity.getServer().getServer(serverName);
         ServerInfo newServer = new ServerInfo(serverName, new InetSocketAddress(serverName, port));
-        if(serverOptional.isEmpty()) {
+        if (serverOptional.isEmpty()) {
             velocity.getServer().registerServer(newServer);
         } else {
             velocity.getServer().unregisterServer(serverOptional.get().getServerInfo());
@@ -140,7 +161,7 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
     public void cheatAlert(String server, String playerName, String category, String type, String desc, int level, int maxLevel, long cps, long ping) {
         if (ping == 0) return;
         this.velocity.getServer().getEventManager().fire(new AlertEvent(server, playerName, category, type, desc, level, maxLevel, cps, ping)).thenAccept(alertEvent -> {
-            if(!alertEvent.getResult().isAllowed()) return;
+            if (!alertEvent.getResult().isAllowed()) return;
 
             List<Player> toAlert = new ArrayList<>();
             for (Player player : velocity.getServer().getAllPlayers()) {
@@ -203,31 +224,5 @@ public class RemoteVelocityServiceImpl implements RemoteVelocityService {
 
     public int playerVersion(UUID uuid) {
         return Via.getAPI().getPlayerVersion(uuid);
-    }
-
-    public static NamedTextColor formatPing(long ping) {
-        if (ping >= 0 && ping < 70) {
-            return NamedTextColor.GREEN;
-        } else if (ping >= 70 && ping < 100) {
-            return NamedTextColor.YELLOW;
-        } else if (ping >= 100 && ping < 150) {
-            return NamedTextColor.GOLD;
-        } else if (ping >= 150) {
-            return NamedTextColor.RED;
-        }
-        return NamedTextColor.WHITE;
-    }
-
-    public static NamedTextColor formatCps(long cps) {
-        if (cps >= 0 && cps < 10) {
-            return NamedTextColor.GREEN;
-        } else if (cps >= 10 && cps < 15) {
-            return NamedTextColor.YELLOW;
-        } else if (cps >= 15 && cps < 20) {
-            return NamedTextColor.GOLD;
-        } else if (cps >= 20) {
-            return NamedTextColor.RED;
-        }
-        return NamedTextColor.WHITE;
     }
 }

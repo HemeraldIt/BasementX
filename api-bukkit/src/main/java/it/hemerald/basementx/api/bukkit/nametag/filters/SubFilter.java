@@ -40,7 +40,7 @@ public abstract class SubFilter extends PermissionFilter {
     @Override
     public boolean ignoreMe(Player player) {
         for (String permission : streamerPermissions) {
-            if(player.hasPermission(permission)) return true;
+            if (player.hasPermission(permission)) return true;
         }
 
         return false;

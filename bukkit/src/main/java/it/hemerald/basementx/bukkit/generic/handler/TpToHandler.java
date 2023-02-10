@@ -2,7 +2,6 @@ package it.hemerald.basementx.bukkit.generic.handler;
 
 import it.hemerald.basementx.api.redis.messages.handler.BasementMessageHandler;
 import it.hemerald.basementx.api.redis.messages.implementation.TpToMessage;
-import it.hemerald.basementx.bukkit.listeners.PlayerListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.function.BiConsumer;

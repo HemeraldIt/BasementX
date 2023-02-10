@@ -10,6 +10,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
 
     /**
      * Specifies the columns to select from a table
+     *
      * @param columns each column to concat in the final expression
      * @return self Query Builder
      */
@@ -18,6 +19,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies already a final expression to be used
      * in the final query
+     *
      * @param statement full final expression
      * @return self Query Builder
      */
@@ -26,6 +28,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the tables used in the query
      * from the same database
+     *
      * @param tables table's name
      * @return self Query Builder
      */
@@ -34,6 +37,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the tables used in the query
      * from another database
+     *
      * @param fullyTableName table's name qualified with database (database.table)
      * @return self Query Builder
      */
@@ -42,6 +46,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the full condition
      * applied to the query
+     *
      * @param conditions full condition
      * @return self Query Builder
      */
@@ -50,6 +55,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the full GROUP BY
      * block statement
+     *
      * @param statement order by expression
      * @return self Query Builder
      */
@@ -58,6 +64,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the full HAVING
      * block statement
+     *
      * @param conditions full having condition
      * @return self Query Builder
      */
@@ -66,6 +73,7 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the full ORDER BY
      * block statement
+     *
      * @param statement group by expression
      * @return self Query Builder
      */
@@ -74,7 +82,8 @@ public interface QueryBuilderSelect extends ReturningQuery<QueryBuilderSelect, Q
     /**
      * Specifies the LIMIT block
      * applied to the query
-     * @param limit limiting by
+     *
+     * @param limit  limiting by
      * @param offset first offset
      * @return self Query Builder
      */

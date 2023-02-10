@@ -12,6 +12,7 @@ public interface QueryBuilderCreateDatabase extends ReturningQuery<QueryBuilderC
      * if true it includes
      * OR REPLACE
      * block in the final query
+     *
      * @param add if the block must be present
      * @return self Query Builder
      */
@@ -21,9 +22,10 @@ public interface QueryBuilderCreateDatabase extends ReturningQuery<QueryBuilderC
      * if true it includes
      * IF NOT EXISTS
      * block in the final query
+     *
      * @param add if the block must be present
      * @return selfQuery Builder
      */
     QueryBuilderCreateDatabase ifNotExists(boolean add);
-    
+
 }

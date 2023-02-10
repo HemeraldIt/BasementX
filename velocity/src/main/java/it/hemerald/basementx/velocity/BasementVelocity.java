@@ -53,14 +53,10 @@ public class BasementVelocity extends AbstractBasementPlugin {
     private final File dataFolder;
     private final File configFile;
     private final Logger logger;
-
+    private final Map<String, AlertType> toggled = new HashMap<>();
     private Together together;
-
     private AbstractMariaHolder holder;
     private AbstractMariaDatabase database;
-
-    private final Map<String, AlertType> toggled = new HashMap<>();
-
     private UserDataManager userDataManager;
 
     @Inject
@@ -105,18 +101,18 @@ public class BasementVelocity extends AbstractBasementPlugin {
                 .addForeignKeyConstraint("player_id", "players", "id", "ON UPDATE CASCADE ON DELETE CASCADE")
                 .build().exec();
 
-       //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
-       //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-       //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
-       //        .addColumn("username", MariaType.VARCHAR, 32)
-       //        .addColumn("last_join", MariaType.DATETIME, "CURRENT_TIMESTAMP")
-       //        .withPrimaryKeys("id").build().exec();
+        //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
+        //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
+        //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
+        //        .addColumn("username", MariaType.VARCHAR, 32)
+        //        .addColumn("last_join", MariaType.DATETIME, "CURRENT_TIMESTAMP")
+        //        .withPrimaryKeys("id").build().exec();
 
-       //database.createTable(DatabaseConstants.PREMIUM_TABLE).ifNotExists(true)
-       //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-       //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
-       //        .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
-       //        .withPrimaryKeys("id").build().exec();
+        //database.createTable(DatabaseConstants.PREMIUM_TABLE).ifNotExists(true)
+        //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
+        //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
+        //        .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
+        //        .withPrimaryKeys("id").build().exec();
 
         userDataManager = new UserDataManager(this, database);
 

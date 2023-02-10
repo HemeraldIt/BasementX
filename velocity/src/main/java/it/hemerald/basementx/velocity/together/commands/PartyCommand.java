@@ -52,11 +52,11 @@ public class PartyCommand implements SimpleCommand {
         CommandArgument argument = arguments.get(invocation.arguments()[0]);
 
         if (argument == null) {
-            arguments.get("invite").execute(player, new String[] {"", invocation.arguments()[0]});
+            arguments.get("invite").execute(player, new String[]{"", invocation.arguments()[0]});
             return;
         }
 
-        if(argument.getLength() > invocation.arguments().length) {
+        if (argument.getLength() > invocation.arguments().length) {
             unknownArgument.execute(player, invocation.arguments());
         } else {
             argument.execute(player, invocation.arguments());
@@ -65,7 +65,7 @@ public class PartyCommand implements SimpleCommand {
 
     public CommandArgument getArgument(String invocation) {
         CommandArgument argument = arguments.get(invocation);
-        if(argument == null) return unknownArgument;
+        if (argument == null) return unknownArgument;
         return argument;
     }
 

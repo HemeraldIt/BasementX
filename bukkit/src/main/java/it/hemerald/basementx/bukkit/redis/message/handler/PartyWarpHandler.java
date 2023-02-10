@@ -16,11 +16,11 @@ public class PartyWarpHandler implements BasementMessageHandler<PartyWarpMessage
     @Override
     public void execute(PartyWarpMessage message) {
         Player player = Bukkit.getPlayer(message.getPlayer());
-        if(player == null) return;
+        if (player == null) return;
         PartyWarpEvent partyWarpEvent = new PartyWarpEvent(player, message.getServer());
         basement.getPlugin().getServer().getScheduler().runTask(basement.getPlugin(), () -> {
             Bukkit.getServer().getPluginManager().callEvent(partyWarpEvent);
-            if(!partyWarpEvent.isCancelled()) {
+            if (!partyWarpEvent.isCancelled()) {
                 basement.getPlayerManager().sendToServer(message.getPlayer(), message.getServer());
             }
         });

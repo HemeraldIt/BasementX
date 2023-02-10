@@ -97,22 +97,6 @@ public class UserDataManager {
         userDataMap.put(uuid, redissonClient.getLiveObjectService().merge(userData));
     }
 
-    @RequiredArgsConstructor
-    private enum NetworkBoosters {
-        XP (UserData::setXpBoost, (user, time) -> {
-            if (System.currentTimeMillis() < time)
-                user.setXpBoostTime(time);
-        }),
-
-        COINS (UserData::setCoinsBoost, (user, time) -> {
-            if (System.currentTimeMillis() < time)
-                user.setCoinsBoostTime(time);
-        });
-
-        private final BiConsumer<UserData, Integer> setBuff;
-        private final BiConsumer<UserData, Long> setTime;
-    }
-
     public void saveUser(Player player) {
         UserData userData = userDataMap.remove(player.getUniqueId());
         if (userData == null) {
@@ -120,7 +104,7 @@ public class UserDataManager {
             return;
         }
         saveUserToDatabase(userData);
-    //    redissonClient.getLiveObjectService().delete(userData);
+        //    redissonClient.getLiveObjectService().delete(userData);
     }
 
     private Set<UserData> getUsers() {
@@ -158,7 +142,7 @@ public class UserDataManager {
             querySelectUserData.patternClone()
                     .columns("id")
                     .where(WhereBuilder.builder().equals("uuid", data.getUuid()).close())
-                    .build().execConsume( (queryData) -> {
+                    .build().execConsume((queryData) -> {
                         if (queryData.first())
                             data.setTableIndex(queryData.getInt("id"));
                     });
@@ -249,6 +233,22 @@ public class UserDataManager {
                             data.getCoinsBoost(), data.getCoinsBoostTime())
                     .build().exec();
         }
+    }
+
+    @RequiredArgsConstructor
+    private enum NetworkBoosters {
+        XP(UserData::setXpBoost, (user, time) -> {
+            if (System.currentTimeMillis() < time)
+                user.setXpBoostTime(time);
+        }),
+
+        COINS(UserData::setCoinsBoost, (user, time) -> {
+            if (System.currentTimeMillis() < time)
+                user.setCoinsBoostTime(time);
+        });
+
+        private final BiConsumer<UserData, Integer> setBuff;
+        private final BiConsumer<UserData, Long> setTime;
     }
 
 }

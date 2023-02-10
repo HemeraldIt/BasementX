@@ -43,7 +43,7 @@ public class Together {
 
         server.getEventManager().register(plugin, new PlayerListener(this));
         server.getCommandManager().register(server.getCommandManager().metaBuilder("party").aliases("p").build(), partyCommand);
-       // server.getCommandManager().register(server.getCommandManager().metaBuilder("friend").aliases("friends", "f").build(), friendCommand);
+        server.getCommandManager().register(server.getCommandManager().metaBuilder("friend").aliases("friends", "f").build(), friendCommand);
     }
 
     public void disable() {

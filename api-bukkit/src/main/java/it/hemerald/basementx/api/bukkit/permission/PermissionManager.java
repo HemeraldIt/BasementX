@@ -10,6 +10,7 @@ public interface PermissionManager {
 
     /**
      * Gets the luckperms {@link User} object
+     *
      * @param player the player
      * @return the luckperms user object
      */
@@ -17,6 +18,7 @@ public interface PermissionManager {
 
     /**
      * Gets the luckperms {@link User} object async
+     *
      * @param name the player name
      * @return the luckperms user object
      */
@@ -24,6 +26,7 @@ public interface PermissionManager {
 
     /**
      * Gets the luckperms {@link User} object async
+     *
      * @param uuid the player uuid
      * @return the luckperms user object
      */
@@ -31,6 +34,7 @@ public interface PermissionManager {
 
     /**
      * Gets the player {@link net.luckperms.api.model.group.Group} priority
+     *
      * @param player the player
      * @return the player group priority. 1000 as default value
      */
@@ -38,6 +42,7 @@ public interface PermissionManager {
 
     /**
      * Gets player {@link net.luckperms.api.model.group.Group} prefix
+     *
      * @param name the player name
      * @return the group prefix
      */
@@ -45,6 +50,7 @@ public interface PermissionManager {
 
     /**
      * Gets player {@link net.luckperms.api.model.group.Group} prefix
+     *
      * @param uuid the player uuid
      * @return the group prefix
      */
@@ -52,6 +58,7 @@ public interface PermissionManager {
 
     /**
      * Gets {@link net.luckperms.api.model.group.Group} prefix
+     *
      * @param groupName the group name
      * @return the group prefix
      */

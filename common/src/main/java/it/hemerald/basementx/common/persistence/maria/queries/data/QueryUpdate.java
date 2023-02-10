@@ -13,17 +13,22 @@ import java.util.concurrent.CompletableFuture;
 
 public class QueryUpdate extends MariaQuery implements QueryBuilderUpdate {
 
-    public QueryUpdate() {}
-
-    public QueryUpdate(AbstractMariaHolder holder, String database) {
-        super(holder, database);
-    }
+    private final List<String> set = new ArrayList<>();
+    private String tables;
 
     /*
         Building
      */
+    private String where;
+    private String orderBy;
+    private int limit;
 
-    private String tables;
+    public QueryUpdate() {
+    }
+
+    public QueryUpdate(AbstractMariaHolder holder, String database) {
+        super(holder, database);
+    }
 
     @Override
     public QueryBuilderUpdate table(String... tables) {
@@ -41,10 +46,9 @@ public class QueryUpdate extends MariaQuery implements QueryBuilderUpdate {
         return this;
     }
 
-    private final List<String> set = new ArrayList<>();
     @Override
     public QueryBuilderUpdate set(String str, Object value) {
-        if(value == null) {
+        if (value == null) {
             set.add(str + "=NULL");
         } else {
             set.add(str + "='" + value + "'");
@@ -54,7 +58,7 @@ public class QueryUpdate extends MariaQuery implements QueryBuilderUpdate {
 
     @Override
     public QueryBuilderUpdate setNQ(String str, Object value) {
-        if(value == null) {
+        if (value == null) {
             set.add(str + "=NULL");
         } else {
             set.add(str + "=" + value);
@@ -80,21 +84,18 @@ public class QueryUpdate extends MariaQuery implements QueryBuilderUpdate {
         return this;
     }
 
-    private String where;
     @Override
     public QueryBuilderUpdate where(String conditions) {
         where = conditions;
         return this;
     }
 
-    private String orderBy;
     @Override
     public QueryBuilderUpdate orderBy(String statement) {
         orderBy = statement;
         return this;
     }
 
-    private int limit;
     @Override
     public QueryBuilderUpdate limit(int n) {
         this.limit = n;

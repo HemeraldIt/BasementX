@@ -10,34 +10,38 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
 
     /**
      * Adds a column to be add to the table
+     *
      * @param columnName name of the column
-     * @param type type of the column
+     * @param type       type of the column
      * @return self Query Builder
      */
     QueryBuilderCreateTable addColumn(String columnName, MariaType type);
 
     /**
      * Adds a column to be add to the table
+     *
      * @param columnName name of the column
-     * @param type type of the column
-     * @param size size applied to the type
+     * @param type       type of the column
+     * @param size       size applied to the type
      * @return self Query Builder
      */
     QueryBuilderCreateTable addColumn(String columnName, MariaType type, Integer size);
 
     /**
      * Adds a column to be add to the table
+     *
      * @param columnName name of the column
-     * @param type type of the column
-     * @param size size applied to the type
+     * @param type       type of the column
+     * @param size       size applied to the type
      * @return self Query Builder
      */
     QueryBuilderCreateTable addColumn(String columnName, MariaType type, Integer size, ColumnData... columnData);
 
     /**
      * Adds a column to be add to the table
-     * @param columnName name of the column
-     * @param type type of the column
+     *
+     * @param columnName    name of the column
+     * @param type          type of the column
      * @param autoIncrement if the column is marked as auto increment
      * @return self Query Builder
      */
@@ -45,8 +49,9 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
 
     /**
      * Adds a column to be add to the table
+     *
      * @param columnName name of the column
-     * @param type type of the column
+     * @param type       type of the column
      * @param columnData the data of colum like if is (auto_increment, unique, ecc...)
      * @return self Query Builder
      */
@@ -54,35 +59,38 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
 
     /**
      * Adds a column to be add to the table
-     * @param columnName name of the column
-     * @param type type of the column
+     *
+     * @param columnName   name of the column
+     * @param type         type of the column
      * @param defaultValue default value
-     * @param columnData the data of colum like if is (auto_increment, unique, ecc...)
+     * @param columnData   the data of colum like if is (auto_increment, unique, ecc...)
      * @return self Query Builder
      */
     QueryBuilderCreateTable addColumn(String columnName, MariaType type, String defaultValue, ColumnData... columnData);
 
     /**
      * Adds a column to be add to the table
-     * @param columnName name of the column
-     * @param type type of the column
-     * @param size size applied to the type
-     * @param defaultValue default value
-     * @param notNull if the column is marked as not null
+     *
+     * @param columnName    name of the column
+     * @param type          type of the column
+     * @param size          size applied to the type
+     * @param defaultValue  default value
+     * @param notNull       if the column is marked as not null
      * @param autoIncrement if the column is marked as auto increment
-     * @param constraint full constraint of the column
+     * @param constraint    full constraint of the column
      * @return self Query Builder
      */
     QueryBuilderCreateTable addColumn(String columnName, MariaType type, Integer size, String defaultValue, boolean notNull, boolean autoIncrement, String constraint);
 
     /**
      * Adds a column to be add to the table
-     * @param columnName name of the column
-     * @param type type of the column
-     * @param size size applied to the type
+     *
+     * @param columnName   name of the column
+     * @param type         type of the column
+     * @param size         size applied to the type
      * @param defaultValue default value
-     * @param constraint full constraint of the column
-     * @param columnData the data of colum like if is (auto_increment, unique, ecc...)
+     * @param constraint   full constraint of the column
+     * @param columnData   the data of colum like if is (auto_increment, unique, ecc...)
      * @return self Query Builder
      */
     QueryBuilderCreateTable addColumn(String columnName, MariaType type, Integer size, String defaultValue, String constraint, ColumnData... columnData);
@@ -90,6 +98,7 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
     /**
      * Specifies a single of bind primary key
      * based on a column already added with ::addColumn()
+     *
      * @param columnName column's name
      * @return self Query Builder
      */
@@ -98,8 +107,9 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
     /**
      * Specifies a foreign key from a table's column
      * in the same database
-     * @param columnName column to be used as foreign key
-     * @param table other table's name
+     *
+     * @param columnName  column to be used as foreign key
+     * @param table       other table's name
      * @param tableColumn other column's name
      * @return self Query Builder
      */
@@ -108,10 +118,11 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
     /**
      * Specifies a foreign key from a table's column
      * in the same database with a specified final constraint
-     * @param columnName column to be used as foreign key
-     * @param table other table's name
+     *
+     * @param columnName  column to be used as foreign key
+     * @param table       other table's name
      * @param tableColumn other column's name
-     * @param constraint full constraint
+     * @param constraint  full constraint
      * @return self Query Builder
      */
     QueryBuilderCreateTable addForeignKeyConstraint(String columnName, String table, String tableColumn, String constraint);
@@ -119,9 +130,10 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
     /**
      * Specifies a foreign key from a table's column
      * in another database
-     * @param columnName column to be used as foreign key
-     * @param outerDB outer database's name
-     * @param outerDBTable outer table's name
+     *
+     * @param columnName         column to be used as foreign key
+     * @param outerDB            outer database's name
+     * @param outerDBTable       outer table's name
      * @param outerDBTableColumn outer column's name
      * @return self Query Builder
      */
@@ -130,11 +142,12 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
     /**
      * Specifies a foreign key from a table's column
      * in another database with a specified final constraint
-     * @param columnName column to be used as foreign key
-     * @param outerDB outer database's name
-     * @param outerDBTable outer table's name
+     *
+     * @param columnName         column to be used as foreign key
+     * @param outerDB            outer database's name
+     * @param outerDBTable       outer table's name
      * @param outerDBTableColumn outer column's name
-     * @param constraint full constraint
+     * @param constraint         full constraint
      * @return self Query Builder
      */
     QueryBuilderCreateTable addForeignKeyConstraint(String columnName, String outerDB, String outerDBTable, String outerDBTableColumn, String constraint);
@@ -143,6 +156,7 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
      * if true it includes
      * OR REPLACE
      * block in the final query
+     *
      * @param add if the block must be present
      * @return self Query Builder
      */
@@ -152,6 +166,7 @@ public interface QueryBuilderCreateTable extends ReturningQuery<QueryBuilderCrea
      * if true it includes
      * IF NOT EXISTS
      * block in the final query
+     *
      * @param add if the block must be present
      * @return self Query Builder
      */

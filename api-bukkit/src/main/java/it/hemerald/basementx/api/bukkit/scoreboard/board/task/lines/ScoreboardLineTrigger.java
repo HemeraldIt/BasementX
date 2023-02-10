@@ -9,6 +9,7 @@ public interface ScoreboardLineTrigger extends Consumer<ScoreboardLine> {
 
     /**
      * Performs the implemented action when the line updates.
+     *
      * @param line the {@link ScoreboardLine}
      */
     void accept(ScoreboardLine line);

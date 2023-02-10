@@ -15,7 +15,7 @@ public class HostListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if(Bukkit.getServer().getOnlinePlayers().size() != 1) return;
+        if (Bukkit.getServer().getOnlinePlayers().size() != 1) return;
 
         basement.setHosted(true);
         basement.setHoster(event.getPlayer().getName());
@@ -23,7 +23,7 @@ public class HostListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        if(Bukkit.getServer().getOnlinePlayers().size() != 1) return;
+        if (Bukkit.getServer().getOnlinePlayers().size() != 1) return;
 
         basement.setHosted(false);
         basement.setHoster(null);

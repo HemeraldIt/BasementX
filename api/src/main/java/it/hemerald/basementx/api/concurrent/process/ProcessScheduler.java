@@ -11,7 +11,9 @@ public final class ProcessScheduler {
     private final Executor async;
     private final ExecutorService service;
 
-    /** Create a new {@code ProcessScheduler} which also creates a new {@link ExecutorService} */
+    /**
+     * Create a new {@code ProcessScheduler} which also creates a new {@link ExecutorService}
+     */
     public ProcessScheduler() {
         this(
                 Executors.newCachedThreadPool(
@@ -66,8 +68,8 @@ public final class ProcessScheduler {
      * ResultedProcessesCompletion}.
      *
      * @param processes the resulted processes to run
+     * @param <T>       result value type parameter
      * @return a process completion
-     * @param <T> result value type parameter
      * @see ResultedProcess
      * @see ResultedProcessesCompletion
      */

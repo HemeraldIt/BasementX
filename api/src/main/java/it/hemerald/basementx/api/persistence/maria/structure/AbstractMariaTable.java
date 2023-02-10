@@ -6,6 +6,7 @@ package it.hemerald.basementx.api.persistence.maria.structure;
 public interface AbstractMariaTable {
     /**
      * Name of the table
+     *
      * @return name
      */
     String getName();

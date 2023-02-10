@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public abstract class HikariConnector implements Connector {
 
-    protected HikariDataSource source;
     protected final HikariConfig config;
+    protected HikariDataSource source;
 
     public HikariConnector(String driver) {
         PropertiesProvider provider = getProperties();
@@ -58,6 +58,7 @@ public abstract class HikariConnector implements Connector {
     }
 
     protected abstract HikariConfig getConfig();
+
     protected abstract PropertiesProvider getProperties();
 
 }

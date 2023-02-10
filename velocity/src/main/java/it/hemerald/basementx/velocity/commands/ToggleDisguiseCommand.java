@@ -24,7 +24,7 @@ public class ToggleDisguiseCommand implements SimpleCommand {
     public void execute(Invocation invocation) {
         if (!(invocation.source() instanceof Player player)) return;
 
-        if(cooldown.contains(player.getUsername())) {
+        if (cooldown.contains(player.getUsername())) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Sei in cooldown!").color(NamedTextColor.RED)));
@@ -32,7 +32,7 @@ public class ToggleDisguiseCommand implements SimpleCommand {
         }
 
         Optional<UserData> optionalUserData = velocity.getUserDataManager().getUserData(player.getUniqueId());
-        if(optionalUserData.isPresent() && optionalUserData.get().getStreamMode()) {
+        if (optionalUserData.isPresent() && optionalUserData.get().getStreamMode()) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Non puoi effettuare il comando mentre sei in StreamMode!").color(NamedTextColor.RED)));

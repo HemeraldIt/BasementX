@@ -12,18 +12,21 @@ import lombok.RequiredArgsConstructor;
 public abstract class Module<T extends Adapter<?>> {
 
     protected final BasementBukkit basement;
-    @Getter(AccessLevel.PROTECTED) private final Property<Boolean> property;
+    @Getter(AccessLevel.PROTECTED)
+    private final Property<Boolean> property;
     protected boolean enabled;
     protected T adapter = getDefaultAdapter();
 
     protected abstract T getDefaultAdapter();
 
-    public void onStart() {}
+    public void onStart() {
+    }
 
-    public void onStop() {}
+    public void onStop() {
+    }
 
     public final void enable() {
-        if(!enabled && basement.getSettingsManager().getProperty(property)) {
+        if (!enabled && basement.getSettingsManager().getProperty(property)) {
             enabled = true;
 
             onStart();
@@ -31,7 +34,7 @@ public abstract class Module<T extends Adapter<?>> {
     }
 
     public final void disable() {
-        if(enabled) {
+        if (enabled) {
             enabled = false;
 
             onStop();

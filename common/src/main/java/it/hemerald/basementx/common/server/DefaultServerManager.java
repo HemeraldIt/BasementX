@@ -18,8 +18,12 @@ public class DefaultServerManager implements ServerManager {
 
     private final RMapCache<String, BukkitServer> servers;
 
-    @Setter private Consumer<BukkitServer> serverAddConsumer = server -> {};
-    @Setter private Consumer<BukkitServer> serverRemoveConsumer = server -> {};
+    @Setter
+    private Consumer<BukkitServer> serverAddConsumer = server -> {
+    };
+    @Setter
+    private Consumer<BukkitServer> serverRemoveConsumer = server -> {
+    };
 
     public DefaultServerManager(Basement basement) {
         servers = basement.getRedisManager().getRedissonClient().getMapCache("servers");
@@ -52,7 +56,7 @@ public class DefaultServerManager implements ServerManager {
     @Override
     public boolean isOnline(String name) {
         BukkitServer server = servers.get(name);
-        if(server == null) return false;
+        if (server == null) return false;
 
         return server.isServerOnline();
     }
@@ -66,7 +70,7 @@ public class DefaultServerManager implements ServerManager {
     public List<BukkitServer> getOnlineServers() {
         List<BukkitServer> onlineServers = new ArrayList<>();
         for (BukkitServer server : servers.values()) {
-            if(server.isServerOnline()) onlineServers.add(server);
+            if (server.isServerOnline()) onlineServers.add(server);
         }
 
         return onlineServers;
@@ -95,7 +99,7 @@ public class DefaultServerManager implements ServerManager {
     }
 
     @Override
-    public void onServerRemove(BukkitServer server){
+    public void onServerRemove(BukkitServer server) {
         serverRemoveConsumer.accept(server);
     }
 }

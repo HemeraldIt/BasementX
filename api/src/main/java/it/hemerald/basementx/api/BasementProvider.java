@@ -22,7 +22,7 @@ public final class BasementProvider {
      */
     public static @NonNull Basement get() {
         Basement instance = BasementProvider.instance;
-        if(instance == null) {
+        if (instance == null) {
             throw new NotLoadedException();
         }
         return instance;

@@ -74,7 +74,7 @@ public class ScoreboardUtils implements it.hemerald.basementx.api.bukkit.scorebo
     @Override
     public void sendPackets(Player player, Object... packets) {
         PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
-        for (Object packet : packets){
+        for (Object packet : packets) {
             connection.sendPacket((Packet<?>) packet);
         }
     }

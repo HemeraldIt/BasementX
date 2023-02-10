@@ -22,25 +22,25 @@ public abstract class Processor<T> {
 
     protected Thread startThread() {
         return new Thread(() -> {
-           while (!Thread.interrupted()) {
-               try {
-                   if (checkPreconditions()) {
-                       T process = this.deque.poll(10, TimeUnit.SECONDS);
+            while (!Thread.interrupted()) {
+                try {
+                    if (checkPreconditions()) {
+                        T process = this.deque.poll(10, TimeUnit.SECONDS);
 
-                       if (process != null) {
-                           try {
-                               compute(process);
-                           } catch (Exception e) {
-                               e.printStackTrace();
-                           }
+                        if (process != null) {
+                            try {
+                                compute(process);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
-                           if (delay > 0) Thread.sleep(delay);
-                       }
-                   }
-               } catch (InterruptedException e) {
-                   Thread.currentThread().interrupt();
-               }
-           }
+                            if (delay > 0) Thread.sleep(delay);
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
         });
     }
 
@@ -71,7 +71,7 @@ public abstract class Processor<T> {
     }
 
     public synchronized void stop(boolean force) {
-        if(force) {
+        if (force) {
             thread.stop();
         } else {
             thread.interrupt();

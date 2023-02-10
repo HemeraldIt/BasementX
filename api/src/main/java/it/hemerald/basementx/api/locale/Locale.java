@@ -12,18 +12,21 @@ public interface Locale {
 
     /**
      * Gets the language
+     *
      * @return the language
      */
     String getLanguage();
 
     /**
      * Gets the configuration object (YAML)
+     *
      * @return the configuration object {@link Configuration}
      */
     Configuration getConfig();
 
     /**
      * Gets text string from config
+     *
      * @param path the element path in the config
      * @return the text string
      */
@@ -33,14 +36,17 @@ public interface Locale {
 
     /**
      * Gets text component from config
+     *
      * @param path the element path in the config
      * @return the text component
      */
     default Component getComponent(String path) {
         return Component.text(getConfig().getString(path));
     }
+
     /**
      * Gets the context of the Locale (plugin name)
+     *
      * @return the context of the Locale
      */
     String getContext();

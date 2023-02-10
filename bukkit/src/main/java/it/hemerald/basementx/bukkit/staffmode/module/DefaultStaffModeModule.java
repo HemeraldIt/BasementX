@@ -58,7 +58,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
     @Override
     public void enableMode(Player player) {
-        if(!localEnable(player)) return;
+        if (!localEnable(player)) return;
 
         vanish(player);
 
@@ -68,9 +68,9 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
     }
 
     private boolean localEnable(Player player) {
-        if(!isEnabled() || isMode(player) || !adapter.onEnterMode(player)) return false;
+        if (!isEnabled() || isMode(player) || !adapter.onEnterMode(player)) return false;
 
-        if(player.getAllowFlight()) adapter.getWasFlying().add(player);
+        if (player.getAllowFlight()) adapter.getWasFlying().add(player);
         player.setAllowFlight(true);
         player.setFlying(true);
 
@@ -93,7 +93,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
     }
 
     private boolean localDisable(Player player) {
-        if(!isEnabled() || !isMode(player) || !adapter.onExitMode(player)) return false;
+        if (!isEnabled() || !isMode(player) || !adapter.onExitMode(player)) return false;
 
         boolean fly = adapter.getWasFlying().remove(player);
         player.setAllowFlight(fly);
@@ -109,20 +109,20 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
     @Override
     public void toggleMode(Player player) {
-        if(isMode(player)) disableMode(player);
+        if (isMode(player)) disableMode(player);
         else enableMode(player);
     }
 
     @Override
     public boolean isMode(Player player) {
-        if(!isEnabled()) return false;
+        if (!isEnabled()) return false;
 
         return adapter.getInventories().containsKey(player);
     }
 
     @Override
     public void vanish(Player player) {
-        if(!localVanish(player)) return;
+        if (!localVanish(player)) return;
 
         adapter.setupInventory(player);
 
@@ -132,11 +132,11 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
     }
 
     public boolean localVanish(Player player) {
-        if(!isEnabled() || isVanished(player)) return false;
+        if (!isEnabled() || isVanished(player)) return false;
 
         List<Player> targets = new ArrayList<>(Bukkit.getOnlinePlayers());
         targets.removeIf(target -> target.hasPermission(BasementMessages.STAFF_PERMISSION));
-        if(!adapter.onVanish(player, targets)) return false;
+        if (!adapter.onVanish(player, targets)) return false;
 
         adapter.getVanished().add(player);
 
@@ -149,7 +149,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
     @Override
     public void unvanish(Player player) {
-        if(!localUnvanish(player)) return;
+        if (!localUnvanish(player)) return;
 
         adapter.setupInventory(player);
 
@@ -159,7 +159,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
     }
 
     public boolean localUnvanish(Player player) {
-        if(!isEnabled() || !isVanished(player)) return false;
+        if (!isEnabled() || !isVanished(player)) return false;
 
         List<Player> targets = new ArrayList<>(Bukkit.getOnlinePlayers());
         if (!adapter.onUnvanish(player, targets)) return false;
@@ -174,30 +174,30 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
     @Override
     public void toggleVanish(Player player) {
-        if(isVanished(player)) unvanish(player);
+        if (isVanished(player)) unvanish(player);
         else vanish(player);
     }
 
     @Override
     public boolean isVanished(Player player) {
-        if(!isEnabled()) return false;
+        if (!isEnabled()) return false;
 
         return adapter.getVanished().contains(player);
     }
 
     @EventHandler
     public void onDropItem(PlayerDropItemEvent event) {
-        if(isMode(event.getPlayer())) event.setCancelled(true);
+        if (isMode(event.getPlayer())) event.setCancelled(true);
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if(isMode((Player) event.getWhoClicked())) event.setCancelled(true);
+        if (isMode((Player) event.getWhoClicked())) event.setCancelled(true);
     }
 
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
-        if(isMode(event.getPlayer())) {
+        if (isMode(event.getPlayer())) {
             event.setCancelled(true);
             adapter.getListener(event.getPlayer().getInventory().getItemInHand()).onInteractEntity(event);
         }
@@ -254,22 +254,22 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if(!player.hasPermission(BasementMessages.STAFF_PERMISSION)) {
+        if (!player.hasPermission(BasementMessages.STAFF_PERMISSION)) {
             for (Player staff : adapter.getVanished()) {
                 player.hidePlayer(staff);
             }
             return;
         }
 
-        if(staffModeSet.contains(player.getName())) {
+        if (staffModeSet.contains(player.getName())) {
             basement.getPlugin().getServer().getScheduler().runTaskLater(basement.getPlugin(), () -> {
-                if(localEnable(player)) {
+                if (localEnable(player)) {
                     player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "StaffMode abilitata!");
                 }
             }, 1L);
         }
-        if(vanishSet.contains(player.getName())) {
-            if(localVanish(player))
+        if (vanishSet.contains(player.getName())) {
+            if (localVanish(player))
                 player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF! " + ChatColor.RESET + "" + ChatColor.WHITE + "Sei invisibile!");
         }
     }

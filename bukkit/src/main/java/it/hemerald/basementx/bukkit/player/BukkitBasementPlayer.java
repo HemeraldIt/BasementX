@@ -22,9 +22,9 @@ public class BukkitBasementPlayer implements BasementPlayer {
     private final LocaleManager localeManager;
     private final DisguiseModule disguiseModule;
     private final UserData userData;
-    private String streamName;
     private final Integer streamId;
     private final MinecraftVersion version;
+    private String streamName;
 
     public BukkitBasementPlayer(Player player, BasementBukkit basement) {
         this.player = player;
@@ -62,7 +62,7 @@ public class BukkitBasementPlayer implements BasementPlayer {
 
     @Override
     public void disguise(boolean enabled) {
-        if(enabled) disguiseModule.disguise(player);
+        if (enabled) disguiseModule.disguise(player);
         else disguiseModule.undisguise(player);
     }
 

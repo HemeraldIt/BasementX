@@ -43,7 +43,7 @@ public class BukkitStreamMode extends StreamMode {
         for (Player who : players) {
             if (who.equals(streamer)) continue;
             BasementPlayer basementPlayer = playerManager.getBasementPlayer(who.getName());
-            if(basementPlayer.isInStreamMode()) {
+            if (basementPlayer.isInStreamMode()) {
                 streamer.hidePlayer(who);
                 streamer.showPlayer(who);
                 who.hidePlayer(streamer);

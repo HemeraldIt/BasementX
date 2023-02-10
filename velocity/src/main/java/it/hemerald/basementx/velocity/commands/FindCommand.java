@@ -23,8 +23,8 @@ public class FindCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
-        String[] args  = invocation.arguments();
-        if(args.length != 1) {
+        String[] args = invocation.arguments();
+        if (args.length != 1) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Uso corretto: /find <player>").color(NamedTextColor.RED)));
@@ -32,7 +32,7 @@ public class FindCommand implements SimpleCommand {
         }
 
         Optional<Player> optionalPlayer = velocity.getServer().getPlayer(args[0]);
-        if(optionalPlayer.isEmpty()) {
+        if (optionalPlayer.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Giocatore non trovato").color(NamedTextColor.RED)));
@@ -42,7 +42,7 @@ public class FindCommand implements SimpleCommand {
         Player player = optionalPlayer.get();
 
         Optional<ServerConnection> optionalServer = player.getCurrentServer();
-        if(optionalServer.isEmpty()) {
+        if (optionalServer.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Server non trovato").color(NamedTextColor.RED)));
@@ -55,7 +55,7 @@ public class FindCommand implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        if(invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
+        if (invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
         return CompletableFuture.supplyAsync(() -> velocity.getServer().getAllPlayers().parallelStream().map(Player::getUsername)
                 .filter(username -> username.toLowerCase().startsWith(invocation.arguments()[0].toLowerCase())).toList());
     }

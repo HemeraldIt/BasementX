@@ -57,7 +57,7 @@ public class QueryDataImpl implements QueryData {
 
     @Override
     public boolean hasNext() {
-        return index+1 < dataByName.size();
+        return index + 1 < dataByName.size();
     }
 
     @Override
@@ -73,7 +73,7 @@ public class QueryDataImpl implements QueryData {
 
     @Override
     public boolean last() {
-        index = dataByName.size()-1;
+        index = dataByName.size() - 1;
         return dataByName.size() > 0;
     }
 

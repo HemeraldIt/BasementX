@@ -24,7 +24,7 @@ public abstract class PermissionFilter extends NameTagFilter {
     @Override
     public boolean test(Player player) {
         for (String permission : permissions) {
-            if(player.hasPermission(permission)) return true;
+            if (player.hasPermission(permission)) return true;
         }
 
         return false;
@@ -33,7 +33,7 @@ public abstract class PermissionFilter extends NameTagFilter {
     public List<String> getPermissionOfPlayer(Player player) {
         List<String> list = new ArrayList<>();
         for (String permission : permissions) {
-            if(player.hasPermission(permission)) {
+            if (player.hasPermission(permission)) {
                 list.add(permission);
             }
         }

@@ -91,7 +91,8 @@ public class StandardBasement implements Basement {
         processScheduler = new ProcessScheduler();
     }
 
-    public void start() {}
+    public void start() {
+    }
 
     public void stop() {
         redisManager.getRedissonClient().shutdown();
@@ -188,7 +189,8 @@ public class StandardBasement implements Basement {
                 T instance = type.cast(TypeHolder.TYPES.get(type).getDeclaredConstructor().newInstance());
                 holderBucket.put(key, instance);
                 return instance;
-            } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            } catch (InstantiationException | NoSuchMethodException | IllegalAccessException |
+                     InvocationTargetException e) {
                 e.printStackTrace();
                 return null;
             }

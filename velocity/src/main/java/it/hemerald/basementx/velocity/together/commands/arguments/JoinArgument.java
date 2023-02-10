@@ -70,11 +70,11 @@ public class JoinArgument extends CommandArgument {
         partyService.sendMessage(player, Component.text("§7Sei entrato nel party di ").append(Component.text(toJoin.getLeader()).color(NamedTextColor.AQUA)));
 
         Optional<Player> optLeader = partyService.getTogether().getServer().getPlayer(toJoin.getLeader());
-        if(optLeader.isEmpty()) return;
+        if (optLeader.isEmpty()) return;
         Optional<ServerConnection> optionalServerConnection = optLeader.get().getCurrentServer();
-        if(optionalServerConnection.isEmpty()) return;
+        if (optionalServerConnection.isEmpty()) return;
         ServerConnection serverConnection = optionalServerConnection.get();
-        if(!serverConnection.getServerInfo().getName().contains("_lobby")) return;
+        if (!serverConnection.getServerInfo().getName().contains("_lobby")) return;
 
         player.createConnectionRequest(serverConnection.getServer()).fireAndForget();
     }

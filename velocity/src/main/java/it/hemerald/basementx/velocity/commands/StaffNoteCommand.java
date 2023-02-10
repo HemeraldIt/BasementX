@@ -49,15 +49,15 @@ public class StaffNoteCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if(!(invocation.source() instanceof Player player)) return;
+        if (!(invocation.source() instanceof Player player)) return;
         String[] args = invocation.arguments();
 
-        if(args.length < 2) {
+        if (args.length < 2) {
             player.sendMessage(help);
             return;
         }
         String argument = args[0].toLowerCase();
-        if(!validArg(argument)) {
+        if (!validArg(argument)) {
             player.sendMessage(help);
             return;
         }
@@ -65,10 +65,10 @@ public class StaffNoteCommand implements SimpleCommand {
         String playerName;
 
         Optional<Player> targetOptional = velocity.getServer().getPlayer(args[1]);
-        if(targetOptional.isEmpty()) {
+        if (targetOptional.isEmpty()) {
             QueryData queryData = this.playerData.patternClone()
                     .where(WhereBuilder.builder().equals("username", args[1]).close()).build().execReturn();
-            if(queryData.first()) {
+            if (queryData.first()) {
                 playerUUID = queryData.getString(1);
                 playerName = queryData.getString(2);
             } else {
@@ -86,7 +86,7 @@ public class StaffNoteCommand implements SimpleCommand {
 
         switch (args[0].toLowerCase()) {
             case "add" -> {
-                if(args.length < 3) {
+                if (args.length < 3) {
                     player.sendMessage(help);
                     return;
                 }
@@ -101,7 +101,7 @@ public class StaffNoteCommand implements SimpleCommand {
                                 .color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
             }
             case "remove" -> {
-                if(args.length < 3) {
+                if (args.length < 3) {
                     player.sendMessage(help);
                     return;
                 }
@@ -118,7 +118,7 @@ public class StaffNoteCommand implements SimpleCommand {
 
                 WhereBuilder whereBuilder = WhereBuilder.builder().equals("player_id", playerId(playerUUID)).and().equals("note_id", id);
                 QueryBuilderDelete query = queryRemoveNotes.patternClone();
-                if(player.hasPermission("basement.staff.admin")) {
+                if (player.hasPermission("basement.staff.admin")) {
                     query.where(whereBuilder.close());
                 } else {
                     query.where(whereBuilder.and().equals("staff_id", playerId(player.getUniqueId().toString())).close());
@@ -133,7 +133,7 @@ public class StaffNoteCommand implements SimpleCommand {
                             .and().equalsNQ("player_id", "ps.id")
                             .and().equals("ps.uuid", playerUUID).close())
                     .build().execReturnAsync().thenAccept(queryData -> {
-                        if(!queryData.isBeforeFirst()) {
+                        if (!queryData.isBeforeFirst()) {
                             player.sendMessage(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE)
                                     .append(Component.text("Il giocatore non ha nessuna nota")
                                             .color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
@@ -163,7 +163,7 @@ public class StaffNoteCommand implements SimpleCommand {
 
     private String builder(String[] args, int start) {
         StringBuilder builder = new StringBuilder(args[start]);
-        for(int i = start+1; i < args.length; i++) builder.append(" ").append(args[i]);
+        for (int i = start + 1; i < args.length; i++) builder.append(" ").append(args[i]);
         return builder.toString();
     }
 
@@ -171,9 +171,9 @@ public class StaffNoteCommand implements SimpleCommand {
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
         return CompletableFuture.supplyAsync(() -> {
             String[] args = invocation.arguments();
-            if(args.length < 2) {
+            if (args.length < 2) {
                 return List.of("add", "remove", "list");
-            } else if(args.length == 2) {
+            } else if (args.length == 2) {
                 return velocity.getServer().getAllPlayers().parallelStream().map(Player::getUsername)
                         .filter(name -> name.toLowerCase().startsWith(args[1].toLowerCase())).toList();
             }

@@ -1,6 +1,8 @@
 package it.hemerald.basementx.velocity.friends.commands.arguments;
 
 import com.velocitypowered.api.proxy.Player;
+import it.hemerald.basementx.velocity.friends.commands.CommandArgument;
+import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;

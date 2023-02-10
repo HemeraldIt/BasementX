@@ -11,6 +11,7 @@ import it.hemerald.basementx.api.persistence.maria.queries.builders.data.*;
 public interface AbstractQueryHolderExecutor {
     /**
      * initializes a select query from the table
+     *
      * @param database referent database for the query
      * @return query to build
      */
@@ -18,6 +19,7 @@ public interface AbstractQueryHolderExecutor {
 
     /**
      * initializes an insert query in the table
+     *
      * @param database referent database for the query
      * @return query to build
      */
@@ -25,6 +27,7 @@ public interface AbstractQueryHolderExecutor {
 
     /**
      * initializes a remove query from the table
+     *
      * @param database referent database for the query
      * @return query to build
      */
@@ -32,6 +35,7 @@ public interface AbstractQueryHolderExecutor {
 
     /**
      * initializes an update query on a table
+     *
      * @param database referent database for the query
      * @return query to build
      */
@@ -39,6 +43,7 @@ public interface AbstractQueryHolderExecutor {
 
     /**
      * initializes a replace query on a table
+     *
      * @param database referent database for the query
      * @return query to build
      */

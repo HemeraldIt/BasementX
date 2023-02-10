@@ -26,10 +26,9 @@ package it.hemerald.basementx.api.common;
 import java.util.Map;
 
 /**
- *
- * @author Pierantonio Cangianiello
  * @param <K> the Key type
  * @param <V> the Value type
+ * @author Pierantonio Cangianiello
  */
 public interface SelfExpiringMap<K, V> extends Map<K, V> {
 

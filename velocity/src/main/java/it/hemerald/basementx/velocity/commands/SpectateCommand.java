@@ -21,15 +21,15 @@ public class SpectateCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        if(!(invocation.source() instanceof Player player)) return;
-        if(invocation.arguments().length < 1) {
+        if (!(invocation.source() instanceof Player player)) return;
+        if (invocation.arguments().length < 1) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Uso corretto: /spectate <player>!").color(NamedTextColor.RED)));
             return;
         }
         Optional<Player> targetOptional = velocity.getServer().getPlayer(invocation.arguments()[0]);
-        if(targetOptional.isEmpty()) {
+        if (targetOptional.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
@@ -42,7 +42,7 @@ public class SpectateCommand implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        if(invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
+        if (invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
         return CompletableFuture.supplyAsync(() -> velocity.getServer().getAllPlayers().parallelStream().map(Player::getUsername)
                 .filter(username -> username.toLowerCase().startsWith(invocation.arguments()[0].toLowerCase())).toList());
     }

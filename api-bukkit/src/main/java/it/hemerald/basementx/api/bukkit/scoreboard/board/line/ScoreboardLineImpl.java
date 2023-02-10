@@ -36,7 +36,7 @@ public class ScoreboardLineImpl implements ScoreboardLine {
         adapter.showLine(getViewer(), row, getTeamName(), getPrefix(), getSuffix());
         if (task != null) {
             task.setLine(this);
-            if(!task.isRunning()) task.start();
+            if (!task.isRunning()) task.start();
         }
     }
 
@@ -44,12 +44,12 @@ public class ScoreboardLineImpl implements ScoreboardLine {
     public void destroy() {
         adapter.destroyLine(getViewer(), getTeamName());
         if (task != null)
-            if(task.isRunning()) task.cancel();
+            if (task.isRunning()) task.cancel();
     }
 
     @Override
     public void update() {
-        if(oldContent.equalsIgnoreCase(content))
+        if (oldContent.equalsIgnoreCase(content))
             return;
 
         adapter.updateLine(getViewer(), oldContent, content, getRow());

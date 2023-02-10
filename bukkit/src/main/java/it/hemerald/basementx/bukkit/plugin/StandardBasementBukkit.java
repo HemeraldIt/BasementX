@@ -72,7 +72,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         setServerID(plugin.getServer().getServerName());
         try {
             getRemoteVelocityService().registerServer(plugin.getServer().getServerName(), plugin.getServer().getPort());
-        } catch(RemoteServiceAckTimeoutException e) {
+        } catch (RemoteServiceAckTimeoutException e) {
             plugin.getLogger().severe("Velocity is offline, server not registered");
         }
 
@@ -107,7 +107,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         getRedisManager().registerTopicListener(PartyWarpMessage.TOPIC, new PartyWarpHandler(this));
         getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(this));
 
-        if(Bukkit.getPluginManager().getPlugin("Vault") != null && getSettingsManager().getProperty(BasementBukkitConfig.COINS_PROVIDER)) {
+        if (Bukkit.getPluginManager().getPlugin("Vault") != null && getSettingsManager().getProperty(BasementBukkitConfig.COINS_PROVIDER)) {
             Bukkit.getServicesManager().register(
                     net.milkbowl.vault.economy.Economy.class,
                     new CoinsVaultProvider(getPlayerManager()),
@@ -138,7 +138,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         staffModeModule.disable();
         nameTagModule.disable();
         disguiseModule.disable();
-        if(scoreboardManager != null) scoreboardManager.stop();
+        if (scoreboardManager != null) scoreboardManager.stop();
     }
 
     @Override
@@ -223,13 +223,13 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
     }
 
     @Override
-    public String getHoster() {
-        return hoster;
+    public void setHosted(boolean hosted) {
+        this.hosted = hosted;
     }
 
     @Override
-    public void setHosted(boolean hosted) {
-        this.hosted = hosted;
+    public String getHoster() {
+        return hoster;
     }
 
     @Override

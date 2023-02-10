@@ -17,12 +17,12 @@ public class BasementServerRemoved extends Event {
         this.server = server;
     }
 
-    @Override
-    public @NotNull HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return HANDLERS_LIST;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS_LIST;
     }
 }

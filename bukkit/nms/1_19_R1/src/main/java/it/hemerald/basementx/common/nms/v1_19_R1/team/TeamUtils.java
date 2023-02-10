@@ -42,9 +42,9 @@ public class TeamUtils implements NameTagModule.TeamUtils {
 
     @Override
     public void updateFakeTeam(Player player) {
-        if(!basement.getStreamMode().isEnabled()) return;
+        if (!basement.getStreamMode().isEnabled()) return;
         BasementPlayer basementPlayer = basement.getPlayerManager().getBasementPlayer(player.getName());
-        if(basementPlayer == null) return;
+        if (basementPlayer == null) return;
         boolean status = basementPlayer.isInStreamMode();
 
         ScoreboardTeam team = fakeTeams.get(player.getName());
@@ -61,7 +61,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
     private void updateTab(Player player, BasementPlayer basementPlayer, boolean status) {
         var packet = makePacket(player, basementPlayer);
 
-        if(status) sendPacket(packet);
+        if (status) sendPacket(packet);
         else sendPacketToStreamers(packet);
     }
 
@@ -71,7 +71,7 @@ public class TeamUtils implements NameTagModule.TeamUtils {
         ScoreboardTeam team = scoreboard.f(name);
         PacketPlayOutScoreboardTeam packet;
 
-        if(team == null) {
+        if (team == null) {
             team = scoreboard.g(name);
             team.b(IChatBaseComponent.a(ChatColor.GRAY.toString()));
             team.a(EnumChatFormat.h);
@@ -84,56 +84,56 @@ public class TeamUtils implements NameTagModule.TeamUtils {
 
         fakeTeams.put(player.getName(), team);
 
-        if(status) sendPacket(packet);
+        if (status) sendPacket(packet);
         else sendPacketToStreamers(packet);
     }
 
     public void updateTeam(BasementPlayer player, ScoreboardTeam team, boolean status) {
         var packet = PacketPlayOutScoreboardTeam.a(team, player.getStreamName(), PacketPlayOutScoreboardTeam.a.a);
 
-        if(status) sendPacket(packet);
+        if (status) sendPacket(packet);
         else sendPacketToStreamers(packet);
     }
 
     public void removePlayer(BasementPlayer player, boolean status) {
         ScoreboardTeam team = fakeTeams.get(player.getName());
-        if(team != null) {
+        if (team != null) {
             team.g().remove(player.getStreamName());
             fakeTeams.remove(player.getName());
-            if(team.g().isEmpty()) {
+            if (team.g().isEmpty()) {
                 var packet = PacketPlayOutScoreboardTeam.a(team);
-                if(status) sendPacket(packet);
+                if (status) sendPacket(packet);
                 else sendPacketToStreamers(packet);
                 scoreboard.d(team);
             } else {
                 var packet = PacketPlayOutScoreboardTeam.a(team, player.getStreamName(), PacketPlayOutScoreboardTeam.a.b);
-                if(status) sendPacket(packet);
+                if (status) sendPacket(packet);
                 else sendPacketToStreamers(packet);
             }
         }
     }
 
     private String getFakeTeamName(BasementPlayer basementPlayer, boolean status) {
-        return basement.getNameTagModule().resize(UUID + (char)(status ? 265 : 270) + basementPlayer.getStreamName());
+        return basement.getNameTagModule().resize(UUID + (char) (status ? 265 : 270) + basementPlayer.getStreamName());
     }
 
     private void sendPacket(Packet<?> packet) {
         Set<String> streamNames =
                 basement.getPlayerManager().getStreamers().parallelStream().map(BasementPlayer::getName).collect(Collectors.toSet());
         for (CraftPlayer onlinePlayer : craftServer.getOnlinePlayers()) {
-            if(streamNames.contains(onlinePlayer.getName())) continue;
+            if (streamNames.contains(onlinePlayer.getName())) continue;
             onlinePlayer.getHandle().b.a(packet);
         }
     }
 
     private void sendPacketToStreamers(Packet<?> packet) {
         basement.getPlayerManager().getStreamers().parallelStream()
-                .map(basementPlayer -> (CraftPlayer)Bukkit.getPlayer(basementPlayer.getName()))
+                .map(basementPlayer -> (CraftPlayer) Bukkit.getPlayer(basementPlayer.getName()))
                 .forEach(player -> player.getHandle().b.a(packet));
     }
 
     private PacketPlayOutPlayerInfo makePacket(Player player, BasementPlayer basementPlayer) {
-        EntityPlayer entityPlayer = ((CraftPlayer)player).getHandle();
+        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.d);
         ProfilePublicKey profilePublicKey = entityPlayer.fz();
         ProfilePublicKey.a data = profilePublicKey != null ? profilePublicKey.b() : null;

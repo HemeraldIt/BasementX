@@ -15,12 +15,12 @@ public class TagCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!(sender instanceof Player player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(BasementMessages.CONSOLE_DENIED);
             return true;
         }
 
-        if(!basement.getNameTagModule().isEnabled() || !basement.getNameTagModule().tagsEnabled()) {
+        if (!basement.getNameTagModule().isEnabled() || !basement.getNameTagModule().tagsEnabled()) {
             basement.getPlayerManager().getBasementPlayer(player.getName()).getLocale("basement")
                     .ifPresentOrElse(locale -> player.sendMessage(locale.getText("command-not-available")),
                             () -> player.sendMessage(BasementMessages.COMMAND_NOT_AVAILABLE));

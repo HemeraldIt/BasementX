@@ -6,6 +6,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class ScoreboardAdapter {
 
+    public static Builder builder(JavaPlugin javaPlugin, ScoreboardUtils scoreboardManager) {
+        return new Builder(javaPlugin, scoreboardManager);
+    }
+
     public abstract int getCharactersLimits();
 
     public abstract ScoreboardUtils getPacketWrapper();
@@ -22,10 +26,6 @@ public abstract class ScoreboardAdapter {
 
     public abstract void updateLine(Player viewer, String oldValue, String newValue, int row);
 
-    public static Builder builder(JavaPlugin javaPlugin, ScoreboardUtils scoreboardManager){
-        return new Builder(javaPlugin, scoreboardManager);
-    }
-
     public static class Builder {
         private final JavaPlugin javaPlugin;
         private final ScoreboardUtils packetWrapper;
@@ -36,7 +36,7 @@ public abstract class ScoreboardAdapter {
             this.packetWrapper = packetWrapper;
         }
 
-        public ScoreboardAdapter build(){
+        public ScoreboardAdapter build() {
             return new ScoreboardAdapter() {
                 @Override
                 public JavaPlugin getJavaPlugin() {

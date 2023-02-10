@@ -34,7 +34,7 @@ public abstract class HeapProcessor<T> extends Processor<T> {
                     } else {
                         T process = this.deque.poll(10, TimeUnit.SECONDS);
 
-                        if(process != null) {
+                        if (process != null) {
                             try {
                                 compute(process);
                             } catch (Exception e) {

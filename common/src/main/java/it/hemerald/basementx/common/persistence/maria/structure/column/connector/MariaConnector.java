@@ -32,21 +32,21 @@ public class MariaConnector extends HikariConnector {
     protected PropertiesProvider getProperties() {
         PropertiesProvider holder = new PropertiesProvider();
         holder.withProperties(
-            new PropertyPair(HikariProperty.cachePrepStmts, "true"),
-            new PropertyPair(HikariProperty.alwaysSendSetIsolation, "false"),
-            new PropertyPair(HikariProperty.cacheServerConfiguration, "true"),
-            new PropertyPair(HikariProperty.elideSetAutoCommits, "true"),
-            new PropertyPair(HikariProperty.maintainTimeStats, "false"),
-            new PropertyPair(HikariProperty.useLocalSessionState, "true"),
-            new PropertyPair(HikariProperty.useServerPrepStmts, "true"),
-            new PropertyPair(HikariProperty.prepStmtCacheSize, "500"),
-            new PropertyPair(HikariProperty.rewriteBatchedStatements, "true"),
-            new PropertyPair(HikariProperty.prepStmtCacheSqlLimit, "2048"),
-            new PropertyPair(HikariProperty.cacheCallableStmts, "true"),
-            new PropertyPair(HikariProperty.cacheResultSetMetadata, "true"),
-            new PropertyPair(HikariProperty.characterEncoding, "utf8"),
-            new PropertyPair(HikariProperty.useUnicode, "true"),
-            new PropertyPair(HikariProperty.zeroDateTimeBehavior, "CONVERT_TO_NULL")
+                new PropertyPair(HikariProperty.cachePrepStmts, "true"),
+                new PropertyPair(HikariProperty.alwaysSendSetIsolation, "false"),
+                new PropertyPair(HikariProperty.cacheServerConfiguration, "true"),
+                new PropertyPair(HikariProperty.elideSetAutoCommits, "true"),
+                new PropertyPair(HikariProperty.maintainTimeStats, "false"),
+                new PropertyPair(HikariProperty.useLocalSessionState, "true"),
+                new PropertyPair(HikariProperty.useServerPrepStmts, "true"),
+                new PropertyPair(HikariProperty.prepStmtCacheSize, "500"),
+                new PropertyPair(HikariProperty.rewriteBatchedStatements, "true"),
+                new PropertyPair(HikariProperty.prepStmtCacheSqlLimit, "2048"),
+                new PropertyPair(HikariProperty.cacheCallableStmts, "true"),
+                new PropertyPair(HikariProperty.cacheResultSetMetadata, "true"),
+                new PropertyPair(HikariProperty.characterEncoding, "utf8"),
+                new PropertyPair(HikariProperty.useUnicode, "true"),
+                new PropertyPair(HikariProperty.zeroDateTimeBehavior, "CONVERT_TO_NULL")
         );
         return holder;
     }
@@ -73,7 +73,7 @@ public class MariaConnector extends HikariConnector {
 
     @Override
     public QueryData executeReturn(String query) {
-        try (Connection connection = source.getConnection() ; Statement statement = connection.createStatement()) {
+        try (Connection connection = source.getConnection(); Statement statement = connection.createStatement()) {
             return new QueryDataImpl(statement.executeQuery(query));
         } catch (SQLException throwable) {
             Logger.getGlobal().severe("Error on sql query:" + query);

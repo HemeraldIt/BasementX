@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * ProbabilityCollection for retrieving random elements based on probability.
  * Selection Algorithm Implementation:
- *
+ * <p>
  * Elements have a "block" of space, sized based on their probability share
  * "Blocks" start from index 1 and end at the total probability of all elements
  * A random number is selected between 1 and the total probability
@@ -32,11 +32,12 @@ public final class ProbabilityCollection<E> {
 
     /**
      * Construct a new Probability Collection copied
+     *
      * @param probabilityCollection the probability collection to be copied
      * @throws IllegalArgumentException if object is null
      */
     public ProbabilityCollection(ProbabilityCollection<E> probabilityCollection) {
-        if(probabilityCollection == null) {
+        if (probabilityCollection == null) {
             throw new IllegalArgumentException("Cannot copy null collection");
         }
 
@@ -82,9 +83,8 @@ public final class ProbabilityCollection<E> {
     /**
      * Add an object to this collection
      *
-     * @param object         object. Not null.
+     * @param object      object. Not null.
      * @param probability share. Must be greater than 0.
-     *
      * @throws IllegalArgumentException if object is null
      * @throws IllegalArgumentException if probability is less than or equal to 0
      */
@@ -109,7 +109,6 @@ public final class ProbabilityCollection<E> {
      *
      * @param object object
      * @return True if object was removed, else False.
-     *
      * @throws IllegalArgumentException if object is null
      */
     public boolean remove(E object) {
@@ -153,7 +152,6 @@ public final class ProbabilityCollection<E> {
      * Get a random object from this collection, based on probability.
      *
      * @return Generic Random object
-     *
      * @throws IllegalStateException if this collection is empty
      */
     public E get() {
@@ -177,13 +175,12 @@ public final class ProbabilityCollection<E> {
     /**
      * Used internally to store information about a object's state in a collection.
      * Specifically, the probability and index within the collection.
-     *
+     * <p>
      * Indexes refer to the start position of this element's "block" of space. The
      * space between element "block"s represents their probability of being selected
      *
-     * @author Lewys Davies
-     *
      * @param <T> Type of element
+     * @author Lewys Davies
      */
     public final static class ProbabilitySetElement<T> {
         private final T object;
@@ -191,7 +188,7 @@ public final class ProbabilityCollection<E> {
         private int index;
 
         /**
-         * @param object object
+         * @param object      object
          * @param probability share within the collection
          */
         private ProbabilitySetElement(T object, int probability) {

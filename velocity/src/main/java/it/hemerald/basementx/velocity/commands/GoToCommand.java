@@ -24,16 +24,16 @@ public class GoToCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
-        String[] args  = invocation.arguments();
+        String[] args = invocation.arguments();
 
-        if(!(source instanceof Player)) {
+        if (!(source instanceof Player)) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Questo comando è eseguibile sono in game!").color(NamedTextColor.RED)));
             return;
         }
 
-        if(args.length != 1) {
+        if (args.length != 1) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Uso corretto: /goto <server>").color(NamedTextColor.RED)));
@@ -41,7 +41,7 @@ public class GoToCommand implements SimpleCommand {
         }
 
         Optional<RegisteredServer> optionalServer = velocity.getServer().getServer(args[0]);
-        if(optionalServer.isEmpty()) {
+        if (optionalServer.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Server non trovato").color(NamedTextColor.RED)));
@@ -52,7 +52,7 @@ public class GoToCommand implements SimpleCommand {
 
         Player player = (Player) invocation.source();
         Optional<ServerConnection> serverConnectionOptional = player.getCurrentServer();
-        if(serverConnectionOptional.isEmpty()) {
+        if (serverConnectionOptional.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Ci dispiace non è stato possibile connetterti al server").color(NamedTextColor.RED)));
@@ -60,7 +60,7 @@ public class GoToCommand implements SimpleCommand {
         }
 
         ServerConnection serverConnectionFrom = serverConnectionOptional.get();
-        if(serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(server.getServerInfo().getName())) {
+        if (serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(server.getServerInfo().getName())) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Ti trovi già in quel server").color(NamedTextColor.RED)));
@@ -72,7 +72,7 @@ public class GoToCommand implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        if(invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
+        if (invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
         return CompletableFuture.supplyAsync(() -> velocity.getServer().getAllServers().parallelStream()
                 .map(registeredServer -> registeredServer.getServerInfo().getName())
                 .filter(name -> name.toLowerCase().startsWith(invocation.arguments()[0].toLowerCase())).toList());

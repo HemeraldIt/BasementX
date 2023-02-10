@@ -13,7 +13,6 @@ import org.redisson.codec.TypedJsonJacksonCodec;
 import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
 import org.redisson.config.ReadMode;
-import org.redisson.config.SingleServerConfig;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +47,7 @@ public class DefaultRedisManager implements RedisManager {
     @Override
     public <T extends BasementMessage> int registerTopicListener(String name, BasementMessageHandler<T> basementMessageHandler) {
         RTopic topic = topicMap.get(name);
-        if(topic == null) {
+        if (topic == null) {
             topic = redissonClient.getTopic(name);
             topicMap.put(name, topic);
         }
@@ -57,7 +56,7 @@ public class DefaultRedisManager implements RedisManager {
 
     public void unregisterTopicListener(String name, Integer... listenerId) {
         RTopic topic = topicMap.get(name);
-        if(topic == null) {
+        if (topic == null) {
             topic = redissonClient.getTopic(name);
             topicMap.put(name, topic);
         }
@@ -66,7 +65,7 @@ public class DefaultRedisManager implements RedisManager {
 
     public void clearTopicListeners(String name) {
         RTopic topic = topicMap.get(name);
-        if(topic == null) {
+        if (topic == null) {
             topic = redissonClient.getTopic(name);
             topicMap.put(name, topic);
         }
@@ -75,7 +74,7 @@ public class DefaultRedisManager implements RedisManager {
 
     public <T extends BasementMessage> long publishMessage(T message) {
         RTopic topic = topicMap.get(message.getTopic());
-        if(topic == null) {
+        if (topic == null) {
             topic = redissonClient.getTopic(message.getTopic());
             topicMap.put(message.getTopic(), topic);
         }

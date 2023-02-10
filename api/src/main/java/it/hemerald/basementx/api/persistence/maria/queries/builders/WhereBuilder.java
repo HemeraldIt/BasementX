@@ -12,7 +12,7 @@ public class WhereBuilder {
     }
 
     private String getQuoted(Object value) {
-        if(value instanceof Boolean)
+        if (value instanceof Boolean)
             return (boolean) value ? "1" : "0";
         return "'" + value + "'";
     }
@@ -175,8 +175,8 @@ public class WhereBuilder {
 
     public WhereBuilder in(String column, String... values) {
         buffer.append(column).append(" ").append("IN (");
-        if(values.length != 0) buffer.append(getQuoted(values[0]));
-        for(int i = 1; i < values.length; i++) {
+        if (values.length != 0) buffer.append(getQuoted(values[0]));
+        for (int i = 1; i < values.length; i++) {
             buffer.append(", ").append(getQuoted(values[i]));
         }
         buffer.append(")").append(" ");
@@ -185,8 +185,8 @@ public class WhereBuilder {
 
     public WhereBuilder in(String column, Number... values) {
         buffer.append(column).append(" ").append("IN (");
-        if(values.length != 0) buffer.append(getQuoted(values[0]));
-        for(int i = 1; i < values.length; i++) {
+        if (values.length != 0) buffer.append(getQuoted(values[0]));
+        for (int i = 1; i < values.length; i++) {
             buffer.append(", ").append(values[i]);
         }
         buffer.append(")").append(" ");

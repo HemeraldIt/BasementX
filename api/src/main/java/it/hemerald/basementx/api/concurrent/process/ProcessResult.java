@@ -5,12 +5,20 @@ import java.util.Optional;
 
 public final class ProcessResult<T> {
 
+    private final Optional<T> value;
+    private final Optional<ProcessException> error;
+
+    private ProcessResult(Optional<T> value, Optional<ProcessException> error) {
+        this.value = value;
+        this.error = error;
+    }
+
     /**
      * Create a successful {@code ProcessResult}
      *
      * @param value result value
+     * @param <T>   type parameter
      * @return new process result
-     * @param <T> type parameter
      */
     public static <T> ProcessResult<T> success(T value) {
         return new ProcessResult<>(
@@ -21,13 +29,15 @@ public final class ProcessResult<T> {
      * Create a failure {@code ProcessResult}
      *
      * @param error why has the process failed
+     * @param <T>   type parameter
      * @return new process result
-     * @param <T> type parameter
      */
     public static <T> ProcessResult<T> failure(ProcessException error) {
         return new ProcessResult<>(
                 Optional.empty(), Optional.of(Objects.requireNonNull(error, "error")));
     }
+
+    // ===========================================
 
     /**
      * Returns whether this {@code ProcessResult} is successful.
@@ -54,15 +64,5 @@ public final class ProcessResult<T> {
      */
     public Optional<ProcessException> getError() {
         return this.error;
-    }
-
-    // ===========================================
-
-    private final Optional<T> value;
-    private final Optional<ProcessException> error;
-
-    private ProcessResult(Optional<T> value, Optional<ProcessException> error) {
-        this.value = value;
-        this.error = error;
     }
 }

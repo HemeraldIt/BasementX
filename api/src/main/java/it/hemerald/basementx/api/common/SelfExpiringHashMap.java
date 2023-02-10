@@ -22,6 +22,7 @@ package it.hemerald.basementx.api.common;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -36,9 +37,9 @@ import java.util.concurrent.TimeUnit;
  * The life-time can be defined on a per-key basis, or using a default one, that is passed to the
  * constructor.
  *
- * @author Pierantonio Cangianiello
  * @param <K> the Key type
  * @param <V> the Value type
+ * @author Pierantonio Cangianiello
  */
 public class SelfExpiringHashMap<K, V> implements SelfExpiringMap<K, V> {
 
@@ -139,7 +140,7 @@ public class SelfExpiringHashMap<K, V> implements SelfExpiringMap<K, V> {
         cleanup();
         ExpiringKey delayedKey = new ExpiringKey(key, lifeTimeMillis);
         ExpiringKey oldKey = expiringKeys.put((K) key, delayedKey);
-        if(oldKey != null) {
+        if (oldKey != null) {
             expireKey(oldKey);
             expiringKeys.put((K) key, delayedKey);
         }
@@ -230,9 +231,9 @@ public class SelfExpiringHashMap<K, V> implements SelfExpiringMap<K, V> {
 
     private class ExpiringKey<K> implements Delayed {
 
-        private long startTime = System.currentTimeMillis();
         private final long maxLifeTimeMillis;
         private final K key;
+        private long startTime = System.currentTimeMillis();
 
         public ExpiringKey(K key, long maxLifeTimeMillis) {
             this.maxLifeTimeMillis = maxLifeTimeMillis;

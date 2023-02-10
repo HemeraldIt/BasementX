@@ -37,11 +37,11 @@ public class ScoreboardManager implements Listener, IScoreboardManager {
             @Override
             public void run() {
                 for (Scoreboard scoreboard : scoreboars.values()) {
-                    if(scoreboard.getViewer() == null || !scoreboard.getViewer().isOnline()) return;
+                    if (scoreboard.getViewer() == null || !scoreboard.getViewer().isOnline()) return;
                     Player player = scoreboard.getViewer();
                     List<ScoreboardLine> lines = provider.getLines(player);
 
-                    if(scoreboard.getLines().size() != lines.size()) {
+                    if (scoreboard.getLines().size() != lines.size()) {
                         remove(player);
                         setup(player);
                         return;
@@ -82,9 +82,9 @@ public class ScoreboardManager implements Listener, IScoreboardManager {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-           if(event.getPlayer().isOnline()) {
-               setup(event.getPlayer());
-           }
+            if (event.getPlayer().isOnline()) {
+                setup(event.getPlayer());
+            }
         }, 5L);
     }
 

@@ -2,10 +2,9 @@ package it.hemerald.basementx.velocity.friends.commands;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import it.hemerald.basementx.velocity.friends.commands.arguments.*;
 import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
 import it.hemerald.basementx.velocity.together.Together;
-import it.hemerald.basementx.velocity.together.commands.CommandArgument;
-import it.hemerald.basementx.velocity.together.commands.arguments.*;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -15,12 +14,12 @@ import java.util.stream.Collectors;
 public class FriendCommand implements SimpleCommand {
 
     private final Together together;
-    private final FriendsManager friendsService;
+    private final FriendsManager friendService;
     private final CommandArgument unknownArgument;
     private final Map<String, CommandArgument> arguments = new HashMap<>();
 
     public FriendCommand(FriendsManager friendsService) {
-        this.friendsService = friendsService;
+        this.friendService = friendsService;
         this.together = friendsService.getTogether();
         unknownArgument = new HelpArgument(friendsService);
     }
@@ -49,11 +48,11 @@ public class FriendCommand implements SimpleCommand {
         CommandArgument argument = arguments.get(invocation.arguments()[0]);
 
         if (argument == null) {
-            arguments.get("add").execute(player, new String[] {"", invocation.arguments()[0]});
+            arguments.get("add").execute(player, new String[]{"", invocation.arguments()[0]});
             return;
         }
 
-        if(argument.getLength() > invocation.arguments().length) {
+        if (argument.getLength() > invocation.arguments().length) {
             unknownArgument.execute(player, invocation.arguments());
         } else {
             argument.execute(player, invocation.arguments());
@@ -62,7 +61,7 @@ public class FriendCommand implements SimpleCommand {
 
     public CommandArgument getArgument(String invocation) {
         CommandArgument argument = arguments.get(invocation);
-        if(argument == null) return unknownArgument;
+        if (argument == null) return unknownArgument;
         return argument;
     }
 

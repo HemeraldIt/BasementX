@@ -12,12 +12,14 @@ public interface BasementMessageHandler<T extends BasementMessage> extends Messa
 
     /**
      * This method will be executed when received a message of this type
+     *
      * @param message the {@link BasementMessage}
      */
     void execute(T message);
 
     /**
      * The class of the {@link BasementMessage}
+     *
      * @return the class of the {@link BasementMessage}
      */
     Class<T> getCommandClass();

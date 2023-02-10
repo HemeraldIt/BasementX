@@ -13,12 +13,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class QueryInsert extends MariaQuery implements QueryBuilderInsert {
 
+    private final List<String> values = new ArrayList<>();
     private String tableName;
     private StringBuilder schema;
     private boolean ignore = true;
-    private final List<String> values = new ArrayList<>();
 
-    public QueryInsert() {}
+    public QueryInsert() {
+    }
 
     public QueryInsert(AbstractMariaHolder holder, String database) {
         super(holder, database);
@@ -69,7 +70,7 @@ public class QueryInsert extends MariaQuery implements QueryBuilderInsert {
         builder.append("(");
         boolean first = true;
         for (Object value : values) {
-            if(value instanceof ReturningQuery) {
+            if (value instanceof ReturningQuery) {
                 ReturningQuery<? extends ExecutiveQuery<?>, ?> castedValue = (ReturningQuery<? extends ExecutiveQuery<?>, ?>) value;
                 if (first) {
                     first = false;
@@ -80,14 +81,14 @@ public class QueryInsert extends MariaQuery implements QueryBuilderInsert {
             } else {
                 if (first) {
                     first = false;
-                    if(value == null) {
+                    if (value == null) {
                         builder.append("NULL");
                     } else {
                         builder.append(quoted ? getQuoted(value) : value);
                     }
                     continue;
                 }
-                if(value == null) {
+                if (value == null) {
                     builder.append(", NULL");
                 } else {
                     builder.append(", ").append(quoted ? getQuoted(value) : value);
@@ -100,8 +101,8 @@ public class QueryInsert extends MariaQuery implements QueryBuilderInsert {
     }
 
     private String getQuoted(Object value) {
-        if(value instanceof Boolean) {
-            return (boolean)value ? "1" : "0";
+        if (value instanceof Boolean) {
+            return (boolean) value ? "1" : "0";
         }
         return "'" + value + "'";
     }

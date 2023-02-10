@@ -37,15 +37,15 @@ public class PlayerListener {
 
     @Subscribe
     public void onServerSwitch(ServerConnectedEvent event) {
-        if(!event.getServer().getServerInfo().getName().contains("_lobby")) return;
+        if (!event.getServer().getServerInfo().getName().contains("_lobby")) return;
         Optional<Party> optional = velocity.getTogether().getPartyManager().getParty(event.getPlayer());
-        if(optional.isEmpty()) return;
+        if (optional.isEmpty()) return;
         Party party = optional.get();
-        if(!party.getLeader().equals(event.getPlayer().getUsername())) return;
+        if (!party.getLeader().equals(event.getPlayer().getUsername())) return;
 
         for (String memberName : party.getMembers()) {
             Optional<Player> optionalMember = velocity.getServer().getPlayer(memberName);
-            if(optionalMember.isEmpty()) continue;
+            if (optionalMember.isEmpty()) continue;
             optionalMember.get().createConnectionRequest(event.getServer()).fireAndForget();
         }
     }

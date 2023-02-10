@@ -6,6 +6,7 @@ public interface PartyManager {
 
     /**
      * Gets the party of a player
+     *
      * @param player the player name
      * @return the party of the player
      */

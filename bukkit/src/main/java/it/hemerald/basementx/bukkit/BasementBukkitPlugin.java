@@ -65,7 +65,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
     @Override
     public void enable() {
         RegisteredServiceProvider<LuckPerms> provider = plugin.getServer().getServicesManager().getRegistration(LuckPerms.class);
-        if(provider != null) {
+        if (provider != null) {
             luckPerms = provider.getProvider();
         } else {
             plugin.getLogger().severe("LuckPerms not found!");
@@ -90,7 +90,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
 
     @Override
     public void disable() {
-        if(task != null) task.cancel();
+        if (task != null) task.cancel();
         getBasement().getRedisManager().publishMessage(new BukkitNotifyShutdownMessage(basement.getServerID()));
         getBasement().getServerManager().removeServer(basement.getServerID());
         super.disable();
@@ -124,16 +124,17 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
         PlayerListener playerListener = new PlayerListener(basement);
         plugin.getServer().getPluginManager().registerEvents(playerListener, plugin);
         getBasement().getRedisManager().registerTopicListener(TpToMessage.TOPIC, new TpToHandler(plugin, playerListener::tpTo));
-        if(basement.isHostable()) {
+        if (basement.isHostable()) {
             plugin.getServer().getPluginManager().registerEvents(new HostListener(basement), plugin);
         }
         try {
-            if(plugin.getServer().getPluginManager().isPluginEnabled("Vulcan") && VulcanAPI.Factory.getApi() != null) {
+            if (plugin.getServer().getPluginManager().isPluginEnabled("Vulcan") && VulcanAPI.Factory.getApi() != null) {
                 VulcanListener vulcanListener = new VulcanListener(basement);
                 plugin.getServer().getPluginManager().registerEvents(vulcanListener, plugin);
                 plugin.getCommand("cheatban").setExecutor(new CheatBanCommand(vulcanListener::ban));
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
@@ -145,6 +146,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
     @RequiredArgsConstructor
     private class ServerInfoRunnable extends BukkitRunnable {
         private final ServerStatus serverStatus;
+
         @Override
         public void run() {
             server.setWhitelist(Bukkit.hasWhitelist());

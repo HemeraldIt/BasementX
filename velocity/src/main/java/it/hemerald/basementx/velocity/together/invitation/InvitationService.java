@@ -21,14 +21,15 @@ public class InvitationService {
                 invited,
                 together.getServer().getScheduler().buildTask(together.getPlugin(), new InvitationExpireRunnable(this, invited, inviter)).delay(1, TimeUnit.MINUTES).schedule());
         for (Invitation anInvitation : invitations) {
-            if(anInvitation.getInvited().equalsIgnoreCase(invited)) endInvitation(anInvitation);
+            if (anInvitation.getInvited().equalsIgnoreCase(invited)) endInvitation(anInvitation);
         }
 
         invitations.add(invitation);
     }
+
     public void endInvitation(String invited, Party inviter) {
         Optional<Invitation> optional = getByInvited(invited, inviter);
-        if(optional.isEmpty()) return;
+        if (optional.isEmpty()) return;
         Invitation invitation = optional.get();
         invitation.getExpirationTask().cancel();
         invitations.remove(invitation);
@@ -42,28 +43,29 @@ public class InvitationService {
 
     public boolean isInvitedFromAnyone(String invited) {
         for (Invitation invitation : invitations) {
-            if(invitation.getInvited().equals(invited)) return true;
+            if (invitation.getInvited().equals(invited)) return true;
         }
         return false;
     }
 
     public Optional<Invitation> getByInvited(String invited, Party inviter) {
         for (Invitation invitation : invitations) {
-            if(invitation.getInvited().equals(invited) && invitation.getInviter().equals(inviter)) return Optional.of(invitation);
+            if (invitation.getInvited().equals(invited) && invitation.getInviter().equals(inviter))
+                return Optional.of(invitation);
         }
         return Optional.empty();
     }
 
     public Optional<Invitation> getLastInvitationByInvited(String invited) {
         for (Invitation invitation : invitations) {
-            if(invitation.getInvited().equals(invited)) return Optional.of(invitation);
+            if (invitation.getInvited().equals(invited)) return Optional.of(invitation);
         }
         return Optional.empty();
     }
 
     public boolean acceptInvitation(String invited, Party inviter) {
         Optional<Invitation> optional = getByInvited(invited, inviter);
-        if(optional.isEmpty()) return false;
+        if (optional.isEmpty()) return false;
         endInvitation(optional.get());
         return true;
     }

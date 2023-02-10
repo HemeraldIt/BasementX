@@ -24,16 +24,16 @@ public class TpToCommand implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
-        String[] args  = invocation.arguments();
+        String[] args = invocation.arguments();
 
-        if(!(source instanceof Player from)) {
+        if (!(source instanceof Player from)) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Questo comando è eseguibile sono in game!").color(NamedTextColor.RED)));
             return;
         }
 
-        if(args.length != 1) {
+        if (args.length != 1) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Uso corretto: /tpto <player>").color(NamedTextColor.RED)));
@@ -41,7 +41,7 @@ public class TpToCommand implements SimpleCommand {
         }
 
         Optional<Player> optionalPlayer = velocity.getServer().getPlayer(args[0]);
-        if(optionalPlayer.isEmpty()) {
+        if (optionalPlayer.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
@@ -49,7 +49,7 @@ public class TpToCommand implements SimpleCommand {
         }
 
         Player to = optionalPlayer.get();
-        if(to.getUsername().equalsIgnoreCase(from.getUsername())) {
+        if (to.getUsername().equalsIgnoreCase(from.getUsername())) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Non puoi teletrasportarti da te stesso!").color(NamedTextColor.RED)));
@@ -57,7 +57,7 @@ public class TpToCommand implements SimpleCommand {
         }
 
         Optional<ServerConnection> optionalServerTo = to.getCurrentServer();
-        if(optionalServerTo.isEmpty()) {
+        if (optionalServerTo.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Non è stato possibile connettersi al server di questo giocatore!").color(NamedTextColor.RED)));
@@ -65,7 +65,7 @@ public class TpToCommand implements SimpleCommand {
         }
 
         Optional<ServerConnection> optionalServerFrom = from.getCurrentServer();
-        if(optionalServerFrom.isEmpty()) {
+        if (optionalServerFrom.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
                     .append(Component.text("Non è stato possibile connettersi al server di questo giocatore!").color(NamedTextColor.RED)));
@@ -74,7 +74,7 @@ public class TpToCommand implements SimpleCommand {
 
         ServerConnection serverConnectionTo = optionalServerTo.get();
         ServerConnection serverConnectionFrom = optionalServerFrom.get();
-        if(serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(serverConnectionTo.getServerInfo().getName())) {
+        if (serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(serverConnectionTo.getServerInfo().getName())) {
             velocity.getBasement().getRedisManager().publishMessage(new TpToMessage(from.getUsername(), to.getUsername()));
             return;
         }
@@ -85,7 +85,7 @@ public class TpToCommand implements SimpleCommand {
 
     @Override
     public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
-        if(invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
+        if (invocation.arguments().length == 0) return CompletableFuture.completedFuture(ImmutableList.of());
         return CompletableFuture.supplyAsync(() -> velocity.getServer().getAllPlayers().parallelStream().map(Player::getUsername)
                 .filter(username -> username.toLowerCase().startsWith(invocation.arguments()[0].toLowerCase())).toList());
     }

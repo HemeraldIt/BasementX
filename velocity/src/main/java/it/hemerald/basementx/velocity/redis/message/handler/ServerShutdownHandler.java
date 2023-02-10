@@ -17,7 +17,7 @@ public class ServerShutdownHandler implements BasementMessageHandler<ServerShutd
 
     @Override
     public void execute(ServerShutdownMessage message) {
-        if(!message.getReceiver().endsWith("velocity")) return;
+        if (!message.getReceiver().endsWith("velocity")) return;
         log.info("Il server si sta spegnendo per il ServerShutdownMessage inviato da " + message.getSender());
         server.shutdown(Component.text()
                 .append(Component.text("Riavvio del server").color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.BOLD))

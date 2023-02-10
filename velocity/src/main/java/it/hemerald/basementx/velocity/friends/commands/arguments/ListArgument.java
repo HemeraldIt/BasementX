@@ -1,9 +1,10 @@
 package it.hemerald.basementx.velocity.friends.commands.arguments;
 
 import com.velocitypowered.api.proxy.Player;
+import it.hemerald.basementx.api.friends.Friend;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import it.hemerald.basementx.velocity.friends.commands.CommandArgument;
+import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
 
 public class ListArgument extends CommandArgument {
 
@@ -13,7 +14,11 @@ public class ListArgument extends CommandArgument {
 
     @Override
     public void execute(Player player, String[] args) {
-        Friend friend = friendManager.getFriend(player).orElse(null);
+        Friend friend = friendService.getFriend(player).orElse(null);
+        if (friend == null) {
+            friendService.sendMessage(player, "§cNon hai amici");
+            return;
+        }
         if (friend.getFriends().size() > 1) {
             player.sendMessage(Component.text("§8§m------------------- §3§lFRIEND §8§m-------------------"));
             for (String username : friend.getFriends().stream().sorted().toList()) {
@@ -21,7 +26,7 @@ public class ListArgument extends CommandArgument {
             }
             player.sendMessage(Component.text("§8§m---------------------------------------------"));
         } else {
-            friendManager.sendMessage(player, "§cNon hai amici");
+            friendService.sendMessage(player, "§cNon hai amici");
         }
     }
 

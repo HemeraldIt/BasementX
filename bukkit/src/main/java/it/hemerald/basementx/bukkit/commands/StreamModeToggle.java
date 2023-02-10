@@ -23,7 +23,7 @@ public class StreamModeToggle implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(!(sender instanceof Player player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(BasementMessages.CONSOLE_DENIED);
             return true;
         }
@@ -33,7 +33,7 @@ public class StreamModeToggle implements CommandExecutor {
             return true;
         }
 
-        if(basement.getDisguiseModule().isDisguised(player)) {
+        if (basement.getDisguiseModule().isDisguised(player)) {
             player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "ERRORE! " + ChatColor.RED + "Non puoi effettuare il comando mentre sei in disguise");
             return true;
         }
@@ -44,7 +44,7 @@ public class StreamModeToggle implements CommandExecutor {
         boolean inStreamMode = !basementPlayer.isInStreamMode();
         basementPlayer.streamMode(inStreamMode);
 
-        if(inStreamMode) {
+        if (inStreamMode) {
             basementPlayer.setStreamName(basement.getDisguiseModule().getRandomUsername());
             basement.getPlayerManager().getStreamers().add(basementPlayer);
         } else {
@@ -52,13 +52,13 @@ public class StreamModeToggle implements CommandExecutor {
             basement.getPlayerManager().getStreamers().remove(basementPlayer);
         }
 
-        if(streamMode.isEnabled()) {
+        if (streamMode.isEnabled()) {
             streamMode.sendPackets(new ArrayList<>(Bukkit.getOnlinePlayers()), player, inStreamMode);
             player.sendMessage(ChatColor.YELLOW + "Hai " + (inStreamMode ? ChatColor.GREEN + "abilitato " : ChatColor.RED + "disabilitato ") +
                     ChatColor.YELLOW + "la streammode");
         } else {
             player.sendMessage(ChatColor.YELLOW + "Hai " + (inStreamMode ? ChatColor.GREEN + "abilitato " : ChatColor.RED + "disabilitato ") +
-                    ChatColor.YELLOW +  "la streammode, ma in questo server è " + ChatColor.RED + "disabilitata" +
+                    ChatColor.YELLOW + "la streammode, ma in questo server è " + ChatColor.RED + "disabilitata" +
                     ChatColor.YELLOW + ", quindi nessun cambiamento visivo verrà applicato su questo server");
         }
 

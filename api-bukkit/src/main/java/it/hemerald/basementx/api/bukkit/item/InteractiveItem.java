@@ -14,7 +14,8 @@ public class InteractiveItem {
 
     private final ItemBuilder itemBuilder;
     private final String data;
-    @Getter private final ItemClickListener listener;
+    @Getter
+    private final ItemClickListener listener;
     private final BiConsumer<ItemBuilder, Player> consumer;
 
     public InteractiveItem(ItemBuilder itemBuilder, String data, ItemClickListener listener) {

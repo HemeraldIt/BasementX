@@ -24,8 +24,9 @@ public class QueryCreateTable extends MariaQuery implements QueryBuilderCreateTa
     private final Deque<ForeignKeyDefinition> foreignKeys = new ArrayDeque<>();
     private final Deque<MariaColumn> columns = new ArrayDeque<>();
 
-     private boolean orReplace = false;
-     private boolean ifNotExists = false;
+    private boolean orReplace = false;
+    private boolean ifNotExists = false;
+    private MariaTable temp;
 
     public QueryCreateTable(MariaDatabase database, String tableName) {
         super(database.getHolder(), database.getName());
@@ -97,7 +98,7 @@ public class QueryCreateTable extends MariaQuery implements QueryBuilderCreateTa
     @Override
     public QueryBuilderCreateTable addColumn(String columnName, MariaType type, boolean autoIncrement) {
         List<ColumnData> columnData = new ArrayList<>();
-        if(autoIncrement) columnData.add(ColumnData.AUTO_INCREMENT);
+        if (autoIncrement) columnData.add(ColumnData.AUTO_INCREMENT);
         addColumn(columnName, type, null, null, null, columnData.toArray(new ColumnData[0]));
         return this;
     }
@@ -118,8 +119,8 @@ public class QueryCreateTable extends MariaQuery implements QueryBuilderCreateTa
     @Override
     public QueryBuilderCreateTable addColumn(String columnName, MariaType type, Integer size, String defaultValue, boolean notNull, boolean autoIncrement, String constraint) {
         List<ColumnData> columnData = new ArrayList<>();
-        if(notNull) columnData.add(ColumnData.NOT_NULL);
-        if(autoIncrement) columnData.add(ColumnData.AUTO_INCREMENT);
+        if (notNull) columnData.add(ColumnData.NOT_NULL);
+        if (autoIncrement) columnData.add(ColumnData.AUTO_INCREMENT);
         addColumn(columnName, type, size, defaultValue, constraint, columnData.toArray(new ColumnData[0]));
         return this;
     }
@@ -130,7 +131,6 @@ public class QueryCreateTable extends MariaQuery implements QueryBuilderCreateTa
         return this;
     }
 
-    private MariaTable temp;
     @Override
     public QueryBuilderCreateTable build() {
 

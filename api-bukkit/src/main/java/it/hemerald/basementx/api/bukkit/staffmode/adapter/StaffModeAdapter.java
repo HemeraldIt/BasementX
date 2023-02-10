@@ -14,7 +14,8 @@ import java.util.*;
 @Getter
 public abstract class StaffModeAdapter extends Adapter<StaffModeModule> {
 
-    @Getter(AccessLevel.NONE) private final Map<String, InteractiveItem> listeners = new HashMap<>();
+    @Getter(AccessLevel.NONE)
+    private final Map<String, InteractiveItem> listeners = new HashMap<>();
     private final Set<Player> vanished = Collections.newSetFromMap(new WeakHashMap<>());
     private final Map<Player, ItemStack[]> inventories = new HashMap<>();
     private final Set<Player> wasFlying = Collections.newSetFromMap(new WeakHashMap<>());
@@ -35,7 +36,7 @@ public abstract class StaffModeAdapter extends Adapter<StaffModeModule> {
     }
 
     public void setupInventory(Player player) {
-        if(!module.isMode(player)) return;
+        if (!module.isMode(player)) return;
 
         for (Map.Entry<String, Integer> entry : getInventory(player).entrySet()) {
             player.getInventory().setItem(

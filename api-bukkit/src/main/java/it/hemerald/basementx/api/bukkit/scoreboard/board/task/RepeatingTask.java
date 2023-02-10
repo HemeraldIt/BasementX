@@ -14,7 +14,8 @@ public abstract class RepeatingTask extends BukkitRunnable {
     private final long period;
     private final boolean async;
 
-    @Getter private int id = 0;
+    @Getter
+    private int id = 0;
 
     protected RepeatingTask(Plugin plugin, long period) {
         this(plugin, period, true);
@@ -26,7 +27,7 @@ public abstract class RepeatingTask extends BukkitRunnable {
     }
 
     public void cancel() {
-        if(id > 0) Bukkit.getScheduler().cancelTask(id);
+        if (id > 0) Bukkit.getScheduler().cancelTask(id);
     }
 
     public boolean isRunning() {

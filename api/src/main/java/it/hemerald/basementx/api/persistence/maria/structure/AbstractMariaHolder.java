@@ -20,6 +20,7 @@ public abstract class AbstractMariaHolder extends Holder implements AbstractQuer
     /**
      * initialize a query to create a database
      * and register it on this holder
+     *
      * @param databaseName name of the database to be created
      * @return the query to build
      */
@@ -28,6 +29,7 @@ public abstract class AbstractMariaHolder extends Holder implements AbstractQuer
     /**
      * initialize a query to drop a database
      * registered on this holder
+     *
      * @param databaseName name of the database to be drop
      * @return
      */
@@ -36,6 +38,7 @@ public abstract class AbstractMariaHolder extends Holder implements AbstractQuer
     /**
      * returns the abstract definition of
      * a database created by the ::createDatabase() method
+     *
      * @param databaseName name of the database
      * @return abstract definition of the database
      */

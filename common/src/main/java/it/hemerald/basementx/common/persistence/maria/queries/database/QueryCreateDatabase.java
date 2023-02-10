@@ -15,6 +15,7 @@ public class QueryCreateDatabase extends MariaQuery implements QueryBuilderCreat
 
     private boolean orReplace = false;
     private boolean ifNotExists = false;
+    private MariaDatabase temp;
 
     public QueryCreateDatabase(AbstractMariaHolder holder, String databaseName) {
         super(holder, databaseName);
@@ -31,7 +32,7 @@ public class QueryCreateDatabase extends MariaQuery implements QueryBuilderCreat
         ifNotExists = add;
         return this;
     }
-    private MariaDatabase temp;
+
     @Override
     public QueryBuilderCreateDatabase build() {
         StringBuilder builder = new StringBuilder("CREATE ");

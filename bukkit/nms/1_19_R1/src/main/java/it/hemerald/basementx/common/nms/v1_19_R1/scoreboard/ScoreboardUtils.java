@@ -55,7 +55,7 @@ public class ScoreboardUtils implements it.hemerald.basementx.api.bukkit.scorebo
 
             return new PacketPlayOutScoreboardObjective(new ScoreboardObjective(null,
                     name, null, IChatBaseComponent.b(displayName), IScoreboardCriteria.EnumScoreboardHealthDisplay.a), mode);
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
             return null;
         }
     }

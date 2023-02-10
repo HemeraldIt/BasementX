@@ -35,13 +35,13 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void addBasementPlayer(String name, E basementPlayer) {
         playerMap.put(name, basementPlayer);
-        if(basementPlayer.isInStreamMode()) streamers.add(basementPlayer);
+        if (basementPlayer.isInStreamMode()) streamers.add(basementPlayer);
     }
 
     @Override
     public void removeBasementPlayer(String name) {
         E player = playerMap.remove(name);
-        if(player != null) {
+        if (player != null) {
             player.remove();
             streamers.remove(player);
         }
@@ -72,7 +72,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
         disguiseSet.add(name);
 
         E player = playerMap.get(name);
-        if(player != null) {
+        if (player != null) {
             player.disguise(true);
         } else {
             basement.getRedisManager().publishMessage(new DisguiseMessage(name, DisguiseAction.DISGUISE));
@@ -84,7 +84,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
         disguiseSet.remove(name);
 
         E player = playerMap.get(name);
-        if(player != null) {
+        if (player != null) {
             player.disguise(false);
         } else {
             basement.getRedisManager().publishMessage(new DisguiseMessage(name, DisguiseAction.UNDISGUISE));
@@ -94,7 +94,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void streamMode(String name, boolean enabled) {
         E player = playerMap.get(name);
-        if(player != null) {
+        if (player != null) {
             player.streamMode(enabled);
         }
     }
@@ -111,7 +111,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
 
     @Override
     public void sendMessage(String player, Component... messages) {
-        if(messages.length == 1) {
+        if (messages.length == 1) {
             velocityService.sendMessageComponent(player, componentSerializer.serialize(messages[0]));
             return;
         }
@@ -145,7 +145,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void sendToGameLobby(String player, String game) {
         Optional<BukkitServer> bestServer = bestServer(game);
-        if(bestServer.isEmpty()) {
+        if (bestServer.isEmpty()) {
             log.warn("Tried to send " + player + "to a lobby server but no one is online");
             return;
         }
@@ -156,7 +156,7 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
     @Override
     public void sendToGameLobby(UUID player, String game) {
         Optional<BukkitServer> bestServer = bestServer(game);
-        if(bestServer.isEmpty()) {
+        if (bestServer.isEmpty()) {
             log.warn("Tried to send " + player + "to a lobby server but no one is online");
             return;
         }
@@ -171,20 +171,21 @@ public class DefaultPlayerManager<E extends BasementPlayer> implements PlayerMan
                 .sorted(((o1, o2) -> {
                     try {
                         return Integer.parseInt(o1.getName().substring(o2.getName().length() - 1));
-                    } catch (NumberFormatException ignored) {}
+                    } catch (NumberFormatException ignored) {
+                    }
                     return 0;
                 }))
                 .sorted(Comparator.comparingInt(BukkitServer::getOnline))
                 .toList();
-        if(bestServers.isEmpty()) {
+        if (bestServers.isEmpty()) {
             return Optional.empty();
         }
-        if(bestServers.size() == 1) {
+        if (bestServers.size() == 1) {
             return Optional.of(bestServers.get(0));
         }
-        for (int i = bestServers.size()-1; i >= 0; i--) {
+        for (int i = bestServers.size() - 1; i >= 0; i--) {
             BukkitServer bukkitServer = bestServers.get(i);
-            if(bukkitServer.getOnline() < bukkitServer.getMax()/2) {
+            if (bukkitServer.getOnline() < bukkitServer.getMax() / 2) {
                 return Optional.of(bukkitServer);
             }
         }

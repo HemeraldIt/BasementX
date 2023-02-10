@@ -11,12 +11,14 @@ public interface AbstractMariaDatabase extends AbstractQueryExecutor {
 
     /**
      * Name of the database
+     *
      * @return name
      */
     String getName();
 
     /**
      * initializes a query to create a table on this database
+     *
      * @param tableName name of the table to be created
      * @return query to build
      */
@@ -24,6 +26,7 @@ public interface AbstractMariaDatabase extends AbstractQueryExecutor {
 
     /**
      * initializes a query to drop a table on this database
+     *
      * @param tableName name of the table to be drop
      * @return query to build
      */
@@ -32,6 +35,7 @@ public interface AbstractMariaDatabase extends AbstractQueryExecutor {
     /**
      * returns the abstract definition of
      * a table created by the ::createTable() method
+     *
      * @param tableName name of the table
      * @return abstract definition of the table
      */

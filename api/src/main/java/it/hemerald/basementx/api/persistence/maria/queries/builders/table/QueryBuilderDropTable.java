@@ -11,6 +11,7 @@ public interface QueryBuilderDropTable extends ExecutiveQuery<QueryBuilderDropTa
      * if true it includes
      * IF EXISTS
      * block in the final query
+     *
      * @param add if the block must be present
      * @return self Query Builder
      */

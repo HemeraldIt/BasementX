@@ -14,7 +14,7 @@ public class CreateServerCommand implements SimpleCommand {
     //createserver <server-name>
     @Override
     public void execute(Invocation invocation) {
-        if(invocation.arguments().length < 1) {
+        if (invocation.arguments().length < 1) {
             invocation.source().sendMessage(Component.text("/createserver <server-name>", NamedTextColor.YELLOW));
             return;
         }

@@ -26,15 +26,14 @@ public class PlayerListener implements Listener {
 
     private final BasementBukkit basement;
     private final PlayerManager<BukkitBasementPlayer> playerManager;
+    private Cache<String, String> tpToCache = CacheBuilder.newBuilder()
+            .expireAfterWrite(1, TimeUnit.MINUTES)
+            .build();
 
     public PlayerListener(BasementBukkit basement) {
         this.basement = basement;
         this.playerManager = basement.getPlayerManager();
     }
-
-    private Cache<String, String> tpToCache = CacheBuilder.newBuilder()
-            .expireAfterWrite(1, TimeUnit.MINUTES)
-            .build();
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChat(AsyncPlayerChatEvent event) {
@@ -61,17 +60,17 @@ public class PlayerListener implements Listener {
         event.setFormat(format.get());
     }
 
-    @EventHandler (priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent event) {
         BukkitBasementPlayer basementPlayer = new BukkitBasementPlayer(event.getPlayer(), basement);
         basement.getPlayerManager().addBasementPlayer(event.getPlayer().getName(), basementPlayer);
 
         Bukkit.getScheduler().runTaskLater(basement.getPlugin(), () -> {
-            if(basement.getPlayerManager().isDisguised(event.getPlayer().getName())) {
+            if (basement.getPlayerManager().isDisguised(event.getPlayer().getName())) {
                 basement.getDisguiseModule().disguise(event.getPlayer());
             }
             playerManager.disguised().stream().map(Bukkit::getPlayer).forEach(player -> {
-                if(player == null || !player.isOnline()) return;
+                if (player == null || !player.isOnline()) return;
                 basementPlayer.getPlayer().hidePlayer(player);
                 basementPlayer.getPlayer().showPlayer(player);
             });
@@ -91,38 +90,38 @@ public class PlayerListener implements Listener {
         }, 2L);
 
         String targetName = tpToCache.asMap().get(event.getPlayer().getName());
-        if(targetName == null) return;
+        if (targetName == null) return;
         Player target = Bukkit.getPlayer(targetName);
-        if(target != null && target.isOnline()) {
+        if (target != null && target.isOnline()) {
             Bukkit.getServer().getScheduler().runTaskLater(basement.getPlugin(), () -> event.getPlayer().teleport(target), 20);
         }
         tpToCache.invalidate(event.getPlayer().getName());
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
         basement.getPlayerManager().removeBasementPlayer(event.getPlayer().getName());
     }
 
     @EventHandler
     public void onShow(PlayerShowEntityEvent event) {
-        if(!basement.getStreamMode().isEnabled() || !(event.getEntity() instanceof Player target)) return;
+        if (!basement.getStreamMode().isEnabled() || !(event.getEntity() instanceof Player target)) return;
 
         BukkitBasementPlayer basementPlayer = playerManager.getBasementPlayer(event.getPlayer().getName());
         BukkitBasementPlayer basementTarget = playerManager.getBasementPlayer(target.getName());
 
-        if(basementPlayer.isInStreamMode()) {
-            if(!basementTarget.isInStreamMode()) basement.getStreamMode().sendPackets(target, event.getPlayer());
-        } else if(basementTarget.isInStreamMode()) {
+        if (basementPlayer.isInStreamMode()) {
+            if (!basementTarget.isInStreamMode()) basement.getStreamMode().sendPackets(target, event.getPlayer());
+        } else if (basementTarget.isInStreamMode()) {
             basement.getStreamMode().sendPackets(event.getPlayer(), target);
         }
     }
 
     public void tpTo(String playerName, String targetName) {
         Player player = Bukkit.getPlayer(playerName);
-        if(player != null && player.isOnline()) {
+        if (player != null && player.isOnline()) {
             Player target = Bukkit.getPlayer(targetName);
-            if(target != null && target.isOnline()) player.teleport(target);
+            if (target != null && target.isOnline()) player.teleport(target);
         } else {
             tpToCache.put(playerName, targetName);
         }

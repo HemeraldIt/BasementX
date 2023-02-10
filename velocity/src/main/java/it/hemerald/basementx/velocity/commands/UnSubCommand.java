@@ -9,19 +9,19 @@ import net.luckperms.api.node.types.PermissionNode;
 
 import java.util.UUID;
 
-public class UnSubCommand implements SimpleCommand  {
+public class UnSubCommand implements SimpleCommand {
 
     private final LuckPerms luckPerms = LuckPermsProvider.get();
 
     @Override
     public void execute(Invocation invocation) {
-        if(!(invocation.source() instanceof ConsoleCommandSource)) return;
-        if(invocation.arguments().length < 2) return;
+        if (!(invocation.source() instanceof ConsoleCommandSource)) return;
+        if (invocation.arguments().length < 2) return;
         UUID uuid = UUID.fromString(invocation.arguments()[0]);
         String permission = invocation.arguments()[1];
 
         User user = luckPerms.getUserManager().getUser(uuid);
-        if(user == null) {
+        if (user == null) {
             user = luckPerms.getUserManager().loadUser(uuid).join();
         }
 

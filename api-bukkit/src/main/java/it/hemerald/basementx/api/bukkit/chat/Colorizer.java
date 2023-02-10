@@ -17,7 +17,7 @@ public final class Colorizer {
     }
 
     public static String colorize(String string) {
-        string =  ChatColor.translateAlternateColorCodes('&', string);
+        string = ChatColor.translateAlternateColorCodes('&', string);
         return nms.translateHex(string);
     }
 

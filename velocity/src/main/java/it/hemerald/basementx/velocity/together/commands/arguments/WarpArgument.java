@@ -32,13 +32,13 @@ public class WarpArgument extends CommandArgument {
 
         Optional<ServerConnection> serverConnectionOptional = player.getCurrentServer();
 
-        if(serverConnectionOptional.isEmpty()) {
+        if (serverConnectionOptional.isEmpty()) {
             partyService.sendMessage(player, "Non sei connesso a nessuno server!");
             return;
         }
 
         String serverName = serverConnectionOptional.get().getServer().getServerInfo().getName();
-        if(serverName.contains("_instance_") || serverName.contains("_server_")) {
+        if (serverName.contains("_instance_") || serverName.contains("_server_")) {
             partyService.sendMessage(player, "Non puoi effettuare il party warp in questo server!");
             return;
         }

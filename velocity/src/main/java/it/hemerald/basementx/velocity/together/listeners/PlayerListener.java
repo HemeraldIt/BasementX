@@ -2,6 +2,7 @@ package it.hemerald.basementx.velocity.together.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
+import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
@@ -19,8 +20,13 @@ public class PlayerListener {
     private final Together together;
 
     @Subscribe
+    public void onJoin(PostLoginEvent event) {
+        together.getFriendsManager().join(event.getPlayer());
+    }
+
+    @Subscribe
     public void onPlayerChat(PlayerChatEvent event) {
-        if(together.getPartyManager().isChat(event.getPlayer())) {
+        if (together.getPartyManager().isChat(event.getPlayer())) {
             event.setResult(PlayerChatEvent.ChatResult.denied());
             together.getPartyManager().getParty(event.getPlayer()).ifPresent(party -> together.getPartyManager().broadcastMessage(party, Component.text("[PARTY] ").color(NamedTextColor.AQUA)
                     .append(Component.text(event.getPlayer().getUsername() + ": ").color(NamedTextColor.GRAY))
@@ -52,5 +58,6 @@ public class PlayerListener {
     @Subscribe
     public void onPlayerQuit(DisconnectEvent event) {
         together.getPartyManager().leave(event.getPlayer());
+        together.getFriendsManager().leave(event.getPlayer());
     }
 }

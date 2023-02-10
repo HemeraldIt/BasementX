@@ -11,12 +11,12 @@ public enum TypeConnector {
     private final Supplier<HikariConnector> connectorSupplier;
 
 
-    public HikariConnector provide() {
-        return connectorSupplier.get();
-    }
-
     TypeConnector(Supplier<HikariConnector> connectorSupplier) {
         this.connectorSupplier = connectorSupplier;
+    }
+
+    public HikariConnector provide() {
+        return connectorSupplier.get();
     }
 
 }

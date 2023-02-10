@@ -5,12 +5,10 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.platform.PlayerAdapter;
-import net.luckperms.api.query.QueryOptions;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -32,10 +30,10 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public CompletableFuture<User> getUser(String player) {
         User user = luckPerms.getUserManager().getUser(player);
-        if(user != null) return CompletableFuture.completedFuture(user);
+        if (user != null) return CompletableFuture.completedFuture(user);
 
         return luckPerms.getUserManager().lookupUniqueId(player).thenCompose(uuid -> {
-            if(uuid == null) return null;
+            if (uuid == null) return null;
 
             return luckPerms.getUserManager().loadUser(uuid, player);
         });
@@ -44,10 +42,10 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public CompletableFuture<User> getUser(UUID uuid) {
         User user = luckPerms.getUserManager().getUser(uuid);
-        if(user != null) return CompletableFuture.completedFuture(user);
+        if (user != null) return CompletableFuture.completedFuture(user);
 
         return luckPerms.getUserManager().lookupUsername(uuid).thenCompose(username -> {
-            if(username == null) return null;
+            if (username == null) return null;
 
             return luckPerms.getUserManager().loadUser(uuid, username);
         });
@@ -56,7 +54,7 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public int getPriority(Player player) {
         User user = getUser(player);
-        if(user == null) return 1000;
+        if (user == null) return 1000;
 
         Collection<Group> groups = user.getInheritedGroups(user.getQueryOptions());
         for (Group group : groups) {
@@ -79,16 +77,16 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public String getPrefixGroup(String groupName) {
         Group group = luckPerms.getGroupManager().getGroup(groupName);
-        if(group == null) return ChatColor.GRAY.toString();
+        if (group == null) return ChatColor.GRAY.toString();
 
         String prefix = group.getCachedData().getMetaData().getPrefix();
-        if(prefix == null) return ChatColor.GRAY.toString();
+        if (prefix == null) return ChatColor.GRAY.toString();
 
         return prefix;
     }
 
     private String getPrefix(User user) {
-        if(user == null) return ChatColor.GRAY.toString();
+        if (user == null) return ChatColor.GRAY.toString();
 
         String prefix = user.getCachedData().getMetaData().getPrefix();
         if (prefix == null) return ChatColor.GRAY.toString();

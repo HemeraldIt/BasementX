@@ -35,13 +35,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DefaultNameTagModule extends NameTagModule implements Listener {
 
-    private RMapCache<String, String> rTagMap;
-
     private static final String UUID = generateUUID();
     private final Map<String, Team> teams = new HashMap<>();
     private final Map<Player, String> tags = new ConcurrentHashMap<>();
-
     private final TeamUtils teamUtils;
+    private RMapCache<String, String> rTagMap;
 
     public DefaultNameTagModule(BasementBukkit basement) {
         super(basement, BasementBukkitConfig.NAME_TAG, BasementBukkitConfig.TAGS);
@@ -71,15 +69,23 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         }
 
         basement.getLuckPerms().getEventBus().subscribe(basement.getPlugin(), NodeRemoveEvent.class, (event) -> {
-            if(!(event.getNode() instanceof PermissionNode node) || !event.isUser()) return;
-            Player player = Bukkit.getPlayer(((User)event.getTarget()).getUniqueId());
-            if(player == null) return;
+            if (!(event.getNode() instanceof PermissionNode node) || !event.isUser()) return;
+            Player player = Bukkit.getPlayer(((User) event.getTarget()).getUniqueId());
+            if (player == null) return;
             NameTagFilter filter = filters.get("sub");
-            if(!(filter instanceof SubFilter subFilter)) return;
-            if(subFilter.test(node.getPermission())) {
+            if (!(filter instanceof SubFilter subFilter)) return;
+            if (subFilter.test(node.getPermission())) {
                 subFilter.clear(player, node.getPermission());
             }
         });
+    }
+
+    private static String generateUUID() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            builder.append((char) (65 + Math.random() * 26));
+        }
+        return builder.toString();
     }
 
     @Override
@@ -99,14 +105,6 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         return new DefaultNameTagAdapter(this);
     }
 
-    private static String generateUUID() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            builder.append((char) (65 + Math.random()*26));
-        }
-        return builder.toString();
-    }
-
     @Override
     public void openInventory(Player player) {
         TagGUI.getInventory(basement).open(player);
@@ -115,7 +113,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
     @Override
     public void setTag(Player player, String tag) {
         rTagMap.put(player.getName(), tag);
-        if(player.isOnline()) tags.put(player, tag);
+        if (player.isOnline()) tags.put(player, tag);
     }
 
     @Override
@@ -135,7 +133,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         return CompletableFuture.supplyAsync(() -> {
             String tag = rTagMap.get(player.getName());
 
-            if(player.isOnline()) {
+            if (player.isOnline()) {
                 tags.put(player, tag == null ? "" : tag);
             }
 
@@ -145,7 +143,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
     @Override
     public Scoreboard getScoreboard(Player player) {
-        if(player.getScoreboard() == null) player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+        if (player.getScoreboard() == null) player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 
         return player.getScoreboard();
     }
@@ -156,7 +154,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         Scoreboard scoreboard = getScoreboard(player);
         Team team = scoreboard.getTeam(name);
 
-        if(team == null) {
+        if (team == null) {
             team = scoreboard.registerNewTeam(name);
             team.setAllowFriendlyFire(true);
             adapter.onCreateTeam(player, team);
@@ -172,7 +170,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         adapter.getSuffix(player).thenAccept(suffix -> executeSync(() -> team.setSuffix(resize(suffix))));
         adapter.getPrefixUncolored(player).thenAccept(prefix -> executeSync(() -> {
             ChatColor color = chatColor(prefix);
-            if(color != null) teamUtils.setColor(team, color);
+            if (color != null) teamUtils.setColor(team, color);
         }));
 
         adapter.onUpdateTeam(player, team);
@@ -180,16 +178,16 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
     private ChatColor chatColor(String string) {
         string = string.trim();
-        return ChatColor.getByChar(string.charAt(string.length()-1));
+        return ChatColor.getByChar(string.charAt(string.length() - 1));
     }
 
     @Override
     public void removePlayer(Player player) {
         Team team = teams.get(player.getName());
-        if(team != null) {
+        if (team != null) {
             team.removeEntry(player.getName());
             teams.remove(player.getName());
-            if(team.getEntries().isEmpty()) team.unregister();
+            if (team.getEntries().isEmpty()) team.unregister();
         }
     }
 
@@ -198,7 +196,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         Team team = teams.get(player.getName());
         String newName = adapter.getTeamName(player);
 
-        if(team == null) {
+        if (team == null) {
             createTeam(player, newName);
         } else {
             if (team.getName().equals(newName)) {
@@ -262,16 +260,17 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
     }
 
     private void executeSync(Runnable runnable) {
-        if(Bukkit.isPrimaryThread()) runnable.run();
+        if (Bukkit.isPrimaryThread()) runnable.run();
         else basement.getPlugin().getServer().getScheduler().runTask(basement.getPlugin(), runnable);
     }
 
     private void executeAsync(Runnable runnable) {
-        if(Bukkit.isPrimaryThread()) basement.getPlugin().getServer().getScheduler().runTaskAsynchronously(basement.getPlugin(), runnable);
+        if (Bukkit.isPrimaryThread())
+            basement.getPlugin().getServer().getScheduler().runTaskAsynchronously(basement.getPlugin(), runnable);
         else runnable.run();
     }
 
-    @EventHandler (priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         adapter.onPreJoin(event);
         update(event.getPlayer());
@@ -311,7 +310,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         healthBar.setDisplayName(ChatColor.RED + "\u2764");
         healthBar.getScore(player.getSafeFakeName()).setScore(Math.max(0, (int) Math.round(health)));
 
-        if(tab) updateHealthTab(player, health);
+        if (tab) updateHealthTab(player, health);
     }
 
     @Override
@@ -334,16 +333,16 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
     @Override
     public void removeHealth(Player player, boolean tab) {
         Objective healthBar = getScoreboard(player).getObjective("health");
-        if(healthBar != null) {
+        if (healthBar != null) {
             healthBar.unregister();
         }
-        if(tab) removeHealthTab(player);
+        if (tab) removeHealthTab(player);
     }
 
     @Override
     public void removeHealthTab(Player player) {
         Objective healthBar = getScoreboard(player).getObjective("healthtab");
-        if(healthBar != null) {
+        if (healthBar != null) {
             healthBar.unregister();
         }
     }

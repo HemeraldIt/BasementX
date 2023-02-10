@@ -26,7 +26,7 @@ public interface ScoreboardProvider {
 
     ScoreboardAdapter getAdapter();
 
-    default List<ScoreboardLine> build(Player player, List<String> lines){
+    default List<ScoreboardLine> build(Player player, List<String> lines) {
         int i = 0;
 
         List<ScoreboardLine> scoreboardLines = new ArrayList<>();

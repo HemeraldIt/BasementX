@@ -17,8 +17,8 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class NameTagModule extends Module<NameTagAdapter> {
 
-    protected Property<Boolean> tags;
     protected final Map<String, NameTagFilter> filters = new HashMap<>();
+    protected Property<Boolean> tags;
 
     public NameTagModule(BasementBukkit basement, Property<Boolean> property, Property<Boolean> tags) {
         super(basement, property);

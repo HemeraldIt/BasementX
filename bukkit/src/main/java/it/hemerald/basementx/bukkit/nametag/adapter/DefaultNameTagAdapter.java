@@ -43,7 +43,7 @@ public class DefaultNameTagAdapter extends NameTagAdapter {
 
     public void hideNameTag(Player player) {
         Team team = player.getScoreboard().getTeam(module.getTeamName(player));
-        if(team != null) {
+        if (team != null) {
             team.setNameTagVisibility(NameTagVisibility.NEVER);
         }
     }

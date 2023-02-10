@@ -14,12 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ScoreboardImpl implements Scoreboard {
 
-    private ScoreboardAdapter adapter;
-
     private final String title;
     private final Set<ScoreboardLine> lines = ConcurrentHashMap.newKeySet();
     private final Player viewer;
-
+    private ScoreboardAdapter adapter;
     private RepeatingTask updateTask;
     private boolean ready = false;
 
@@ -51,7 +49,7 @@ public class ScoreboardImpl implements Scoreboard {
     public void create() {
         adapter.create(title, viewer);
         lines.forEach(ScoreboardLine::show);
-        if(updateTask != null) updateTask.start();
+        if (updateTask != null) updateTask.start();
         ready = true;
     }
 
@@ -59,7 +57,7 @@ public class ScoreboardImpl implements Scoreboard {
     public void destroy() {
         adapter.destroy(viewer);
         lines.forEach(ScoreboardLine::destroy);
-        if(updateTask != null) updateTask.cancel();
+        if (updateTask != null) updateTask.cancel();
         ready = false;
     }
 
@@ -102,7 +100,7 @@ public class ScoreboardImpl implements Scoreboard {
     public void addLine(ScoreboardLine line) {
         int row = line.getRow();
         Optional<ScoreboardLine> existing = getLine(row);
-        if(existing.isPresent()) {
+        if (existing.isPresent()) {
             setLine(existing.get(), line.getContent());
             return;
         }
@@ -130,7 +128,7 @@ public class ScoreboardImpl implements Scoreboard {
 
     @Override
     public void setLineTask(ScoreboardLine line, ScoreboardLineTask task) {
-        if(line.getTask() != null && line.getTask().isRunning())
+        if (line.getTask() != null && line.getTask().isRunning())
             line.getTask().cancel();
 
         line.setTask(task);

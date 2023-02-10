@@ -20,6 +20,11 @@ public class BasementFriend implements Friend {
     }
 
     @Override
+    public void addFriend(String username) {
+        friends.add(username);
+    }
+
+    @Override
     public boolean limit() {
         return friends.size() >= 10;
     }

@@ -6,6 +6,7 @@ public class AddonExecuter {
 
     /**
      * This method replace Player#softHidePlayer of custom paper build
+     *
      * @param hider The name of the player that another player will be hidden from
      * @param hided The name of the player that will be hidden
      */

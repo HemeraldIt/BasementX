@@ -27,12 +27,12 @@ public abstract class NameTagFilter {
     }
 
     public void testThenApply(Player player, boolean ignoreMe) {
-        if(test(player))
+        if (test(player))
             apply(player, ignoreMe);
     }
 
     public void testThenApply(Player player) {
-        if(!isEnabled()) return;
+        if (!isEnabled()) return;
         testThenApply(player, ignoreMe(player));
     }
 }

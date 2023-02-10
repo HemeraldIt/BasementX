@@ -8,5 +8,6 @@ public abstract class Holder {
     @Getter
     @Setter
     protected Connector connector;
+
     public abstract void close();
 }

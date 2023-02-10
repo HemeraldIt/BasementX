@@ -45,7 +45,7 @@ public class ItemBuilder {
 
     public ItemBuilder(ItemStack item, int amount) {
         this.item = item;
-        if(amount > 64 || amount < 0) amount = 64;
+        if (amount > 64 || amount < 0) amount = 64;
         this.item.setAmount(amount);
         this.meta = this.item.getItemMeta();
     }
@@ -154,6 +154,13 @@ public class ItemBuilder {
         return item;
     }
 
+    public interface NMS {
+
+        void setUnbreakable(ItemMeta meta, boolean state);
+
+        void setBasePotionData(PotionMeta meta, PotionType type, boolean extended, boolean upgraded);
+    }
+
     public class BookItemMeta {
         private final BookMeta meta = (BookMeta) ItemBuilder.this.meta;
 
@@ -199,12 +206,5 @@ public class ItemBuilder {
             ItemBuilder.this.item.setItemMeta(meta);
             return ItemBuilder.this;
         }
-    }
-
-    public interface NMS {
-
-        void setUnbreakable(ItemMeta meta, boolean state);
-
-        void setBasePotionData(PotionMeta meta, PotionType type, boolean extended, boolean upgraded);
     }
 }

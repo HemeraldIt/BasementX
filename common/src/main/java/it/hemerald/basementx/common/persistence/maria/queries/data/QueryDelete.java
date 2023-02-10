@@ -19,7 +19,8 @@ public class QueryDelete extends MariaQuery implements QueryBuilderDelete {
     private String returning;
     private int limit;
 
-    public QueryDelete() {}
+    public QueryDelete() {
+    }
 
     public QueryDelete(AbstractMariaHolder holder, String database) {
         super(holder, database);

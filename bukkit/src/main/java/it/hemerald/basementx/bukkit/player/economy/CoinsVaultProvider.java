@@ -123,7 +123,7 @@ public class CoinsVaultProvider implements Economy {
         UserData userData = getUserData(playerName);
 
         if (has(playerName, amount)) {
-            userData.setNetworkCoins((int) (userData.getNetworkCoins()-amount));
+            userData.setNetworkCoins((int) (userData.getNetworkCoins() - amount));
             return new EconomyResponse(amount, userData.getNetworkCoins(), EconomyResponse.ResponseType.SUCCESS, "Sono stati rimossi " + amount + " coins dal tuo conto.");
         }
 
