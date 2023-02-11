@@ -88,18 +88,18 @@ public class MariaConnector extends HikariConnector {
     }
 
     @Override
-    public HikariDataSource connect(String host) {
-        return super.connect("jdbc:mariadb://" + host);
+    public void connect(String host) {
+        super.connect("jdbc:mariadb://" + host);
     }
 
     @Override
-    public HikariDataSource connect(String host, String username) {
-        return super.connect("jdbc:mariadb://" + host, username);
+    public void connect(String host, String username) {
+        super.connect("jdbc:mariadb://" + host, username);
     }
 
     @Override
-    public HikariDataSource connect(String host, String username, String password) {
-        return super.connect("jdbc:mariadb://" + host, username, password);
+    public void connect(String host, String username, String password) {
+        super.connect("jdbc:mariadb://" + host, username, password);
     }
 
 }
