@@ -10,7 +10,6 @@ import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
 import it.hemerald.basementx.api.persistence.generic.connection.Connector;
-import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
 import it.hemerald.basementx.api.player.BasementPlayer;
@@ -27,6 +26,7 @@ import it.hemerald.basementx.common.friends.DefaultFriendsManager;
 import it.hemerald.basementx.common.locale.DefaultLocaleManager;
 import it.hemerald.basementx.common.party.DefaultPartyManager;
 import it.hemerald.basementx.common.persistence.hikari.TypeHolder;
+import it.hemerald.basementx.common.persistence.maria.structure.column.connector.MariaConnector;
 import it.hemerald.basementx.common.player.DefaultPlayerManager;
 import it.hemerald.basementx.common.redis.DefaultRedisManager;
 import it.hemerald.basementx.common.server.DefaultServerManager;
@@ -58,6 +58,7 @@ public class StandardBasement implements Basement {
     private final HashMap<Class<?>, Holder> holderBucket = new HashMap<>();
 
     private final ProcessScheduler processScheduler;
+    private final AbstractMariaHolder holder;
 
     public StandardBasement(BasementPlugin plugin) {
         this(plugin, null);
@@ -69,11 +70,11 @@ public class StandardBasement implements Basement {
 
         redisManager = new DefaultRedisManager(settingsManager);
 
-        Connector connector = getConnector(TypeConnector.MARIADB);
+        Connector connector = getConnector(10, 10, "basement");
         connector.connect(getSettingsManager().getProperty(BasementConfig.MARIA_HOST),
                 getSettingsManager().getProperty(BasementConfig.MARIA_USERNAME),
                 getSettingsManager().getProperty(BasementConfig.MARIA_PASSWORD));
-        AbstractMariaHolder holder = getHolder(Basement.class, AbstractMariaHolder.class);
+        holder = getHolder(Basement.class, AbstractMariaHolder.class);
         holder.setConnector(connector);
         database = holder.createDatabase("minecraft").ifNotExists(true).build().execReturn();
 
@@ -95,6 +96,7 @@ public class StandardBasement implements Basement {
     }
 
     public void stop() {
+        holder.close();
         redisManager.getRedissonClient().shutdown();
     }
 
@@ -177,8 +179,8 @@ public class StandardBasement implements Basement {
     }
 
     @Override
-    public Connector getConnector(TypeConnector type) {
-        return it.hemerald.basementx.common.persistence.hikari.TypeConnector.valueOf(type.toString()).provide();
+    public Connector getConnector(int minPoolSize, int maxPoolSize, String poolName) {
+        return new MariaConnector(minPoolSize, maxPoolSize, poolName);
     }
 
     @Override

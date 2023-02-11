@@ -13,6 +13,7 @@ public final class ResultedProcessesCompletion<T> {
 
     // ======================================
     private Map<String, ProcessResult<T>> resultMap;
+
     ResultedProcessesCompletion(int processCount, Executor asyncExecutor) {
         this.latch = new CountDownLatch(processCount);
         this.asyncExecutor = asyncExecutor;

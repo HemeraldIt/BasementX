@@ -13,23 +13,25 @@ public abstract class HikariConnector implements Connector {
     protected final HikariConfig config;
     protected HikariDataSource source;
 
-    public HikariConnector(String driver) {
+    public HikariConnector(int minPoolSize, int maxPoolSize, String poolName, String driver) {
         PropertiesProvider provider = getProperties();
         if (provider == null) {
             provider = new PropertiesProvider();
         }
 
-        this.config = getConfig();
+        config = getConfig(minPoolSize, maxPoolSize, poolName);
         config.setDriverClassName(driver);
         config.setDataSourceProperties(provider.getBuild());
     }
 
+    @Override
     public void connect(String host) {
         config.setJdbcUrl(host);
         source = new HikariDataSource(config);
         establish();
     }
 
+    @Override
     public void connect(String host, String username) {
         config.setJdbcUrl(host);
         config.setUsername(username);
@@ -37,6 +39,7 @@ public abstract class HikariConnector implements Connector {
         establish();
     }
 
+    @Override
     public void connect(String host, String username, String password) {
         config.setJdbcUrl(host);
         config.setUsername(username);
@@ -54,7 +57,7 @@ public abstract class HikariConnector implements Connector {
         }
     }
 
-    protected abstract HikariConfig getConfig();
+    protected abstract HikariConfig getConfig(int minPoolSize, int maxPoolSize, String poolName);
 
     protected abstract PropertiesProvider getProperties();
 

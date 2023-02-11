@@ -34,6 +34,7 @@ public class UserData {
     private long xpBoostTime = 0; // Instant.plus(now, duration) then specify the end time of boost
     private int coinsBoost = 1;
     private long coinsBoostTime = 0; // Instant.plus(now, duration) then specify the end time of boost
+
     public UserData() {
         uuid = null;
         username = null;

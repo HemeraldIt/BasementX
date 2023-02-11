@@ -1,6 +1,5 @@
 package it.hemerald.basementx.api.persistence.generic.connection;
 
-import com.zaxxer.hikari.HikariDataSource;
 import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 
 import java.sql.PreparedStatement;

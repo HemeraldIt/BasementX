@@ -7,7 +7,6 @@ import it.hemerald.basementx.api.locale.LocaleManager;
 import it.hemerald.basementx.api.party.PartyManager;
 import it.hemerald.basementx.api.persistence.generic.Holder;
 import it.hemerald.basementx.api.persistence.generic.connection.Connector;
-import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.player.BasementPlayer;
 import it.hemerald.basementx.api.player.PlayerManager;
@@ -133,7 +132,7 @@ public interface Basement {
      *
      * @return connector object
      */
-    Connector getConnector(TypeConnector type);
+    Connector getConnector(int minPoolSize, int maxPoolSize, String poolName);
 
     <T extends Holder> T getHolder(Class<?> key, Class<T> type);
 

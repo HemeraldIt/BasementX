@@ -1,7 +1,6 @@
 package it.hemerald.basementx.common.persistence.maria.structure.column.connector;
 
 import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 import it.hemerald.basementx.common.persistence.hikari.HikariConnector;
 import it.hemerald.basementx.common.persistence.hikari.property.HikariProperty;
@@ -17,14 +16,16 @@ import java.util.logging.Logger;
 
 public class MariaConnector extends HikariConnector {
 
-    public MariaConnector() {
-        super("org.mariadb.jdbc.Driver");
+    public MariaConnector(int minPoolSize, int maxPoolSize, String poolName) {
+        super(minPoolSize, maxPoolSize, poolName, "org.mariadb.jdbc.Driver");
     }
 
-    protected HikariConfig getConfig() {
+    @Override
+    protected HikariConfig getConfig(int minPoolSize, int maxPoolSize, String poolName) {
         HikariConfig config = new HikariConfig();
-        config.setMaximumPoolSize(30);
-        config.setMinimumIdle(10);
+        config.setMaximumPoolSize(maxPoolSize);
+        config.setMinimumIdle(minPoolSize);
+        config.setPoolName(poolName);
         return config;
     }
 
@@ -73,8 +74,8 @@ public class MariaConnector extends HikariConnector {
 
     @Override
     public QueryData executeReturn(String query) {
-        try (Connection connection = source.getConnection(); Statement statement = connection.createStatement()) {
-            return new QueryDataImpl(statement.executeQuery(query));
+        try (Connection connection = source.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            return new QueryDataImpl(statement.executeQuery());
         } catch (SQLException throwable) {
             Logger.getGlobal().severe("Error on sql query:" + query);
             throwable.printStackTrace();

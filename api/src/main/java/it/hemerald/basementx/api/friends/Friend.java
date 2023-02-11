@@ -1,7 +1,6 @@
 package it.hemerald.basementx.api.friends;
 
 import java.util.List;
-import java.util.Set;
 
 public interface Friend {
 

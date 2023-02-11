@@ -2,9 +2,6 @@ plugins {
     id("java-library")
 }
 
-project.tasks.publishShadowPublicationToBytesafeRepository.enabled = false
-project.tasks.publishAllPublicationsToBytesafeRepository.enabled = false
-
 dependencies {
     api(project(':api'))
 }
