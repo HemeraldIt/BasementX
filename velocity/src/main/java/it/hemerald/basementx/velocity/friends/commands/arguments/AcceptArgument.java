@@ -26,14 +26,14 @@ public class AcceptArgument extends CommandArgument {
         }
 
         if (!AddArgument.isInvited(player.getUsername(), invitedPlayer.get().getUsername())) {
-            friendService.sendMessage(player, "Non hai ricevuto nessuna richiesta di amicizia da questo giocatore.");
+            friendService.sendMessage(player, "§cNon hai ricevuto nessuna richiesta di amicizia da questo giocatore.");
             return;
         }
 
         friendService.addFriend(player, invitedPlayer.get().getUsername());
         friendService.addFriend(invitedPlayer.get(), player.getUsername());
-        friendService.sendMessage(player, "Hai accettato la richiesta di amicizia di " + invitedPlayer.get().getUsername() + ".");
-        friendService.sendMessage(invitedPlayer.get(), player.getUsername() + " ha accettato la tua richiesta di amicizia.");
+        friendService.sendMessage(player, "Hai accettato la richiesta di amicizia di §b§l" + invitedPlayer.get().getUsername() + "§7.");
+        friendService.sendMessage(invitedPlayer.get(), "§b§l" + player.getUsername() + " §7ha accettato la tua richiesta di amicizia.");
     }
 
 }

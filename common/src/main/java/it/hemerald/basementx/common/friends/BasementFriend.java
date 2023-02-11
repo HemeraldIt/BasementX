@@ -1,15 +1,14 @@
 package it.hemerald.basementx.common.friends;
 
 import it.hemerald.basementx.api.friends.Friend;
+import it.hemerald.basementx.api.friends.Pair;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class BasementFriend implements Friend {
 
     private final UUID uuid;
-    private final Set<String> friends = new HashSet<>();
+    private final List<Pair<String, Long>> friends = new ArrayList<>();
 
     private BasementFriend() {
         this.uuid = null;
@@ -20,8 +19,13 @@ public class BasementFriend implements Friend {
     }
 
     @Override
-    public void addFriend(String username) {
-        friends.add(username);
+    public void addFriend(String username, long seconds) {
+        friends.add(new Pair<>(username, seconds));
+    }
+
+    @Override
+    public void removeFriend(String friendName) {
+        friends.removeIf(s -> s.getKey().equalsIgnoreCase(friendName));
     }
 
     @Override
@@ -42,13 +46,13 @@ public class BasementFriend implements Friend {
     }
 
     @Override
-    public Set<String> getFriends() {
+    public List<Pair<String, Long>> getFriends() {
         return friends;
     }
 
     @Override
     public boolean containsFriend(String name) {
-        return friends.contains(name);
+        return friends.stream().map(Pair::getKey).anyMatch(name::equalsIgnoreCase);
     }
 
 }

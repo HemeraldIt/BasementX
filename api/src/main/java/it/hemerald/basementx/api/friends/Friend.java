@@ -1,5 +1,6 @@
 package it.hemerald.basementx.api.friends;
 
+import java.util.List;
 import java.util.Set;
 
 public interface Friend {
@@ -9,7 +10,7 @@ public interface Friend {
      *
      * @return friends members
      */
-    Set<String> getFriends();
+    List<Pair<String, Long>> getFriends();
 
     /**
      * Gets if a player is friend to this player
@@ -26,5 +27,7 @@ public interface Friend {
      */
     boolean limit();
 
-    void addFriend(String username);
+    void addFriend(String username, long seconds);
+
+    void removeFriend(String friendName);
 }

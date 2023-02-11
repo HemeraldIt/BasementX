@@ -3,10 +3,10 @@ package it.hemerald.basementx.velocity.friends.commands.arguments;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.api.friends.Friend;
+import it.hemerald.basementx.api.friends.Pair;
 import it.hemerald.basementx.velocity.friends.commands.CommandArgument;
 import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +22,17 @@ public class RemoveArgument extends CommandArgument {
         if (optionalFriend.isEmpty()) {
             return;
         }
-        String username = args[1].toLowerCase();
-        if (optionalFriend.get().getFriends().stream().map(String::toLowerCase).noneMatch(s -> s.equals(username))) {
-            friendService.sendMessage(player, "Questo giocatore non è nei tuoi amici.");
+        if (!optionalFriend.get().containsFriend(args[1])) {
+            friendService.sendMessage(player, "§cQuesto giocatore non è nei tuoi amici.");
             return;
         }
 
-        Optional<Player> optionalPlayer = friendService.getTogether().getServer().getPlayer(username);
-        optionalPlayer.ifPresent(value -> friendService.sendMessage(value, player.getUsername() + " ha rimosso la tua amicizia."));
+        Optional<Player> optionalPlayer = friendService.getTogether().getServer().getPlayer(args[1]);
+        optionalPlayer.ifPresent(value -> friendService.sendMessage(value, "§b§l" + player.getUsername() + " §cti ha rimosso dagli amici."));
 
-        friendService.removeFriend(username, player.getUsername());
-        friendService.removeFriend(player, username);
-        friendService.sendMessage(player, "Hai rimosso " + username + " dai tuoi amici.");
+        friendService.removeFriend(args[1], player.getUsername());
+        friendService.removeFriend(player, args[1]);
+        friendService.sendMessage(player, "Hai rimosso §b§l" + args[1] + "§7 dai tuoi amici.");
     }
 
     @Override
@@ -41,6 +40,6 @@ public class RemoveArgument extends CommandArgument {
         if (!(source instanceof Player player)) return super.suggest(source, currentArgs);
         Friend friend = friendService.getFriend(player).orElse(null);
         if (friend == null) return super.suggest(source, currentArgs);
-        return new ArrayList<>(friend.getFriends());
+        return friend.getFriends().stream().map(Pair::getKey).toList();
     }
 }

@@ -85,4 +85,9 @@ public class FriendCommand implements SimpleCommand {
 
         }, executor);
     }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("basement.friends");
+    }
 }

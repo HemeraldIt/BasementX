@@ -2,9 +2,14 @@ package it.hemerald.basementx.velocity.friends.commands.arguments;
 
 import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.api.friends.Friend;
+import it.hemerald.basementx.api.friends.Pair;
 import net.kyori.adventure.text.Component;
 import it.hemerald.basementx.velocity.friends.commands.CommandArgument;
 import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
+
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 
 public class ListArgument extends CommandArgument {
 
@@ -15,19 +20,27 @@ public class ListArgument extends CommandArgument {
     @Override
     public void execute(Player player, String[] args) {
         Friend friend = friendService.getFriend(player).orElse(null);
-        if (friend == null) {
-            friendService.sendMessage(player, "§cNon hai amici");
-            return;
-        }
-        if (friend.getFriends().size() > 1) {
+        if (friend == null) return;
+        if (!friend.getFriends().isEmpty()) {
             player.sendMessage(Component.text("§8§m------------------- §3§lFRIEND §8§m-------------------"));
-            for (String username : friend.getFriends().stream().sorted().toList()) {
-                player.sendMessage(Component.text("§8§l› §b" + username));
+            for (Pair<String, Long> pair : friend.getFriends().stream().sorted().toList()) {
+                player.sendMessage(Component.text(status(pair.getKey()) + " §b" + pair.getKey() + " §7- §e" + format(pair.getValue())));
             }
             player.sendMessage(Component.text("§8§m---------------------------------------------"));
         } else {
             friendService.sendMessage(player, "§cNon hai amici");
         }
+
+    }
+
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("hh:mm:ss dd/M/yyyy");
+
+    private static String format(long epochSeconds) {
+        return FORMAT.format(new Date(Instant.ofEpochSecond(epochSeconds).toEpochMilli()));
+    }
+
+    private String status(String username) {
+        return friendService.getTogether().getServer().getPlayer(username).isPresent() ? "§a§l●" : "§c§l●";
     }
 
 }
