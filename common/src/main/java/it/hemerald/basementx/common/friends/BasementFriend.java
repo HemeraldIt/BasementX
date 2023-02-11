@@ -3,7 +3,9 @@ package it.hemerald.basementx.common.friends;
 import it.hemerald.basementx.api.friends.Friend;
 import it.hemerald.basementx.api.friends.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class BasementFriend implements Friend {
 

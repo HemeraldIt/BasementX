@@ -23,16 +23,14 @@ import java.util.concurrent.CompletableFuture;
 public class FriendsManager {
 
     public static final Component PREFIX = Component.text("§3§lFriends §8§l› ");
-
-    @Getter
-    private final Together together;
-    private final RLocalCachedMap<String, Friend> friends;
-
     private static QueryBuilderInsert INSERT_FRIENDS;
     private static QueryBuilderDelete REMOVE_FRIENDS;
     private static QueryBuilderSelect SELECT_FRIENDS;
     private static QueryBuilderSelect PLAYER_ID;
     private static QueryBuilderSelect PLAYER_USERNAME;
+    @Getter
+    private final Together together;
+    private final RLocalCachedMap<String, Friend> friends;
 
     public FriendsManager(Together together) {
         this.together = together;

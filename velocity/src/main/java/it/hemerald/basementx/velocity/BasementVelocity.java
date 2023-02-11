@@ -10,18 +10,11 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import it.hemerald.basementx.api.Basement;
-import it.hemerald.basementx.api.persistence.generic.connection.Connector;
-import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
-import it.hemerald.basementx.api.persistence.maria.queries.builders.table.QueryBuilderCreateTable;
-import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
-import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaHolder;
-import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import it.hemerald.basementx.api.redis.messages.implementation.BukkitNotifyShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.ServerShutdownMessage;
 import it.hemerald.basementx.api.redis.messages.implementation.VelocityNotifyMessage;
 import it.hemerald.basementx.api.remote.RemoteVelocityService;
 import it.hemerald.basementx.api.remote.UserDataService;
-import it.hemerald.basementx.common.config.BasementConfig;
 import it.hemerald.basementx.common.plugin.AbstractBasementPlugin;
 import it.hemerald.basementx.velocity.alert.AlertType;
 import it.hemerald.basementx.velocity.commands.*;
@@ -55,8 +48,6 @@ public class BasementVelocity extends AbstractBasementPlugin {
     private final Logger logger;
     private final Map<String, AlertType> toggled = new HashMap<>();
     private Together together;
-    private AbstractMariaHolder holder;
-    private AbstractMariaDatabase database;
     private UserDataManager userDataManager;
 
     @Inject
@@ -72,49 +63,7 @@ public class BasementVelocity extends AbstractBasementPlugin {
     public void onInitialize(ProxyInitializeEvent event) {
         enable();
 
-        Connector connector = basement.getConnector(TypeConnector.MARIADB);
-        connector.connect(basement.getSettingsManager().getProperty(BasementConfig.MARIA_HOST),
-                basement.getSettingsManager().getProperty(BasementConfig.MARIA_USERNAME),
-                basement.getSettingsManager().getProperty(BasementConfig.MARIA_PASSWORD));
-        holder = basement.getHolder(BasementVelocity.class, AbstractMariaHolder.class);
-        holder.setConnector(connector);
-        database = holder.createDatabase("minecraft").ifNotExists(true).build().execReturn();
-
-        database.createTable("player_boosters").ifNotExists(true)
-                .addColumn("user_id", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
-                .addColumn("mode", MariaType.INT, 4, QueryBuilderCreateTable.ColumnData.NOT_NULL)
-                .addColumn("type", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
-                .addColumn("value", MariaType.INT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
-                .addColumn("time", MariaType.BIGINT, QueryBuilderCreateTable.ColumnData.NOT_NULL)
-                .withPrimaryKeys("user_id", "mode", "type")
-                .addForeignKeyConstraint("user_id", "players", "id", "ON DELETE CASCADE ON UPDATE CASCADE")
-                .build().exec();
-
-        database.createTable("staff_notes").ifNotExists(true)
-                .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-                .addColumn("staff_id", MariaType.INT)
-                .addColumn("player_id", MariaType.INT)
-                .addColumn("note_id", MariaType.INT)
-                .addColumn("note", MariaType.VARCHAR, 256)
-                .withPrimaryKeys("id")
-                .addForeignKeyConstraint("staff_id", "players", "id", "ON UPDATE CASCADE ON DELETE CASCADE")
-                .addForeignKeyConstraint("player_id", "players", "id", "ON UPDATE CASCADE ON DELETE CASCADE")
-                .build().exec();
-
-        //database.createTable(DatabaseConstants.PLAYER_TABLE).ifNotExists(true)
-        //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-        //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
-        //        .addColumn("username", MariaType.VARCHAR, 32)
-        //        .addColumn("last_join", MariaType.DATETIME, "CURRENT_TIMESTAMP")
-        //        .withPrimaryKeys("id").build().exec();
-
-        //database.createTable(DatabaseConstants.PREMIUM_TABLE).ifNotExists(true)
-        //        .addColumn("id", MariaType.INT, QueryBuilderCreateTable.ColumnData.AUTO_INCREMENT)
-        //        .addColumn("uuid", MariaType.VARCHAR, 36, QueryBuilderCreateTable.ColumnData.UNIQUE)
-        //        .addColumn("username", MariaType.VARCHAR, 32, QueryBuilderCreateTable.ColumnData.UNIQUE)
-        //        .withPrimaryKeys("id").build().exec();
-
-        userDataManager = new UserDataManager(this, database);
+        userDataManager = new UserDataManager(this);
 
         basement.getRedisManager().registerTopicListener(ServerShutdownMessage.TOPIC, new ServerShutdownHandler(server));
         basement.getRedisManager().registerTopicListener(BukkitNotifyShutdownMessage.TOPIC, new BukkitNotifyShutdownHandler(server));
@@ -151,7 +100,6 @@ public class BasementVelocity extends AbstractBasementPlugin {
         together.disable();
         userDataManager.shutdown();
         disable();
-        holder.close();
     }
 
     @Override

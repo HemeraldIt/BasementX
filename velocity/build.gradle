@@ -2,9 +2,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-project.tasks.publishShadowPublicationToBytesafeRepository.enabled = false
-project.tasks.publishAllPublicationsToBytesafeRepository.enabled = false
-
 repositories {
     maven { url = 'https://repo.velocitypowered.com/releases/' }
     maven { url = 'https://libraries.minecraft.net/' }

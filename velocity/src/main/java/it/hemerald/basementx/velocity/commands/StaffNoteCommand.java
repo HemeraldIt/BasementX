@@ -37,14 +37,14 @@ public class StaffNoteCommand implements SimpleCommand {
     public StaffNoteCommand(BasementVelocity velocity) {
         this.velocity = velocity;
 
-        playerId = velocity.getDatabase().select().columns("id").from("players");
-        playerData = velocity.getDatabase().select().columns("uuid", "username").from("players");
-        noteId = velocity.getDatabase().select().columns("COUNT(note_id)+1").from("staff_notes as sn");
+        playerId = velocity.getBasement().getDatabase().select().columns("id").from("players");
+        playerData = velocity.getBasement().getDatabase().select().columns("uuid", "username").from("players");
+        noteId = velocity.getBasement().getDatabase().select().columns("COUNT(note_id)+1").from("staff_notes as sn");
 
-        queryInsertNotes = velocity.getDatabase().insert().ignore(true).into("staff_notes").columnSchema("staff_id", "player_id", "note_id", "note");
-        queryGetNotes = velocity.getDatabase().select().columns("note_id", "note", "players.username")
+        queryInsertNotes = velocity.getBasement().getDatabase().insert().ignore(true).into("staff_notes").columnSchema("staff_id", "player_id", "note_id", "note");
+        queryGetNotes = velocity.getBasement().getDatabase().select().columns("note_id", "note", "players.username")
                 .from("staff_notes", "players", "players" + " as ps");
-        queryRemoveNotes = velocity.getDatabase().delete().from("staff_notes");
+        queryRemoveNotes = velocity.getBasement().getDatabase().delete().from("staff_notes");
     }
 
     @Override

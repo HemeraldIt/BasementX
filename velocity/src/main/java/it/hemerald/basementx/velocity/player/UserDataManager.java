@@ -7,7 +7,6 @@ import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBu
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderReplace;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderSelect;
 import it.hemerald.basementx.api.persistence.maria.queries.builders.data.QueryBuilderUpdate;
-import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.data.QueryData;
 import it.hemerald.basementx.api.player.UserData;
 import it.hemerald.basementx.velocity.BasementVelocity;
@@ -35,19 +34,19 @@ public class UserDataManager {
     private final ScheduledTask task;
     private final BasementVelocity velocity;
 
-    public UserDataManager(BasementVelocity velocity, AbstractMariaDatabase database) {
+    public UserDataManager(BasementVelocity velocity) {
         this.velocity = velocity;
         this.redissonClient = velocity.getBasement().getRedisManager().getRedissonClient();
 
-        querySelectUserData = database.select().from("players").columns("id", "username", "xp", "level", "coins", "gems", "premium", "language");
-        querySelectUserBoosters = database.delete().from("player_boosters").returning("type, value, time");
+        querySelectUserData = velocity.getBasement().getDatabase().select().from("players").columns("id", "username", "xp", "level", "coins", "gems", "premium", "language");
+        querySelectUserBoosters = velocity.getBasement().getDatabase().delete().from("player_boosters").returning("type, value, time");
 
-        queryUpdateUserData = database.update().table("players")
+        queryUpdateUserData = velocity.getBasement().getDatabase().update().table("players")
                 .setNQ("xp", "?").setNQ("level", "?").setNQ("coins", "?")
                 .setNQ("gems", "?").setNQ("language", "?")
                 .where(WhereBuilder.builder().equalsNQ("uuid", "?").close());
 
-        queryInsertUserBoosters = database.replace().into("player_boosters")
+        queryInsertUserBoosters = velocity.getBasement().getDatabase().replace().into("player_boosters")
                 .columnSchema("user_id", "mode", "type", "value", "time")
                 .valuesNQ("?", "?", "?", "?", "?");
 

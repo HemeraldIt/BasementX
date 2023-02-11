@@ -4,7 +4,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.api.friends.Friend;
-import it.hemerald.basementx.api.friends.Pair;
 import it.hemerald.basementx.velocity.friends.commands.CommandArgument;
 import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
 import net.kyori.adventure.text.Component;

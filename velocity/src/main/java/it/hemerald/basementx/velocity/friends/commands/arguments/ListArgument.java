@@ -3,9 +3,9 @@ package it.hemerald.basementx.velocity.friends.commands.arguments;
 import com.velocitypowered.api.proxy.Player;
 import it.hemerald.basementx.api.friends.Friend;
 import it.hemerald.basementx.api.friends.Pair;
-import net.kyori.adventure.text.Component;
 import it.hemerald.basementx.velocity.friends.commands.CommandArgument;
 import it.hemerald.basementx.velocity.friends.manager.FriendsManager;
+import net.kyori.adventure.text.Component;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -13,8 +13,14 @@ import java.util.Date;
 
 public class ListArgument extends CommandArgument {
 
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("hh:mm:ss dd/M/yyyy");
+
     public ListArgument(FriendsManager friendManager) {
         super(friendManager, "list", 0);
+    }
+
+    private static String format(long epochSeconds) {
+        return FORMAT.format(new Date(Instant.ofEpochSecond(epochSeconds).toEpochMilli()));
     }
 
     @Override
@@ -22,8 +28,8 @@ public class ListArgument extends CommandArgument {
         Friend friend = friendService.getFriend(player).orElse(null);
         if (friend == null) return;
         if (!friend.getFriends().isEmpty()) {
-            player.sendMessage(Component.text("§8§m------------------- §3§lFRIEND §8§m-------------------"));
-            for (Pair<String, Long> pair : friend.getFriends().stream().sorted().toList()) {
+            player.sendMessage(Component.text("§8§m-------------------§3§lFRIEND §8§m-------------------"));
+            for (Pair<String, Long> pair : friend.getFriends()) {
                 player.sendMessage(Component.text(status(pair.getKey()) + " §b" + pair.getKey() + " §7- §e" + format(pair.getValue())));
             }
             player.sendMessage(Component.text("§8§m---------------------------------------------"));
@@ -31,12 +37,6 @@ public class ListArgument extends CommandArgument {
             friendService.sendMessage(player, "§cNon hai amici");
         }
 
-    }
-
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("hh:mm:ss dd/M/yyyy");
-
-    private static String format(long epochSeconds) {
-        return FORMAT.format(new Date(Instant.ofEpochSecond(epochSeconds).toEpochMilli()));
     }
 
     private String status(String username) {

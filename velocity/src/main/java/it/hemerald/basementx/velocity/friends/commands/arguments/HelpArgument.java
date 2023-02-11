@@ -15,7 +15,7 @@ public class HelpArgument extends CommandArgument {
 
     @Override
     public void execute(Player player, String[] args) {
-        player.sendMessage(Component.text("§8§m------------------- §3§lFRIEND §8§m-------------------"));
+        player.sendMessage(Component.text("§8§m-------------------§3§l FRIEND §8§m-------------------"));
         sendMessage(player, "§8§l› §b/friend add <player> §eInvita un amico.", "/friend add <player>");
         sendMessage(player, "§8§l› §b/friend accept <player> §eAccetta l'amicizia.", "/friend accept <player>");
         sendMessage(player, "§8§l› §b/friend remove <player> §eRimuovi un amico.", "/friend remove <player>");
