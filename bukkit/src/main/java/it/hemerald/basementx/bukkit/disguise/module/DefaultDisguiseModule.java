@@ -3,8 +3,6 @@ package it.hemerald.basementx.bukkit.disguise.module;
 import it.hemerald.basementx.api.bukkit.BasementBukkit;
 import it.hemerald.basementx.api.bukkit.disguise.adapter.DisguiseAdapter;
 import it.hemerald.basementx.api.bukkit.disguise.module.DisguiseModule;
-import it.hemerald.basementx.api.persistence.generic.connection.Connector;
-import it.hemerald.basementx.api.persistence.generic.connection.TypeConnector;
 import it.hemerald.basementx.api.persistence.maria.structure.AbstractMariaDatabase;
 import it.hemerald.basementx.api.persistence.maria.structure.column.MariaType;
 import it.hemerald.basementx.api.player.PlayerManager;
@@ -21,11 +19,6 @@ public class DefaultDisguiseModule extends DisguiseModule {
 
     public DefaultDisguiseModule(BasementBukkit basement) {
         super(basement, BasementBukkitConfig.DISGUISE);
-        Connector connector = basement.getConnector(TypeConnector.MARIADB);
-        connector.connect(basement.getSettingsManager().getProperty(BasementBukkitConfig.MARIA_HOST),
-                basement.getSettingsManager().getProperty(BasementBukkitConfig.MARIA_USERNAME),
-                basement.getSettingsManager().getProperty(BasementBukkitConfig.MARIA_PASSWORD));
-
         database = basement.getDatabase();
         database.createTable("disguise_names").ifNotExists(true)
                 .addColumn("name", MariaType.VARCHAR, 32)

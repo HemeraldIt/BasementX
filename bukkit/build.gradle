@@ -2,9 +2,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-project.tasks.publishShadowPublicationToBytesafeRepository.enabled = false
-project.tasks.publishAllPublicationsToBytesafeRepository.enabled = false
-
 repositories {
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url = 'https://oss.sonatype.org/content/groups/public/' }
