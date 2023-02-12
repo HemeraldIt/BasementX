@@ -87,7 +87,7 @@ public class FriendsManager {
                 throwable.printStackTrace();
                 return;
             }
-            friends.fastPut(player.getUsername().toLowerCase(), friend);
+            friends.fastPut(player.getUsername(), friend);
             friend.getFriends().forEach(friendName -> {
                 Optional<Player> optionalPlayer = together.getServer().getPlayer(friendName.getKey());
                 optionalPlayer.ifPresent(value -> sendMessage(value, "§a" + player.getUsername() + " §7è entrato nel server."));

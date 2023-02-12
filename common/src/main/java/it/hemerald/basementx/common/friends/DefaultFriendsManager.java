@@ -20,4 +20,5 @@ public class DefaultFriendsManager implements FriendsManager {
     public Optional<Friend> getFriends(String player) {
         return Optional.ofNullable(friendsMap.get(player));
     }
+
 }
