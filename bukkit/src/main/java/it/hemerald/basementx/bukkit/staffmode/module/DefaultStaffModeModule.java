@@ -162,6 +162,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
         if (!isEnabled() || !isVanished(player)) return false;
 
         List<Player> targets = new ArrayList<>(Bukkit.getOnlinePlayers());
+        targets.removeIf(target -> target.hasPermission(BasementMessages.STAFF_PERMISSION));
         if (!adapter.onUnvanish(player, targets)) return false;
 
         adapter.getVanished().remove(player);
