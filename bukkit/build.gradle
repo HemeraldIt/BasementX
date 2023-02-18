@@ -5,14 +5,6 @@ plugins {
 repositories {
     maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url = 'https://oss.sonatype.org/content/groups/public/' }
-    maven {
-        name = 'bytesafe'
-        url 'https://mineblock.bytesafe.dev/maven/minecraft/'
-        credentials {
-            username = 'bytesafe'
-            password = '01G3VFHVRF03FFKK74ZNR9WAT6'
-        }
-    }
     maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
     maven { url 'https://jitpack.io' }
 }

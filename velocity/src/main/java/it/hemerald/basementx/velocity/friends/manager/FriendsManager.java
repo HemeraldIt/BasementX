@@ -57,7 +57,7 @@ public class FriendsManager {
     }
 
     public void saveFriend(String username, Friend friend) {
-        friends.fastPut(username, friend);
+        friends.fastPut(username.toLowerCase(), friend);
     }
 
     public void sendMessage(Player player, String component) {
@@ -87,7 +87,7 @@ public class FriendsManager {
                 throwable.printStackTrace();
                 return;
             }
-            friends.fastPut(player.getUsername(), friend);
+            friends.fastPut(player.getUsername().toLowerCase(), friend);
             friend.getFriends().forEach(friendName -> {
                 Optional<Player> optionalPlayer = together.getServer().getPlayer(friendName.getKey());
                 optionalPlayer.ifPresent(value -> sendMessage(value, "§a" + player.getUsername() + " §7è entrato nel server."));
