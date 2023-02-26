@@ -49,7 +49,7 @@ public class FriendsManager {
     }
 
     public Optional<Friend> getFriend(String player) {
-        return Optional.ofNullable(friends.get(player.toLowerCase()));
+        return Optional.ofNullable(friends.get(player));
     }
 
     public Optional<Friend> getFriend(Player player) {
@@ -57,7 +57,7 @@ public class FriendsManager {
     }
 
     public void saveFriend(String username, Friend friend) {
-        friends.fastPut(username.toLowerCase(), friend);
+        friends.fastPut(username, friend);
     }
 
     public void sendMessage(Player player, String component) {
@@ -87,7 +87,7 @@ public class FriendsManager {
                 throwable.printStackTrace();
                 return;
             }
-            friends.fastPut(player.getUsername().toLowerCase(), friend);
+            friends.fastPut(player.getUsername(), friend);
             friend.getFriends().forEach(friendName -> {
                 Optional<Player> optionalPlayer = together.getServer().getPlayer(friendName.getKey());
                 optionalPlayer.ifPresent(value -> sendMessage(value, "§a" + player.getUsername() + " §7è entrato nel server."));
@@ -96,7 +96,7 @@ public class FriendsManager {
     }
 
     public void leave(Player player) {
-        Friend friend = friends.remove(player.getUsername().toLowerCase());
+        Friend friend = friends.remove(player.getUsername());
         if (friend == null) return;
         friend.getFriends().forEach(friendName -> {
             Optional<Player> optionalPlayer = together.getServer().getPlayer(friendName.getKey());

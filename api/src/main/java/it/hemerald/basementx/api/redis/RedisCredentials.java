@@ -9,5 +9,5 @@ import java.util.List;
 @Getter
 public final class RedisCredentials {
 
-    private final List<String> hosts;
+    private final String hosts;
 }
