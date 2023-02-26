@@ -10,9 +10,7 @@ import org.redisson.Redisson;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.redisson.codec.TypedJsonJacksonCodec;
-import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
-import org.redisson.config.ReadMode;
 import org.redisson.config.SingleServerConfig;
 
 import java.util.HashMap;
@@ -25,14 +23,14 @@ public class DefaultRedisManager implements RedisManager {
 
     public DefaultRedisManager(SettingsManager settingsManager) {
         RedisCredentials credentials = new RedisCredentials(settingsManager.getProperty(BasementConfig.REDIS_HOST));
+
         Config config = new Config();
         config.setUseThreadClassLoader(false);
         config.setCodec(TypedJsonJacksonCodec.INSTANCE);
-        config.setNettyThreads(64);
-        config.setThreads(24);
-        SingleServerConfig singleServerConfig = config.useSingleServer()
-                .setAddress("redis://" + credentials.getHosts() + ":6379");
+
+        SingleServerConfig singleServerConfig = config.useSingleServer().setAddress("redis://" + credentials.getHost() + ":6379");
         singleServerConfig.setClientName("BasementX");
+
         redissonClient = Redisson.create(config);
         topicMap = new HashMap<>();
     }
