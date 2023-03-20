@@ -3,7 +3,7 @@ plugins {
 }
 
 repositories {
-    maven { url = 'https://repo.velocitypowered.com/releases/' }
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
 }
 
 dependencies {
