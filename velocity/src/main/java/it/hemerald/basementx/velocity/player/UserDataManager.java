@@ -38,8 +38,12 @@ public class UserDataManager {
         this.velocity = velocity;
         this.redissonClient = velocity.getBasement().getRedisManager().getRedissonClient();
 
-        querySelectUserData = velocity.getBasement().getDatabase().select().from("players").columns("id", "username", "xp", "level", "coins", "gems", "premium", "language");
-        querySelectUserBoosters = velocity.getBasement().getDatabase().delete().from("player_boosters").returning("type, value, time");
+        querySelectUserData = velocity.getBasement().getDatabase().select()
+                .from("players")
+                .columns("id", "username", "xp", "level", "coins", "gems", "premium", "language");
+        querySelectUserBoosters = velocity.getBasement().getDatabase().delete()
+                .from("player_boosters")
+                .returning("type, value, time");
 
         queryUpdateUserData = velocity.getBasement().getDatabase().update().table("players")
                 .setNQ("xp", "?").setNQ("level", "?").setNQ("coins", "?")
