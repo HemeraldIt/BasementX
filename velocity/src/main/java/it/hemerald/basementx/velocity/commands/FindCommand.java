@@ -26,7 +26,8 @@ public class FindCommand implements SimpleCommand {
         String[] args = invocation.arguments();
         if (args.length != 1) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Uso corretto: /find <player>").color(NamedTextColor.RED)));
             return;
         }
@@ -34,7 +35,8 @@ public class FindCommand implements SimpleCommand {
         Optional<Player> optionalPlayer = velocity.getServer().getPlayer(args[0]);
         if (optionalPlayer.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Giocatore non trovato").color(NamedTextColor.RED)));
             return;
         }
@@ -44,7 +46,8 @@ public class FindCommand implements SimpleCommand {
         Optional<ServerConnection> optionalServer = player.getCurrentServer();
         if (optionalServer.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Server non trovato").color(NamedTextColor.RED)));
             return;
         }

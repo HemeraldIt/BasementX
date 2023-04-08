@@ -34,7 +34,7 @@ public class StreamModeToggle implements CommandExecutor {
         }
 
         if (basement.getDisguiseModule().isDisguised(player)) {
-            player.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "ERRORE! " + ChatColor.RED + "Non puoi effettuare il comando mentre sei in disguise");
+            player.sendMessage(ChatColor.LIGHT_PURPLE + "Hemerald" + ChatColor.BLACK + " » " + ChatColor.RED + "Non puoi effettuare il comando mentre sei in disguise.");
             return true;
         }
 

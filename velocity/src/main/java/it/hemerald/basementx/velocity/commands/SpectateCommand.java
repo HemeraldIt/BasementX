@@ -24,14 +24,16 @@ public class SpectateCommand implements SimpleCommand {
         if (!(invocation.source() instanceof Player player)) return;
         if (invocation.arguments().length < 1) {
             player.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Uso corretto: /spectate <player>!").color(NamedTextColor.RED)));
             return;
         }
         Optional<Player> targetOptional = velocity.getServer().getPlayer(invocation.arguments()[0]);
         if (targetOptional.isEmpty()) {
             player.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
             return;
         }

@@ -43,7 +43,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
     public BasementBukkitPlugin(JavaPlugin plugin) {
         super(plugin);
         config = new File(plugin.getDataFolder(), "config.yml");
-        SpigotConfig.unknownCommandMessage = ChatColor.RED + ChatColor.BOLD.toString() + "ERRORE! " + ChatColor.RED + "Comando sconosciuto!";
+        SpigotConfig.unknownCommandMessage = ChatColor.LIGHT_PURPLE + "Hemerald" + ChatColor.BLACK + " » " +  ChatColor.RED + "Comando sconosciuto.";
     }
 
     @Override

@@ -26,7 +26,8 @@ public class ToggleDisguiseCommand implements SimpleCommand {
 
         if (cooldown.contains(player.getUsername())) {
             player.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Sei in cooldown!").color(NamedTextColor.RED)));
             return;
         }
@@ -34,7 +35,8 @@ public class ToggleDisguiseCommand implements SimpleCommand {
         Optional<UserData> optionalUserData = velocity.getUserDataManager().getUserData(player.getUniqueId());
         if (optionalUserData.isPresent() && optionalUserData.get().getStreamMode()) {
             player.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
                     .append(Component.text("Non puoi effettuare il comando mentre sei in StreamMode!").color(NamedTextColor.RED)));
             return;
         }
