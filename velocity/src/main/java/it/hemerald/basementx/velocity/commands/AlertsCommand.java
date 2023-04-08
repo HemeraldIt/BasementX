@@ -25,7 +25,7 @@ public class AlertsCommand implements SimpleCommand {
         if (!player.hasPermission("basement.alerts")) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non hai il permesso per eseguire quest'azione!").color(NamedTextColor.RED)));
             return;
         }

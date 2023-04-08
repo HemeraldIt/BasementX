@@ -73,7 +73,7 @@ public class StaffNoteCommand implements SimpleCommand {
                 playerName = queryData.getString(2);
             } else {
                 player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
-                        .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                        .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                         .append(Component.text("Il giocatore non si è mai connesso!").color(NamedTextColor.RED)));
                 return;
             }
@@ -97,7 +97,7 @@ public class StaffNoteCommand implements SimpleCommand {
                                 builder(args, 2)).build().execAsync();
 
                 player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
-                        .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                        .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                         .append(Component.text("Nota aggiunta al giocatore" + playerName).color(NamedTextColor.AQUA)
                                 .color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
             }
@@ -112,7 +112,7 @@ public class StaffNoteCommand implements SimpleCommand {
                     id = Integer.parseInt(args[2]);
                 } catch (NumberFormatException ignored) {
                     player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
-                            .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                            .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                             .append(Component.text("Inserisci un numero!").color(NamedTextColor.RED)));
                     return;
                 }
@@ -126,7 +126,7 @@ public class StaffNoteCommand implements SimpleCommand {
                 }
                 query.build().execAsync();
                 player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
-                        .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                        .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                         .append(Component.text("Nota rimossa al giocatore" + playerName).color(NamedTextColor.AQUA).color(NamedTextColor.GREEN)));
             }
             case "list" -> queryGetNotes.patternClone()
@@ -136,7 +136,7 @@ public class StaffNoteCommand implements SimpleCommand {
                     .build().execReturnAsync().thenAccept(queryData -> {
                         if (!queryData.isBeforeFirst()) {
                             player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
-                                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                                     .append(Component.text("Il giocatore non ha nessuna nota.").color(NamedTextColor.RED)));
                             return;
                         }

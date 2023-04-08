@@ -25,7 +25,7 @@ public class SpectateCommand implements SimpleCommand {
         if (invocation.arguments().length < 1) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Uso corretto: /spectate <player>!").color(NamedTextColor.RED)));
             return;
         }
@@ -33,7 +33,7 @@ public class SpectateCommand implements SimpleCommand {
         if (targetOptional.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
             return;
         }

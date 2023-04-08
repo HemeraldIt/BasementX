@@ -64,7 +64,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         staffModeSet.addAsync(player.getName());
 
-        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.BLACK + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "StaffMode abilitata!");
+        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.DARK_GRAY + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "StaffMode abilitata!");
     }
 
     private boolean localEnable(Player player) {
@@ -89,7 +89,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         staffModeSet.removeAsync(player.getName());
 
-        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.BLACK + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "StaffMode disabilitata!");
+        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.DARK_GRAY + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "StaffMode disabilitata!");
     }
 
     private boolean localDisable(Player player) {
@@ -128,7 +128,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         vanishSet.addAsync(player.getName());
 
-        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.BLACK + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "Vanish abilitata!");
+        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.DARK_GRAY + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "Vanish abilitata!");
     }
 
     public boolean localVanish(Player player) {
@@ -155,7 +155,7 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
 
         vanishSet.removeAsync(player.getName());
 
-        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.BLACK + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "Vanish disabilitata!");
+        player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.DARK_GRAY + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "Vanish disabilitata!");
     }
 
     public boolean localUnvanish(Player player) {
@@ -265,13 +265,13 @@ public class DefaultStaffModeModule extends StaffModeModule implements Listener 
         if (staffModeSet.contains(player.getName())) {
             basement.getPlugin().getServer().getScheduler().runTaskLater(basement.getPlugin(), () -> {
                 if (localEnable(player)) {
-                    player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.BLACK + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "StaffMode abilitata!");
+                    player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.DARK_GRAY + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "StaffMode abilitata!");
                 }
             }, 1L);
         }
         if (vanishSet.contains(player.getName())) {
             if (localVanish(player))
-                player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.BLACK + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "Sei invisibile!");
+                player.sendMessage(ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "STAFF" + ChatColor.DARK_GRAY + " » " + ChatColor.RESET + "" + ChatColor.AQUA + "Sei invisibile!");
         }
     }
 

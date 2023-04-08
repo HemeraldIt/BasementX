@@ -29,7 +29,7 @@ public class SendCommand implements SimpleCommand {
         if (args.length < 2) {
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Uso corretto: /send <player> <server>").color(NamedTextColor.RED)));
             return;
         }
@@ -44,7 +44,7 @@ public class SendCommand implements SimpleCommand {
                         if (optionalServerTo.isEmpty()) {
                             source.sendMessage(Component.text()
                                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                                     .append(Component.text("Non è stato possibile mandare nessun giocatore in questo server!").color(NamedTextColor.RED)));
                             return;
                         }
@@ -53,7 +53,7 @@ public class SendCommand implements SimpleCommand {
                         if (server.getServerInfo().getName().equalsIgnoreCase(registeredServer.getServerInfo().getName())) {
                             source.sendMessage(Component.text()
                                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                                     .append(Component.text("I giocatori si trovano già in quel nel server!").color(NamedTextColor.RED)));
                             return;
                         }
@@ -63,7 +63,7 @@ public class SendCommand implements SimpleCommand {
                 } else {
                     source.sendMessage(Component.text()
                             .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                            .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                            .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                             .append(Component.text("Non puoi usare questo comando da console!").color(NamedTextColor.RED)));
                 }
                 return;
@@ -71,7 +71,7 @@ public class SendCommand implements SimpleCommand {
 
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
             return;
         }
@@ -83,7 +83,7 @@ public class SendCommand implements SimpleCommand {
         if (optionalServerTo.isEmpty() || optionalServerConnection.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non è stato possibile mandare il giocatore in questo server!").color(NamedTextColor.RED)));
             return;
         }
@@ -93,7 +93,7 @@ public class SendCommand implements SimpleCommand {
         if (serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(registeredServer.getServerInfo().getName())) {
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Il giocatore si trova già in quel nel server!").color(NamedTextColor.RED)));
             return;
         }

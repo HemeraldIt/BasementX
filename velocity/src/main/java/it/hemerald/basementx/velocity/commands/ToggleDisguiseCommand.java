@@ -27,7 +27,7 @@ public class ToggleDisguiseCommand implements SimpleCommand {
         if (cooldown.contains(player.getUsername())) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Sei in cooldown!").color(NamedTextColor.RED)));
             return;
         }
@@ -36,7 +36,7 @@ public class ToggleDisguiseCommand implements SimpleCommand {
         if (optionalUserData.isPresent() && optionalUserData.get().getStreamMode()) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non puoi effettuare il comando mentre sei in StreamMode!").color(NamedTextColor.RED)));
             return;
         }
@@ -47,13 +47,15 @@ public class ToggleDisguiseCommand implements SimpleCommand {
         if (velocity.getBasement().getPlayerManager().isDisguised(player.getUsername())) {
             velocity.getBasement().getPlayerManager().undisguise(player.getUsername());
             player.sendMessage(Component.text()
-                    .append(Component.text("DISGUISE! ").color(NamedTextColor.DARK_AQUA).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
-                    .append(Component.text("Sei uscito dalla modalità disguise!").color(NamedTextColor.WHITE)));
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                    .append(Component.text("Modalità disguise disattivata.").color(NamedTextColor.WHITE)));
         } else {
             velocity.getBasement().getPlayerManager().disguise(player.getUsername());
             player.sendMessage(Component.text()
-                    .append(Component.text("DISGUISE! ").color(NamedTextColor.DARK_AQUA).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
-                    .append(Component.text("Sei entrato nella modalità disguise!").color(NamedTextColor.WHITE)));
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                    .append(Component.text("Modalità disguise attivata.").color(NamedTextColor.WHITE)));
         }
     }
 

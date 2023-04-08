@@ -25,7 +25,7 @@ public class HubCommand implements SimpleCommand {
         if (optionalServerConnection.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("C'è stato un problema con il proxy!").color(NamedTextColor.RED)));
             return;
         }
@@ -33,7 +33,7 @@ public class HubCommand implements SimpleCommand {
         if (serverNameParts[0].equals("hub")) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Sei già alla hub!").color(NamedTextColor.RED)));
             return;
         }
@@ -53,7 +53,7 @@ public class HubCommand implements SimpleCommand {
         if (optionalBukkitServer.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("La lobby non è online!").color(NamedTextColor.RED)));
             return;
         }
@@ -61,7 +61,7 @@ public class HubCommand implements SimpleCommand {
         if (optionalRegisteredServer.isEmpty()) {
             player.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("La lobby non è online!").color(NamedTextColor.RED)));
             return;
         }

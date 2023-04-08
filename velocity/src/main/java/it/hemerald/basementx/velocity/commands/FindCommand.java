@@ -27,7 +27,7 @@ public class FindCommand implements SimpleCommand {
         if (args.length != 1) {
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Uso corretto: /find <player>").color(NamedTextColor.RED)));
             return;
         }
@@ -36,7 +36,7 @@ public class FindCommand implements SimpleCommand {
         if (optionalPlayer.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Giocatore non trovato").color(NamedTextColor.RED)));
             return;
         }
@@ -47,7 +47,7 @@ public class FindCommand implements SimpleCommand {
         if (optionalServer.isEmpty()) {
             source.sendMessage(Component.text()
                     .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
-                    .append(Component.text(" » ").color(NamedTextColor.BLACK))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Server non trovato").color(NamedTextColor.RED)));
             return;
         }
