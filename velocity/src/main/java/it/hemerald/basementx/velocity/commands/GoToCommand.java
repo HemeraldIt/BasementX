@@ -28,14 +28,16 @@ public class GoToCommand implements SimpleCommand {
 
         if (!(source instanceof Player)) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Questo comando è eseguibile sono in game!").color(NamedTextColor.RED)));
             return;
         }
 
         if (args.length != 1) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Uso corretto: /goto <server>").color(NamedTextColor.RED)));
             return;
         }
@@ -43,7 +45,8 @@ public class GoToCommand implements SimpleCommand {
         Optional<RegisteredServer> optionalServer = velocity.getServer().getServer(args[0]);
         if (optionalServer.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Server non trovato").color(NamedTextColor.RED)));
             return;
         }
@@ -54,7 +57,8 @@ public class GoToCommand implements SimpleCommand {
         Optional<ServerConnection> serverConnectionOptional = player.getCurrentServer();
         if (serverConnectionOptional.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Ci dispiace non è stato possibile connetterti al server").color(NamedTextColor.RED)));
             return;
         }
@@ -62,7 +66,8 @@ public class GoToCommand implements SimpleCommand {
         ServerConnection serverConnectionFrom = serverConnectionOptional.get();
         if (serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(server.getServerInfo().getName())) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Ti trovi già in quel server").color(NamedTextColor.RED)));
             return;
         }

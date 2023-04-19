@@ -1,2 +1,2 @@
-unknown-command-message: "&c&lERRORE! &cComando sconosciuto!"
-command-not-available: "&cQuesto comando non è disponibile in questo server."
+unknown-command-message: "&dHemerald &8» &cComando sconosciuto."
+command-not-available: "&cComando non disponibile in questo server."

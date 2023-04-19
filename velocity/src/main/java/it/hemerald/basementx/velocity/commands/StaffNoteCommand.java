@@ -72,9 +72,9 @@ public class StaffNoteCommand implements SimpleCommand {
                 playerUUID = queryData.getString(1);
                 playerName = queryData.getString(2);
             } else {
-                player.sendMessage(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE)
-                        .append(Component.text("Il giocatore non si è mai connesso!")
-                                .color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
+                player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
+                        .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                        .append(Component.text("Il giocatore non si è mai connesso!").color(NamedTextColor.RED)));
                 return;
             }
         } else {
@@ -96,8 +96,9 @@ public class StaffNoteCommand implements SimpleCommand {
                                 noteId.patternClone().where(WhereBuilder.builder().equals("sn.player_id", playerId(playerUUID)).close()),
                                 builder(args, 2)).build().execAsync();
 
-                player.sendMessage(Component.text("SUCCESSO! ").color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE)
-                        .append(Component.text("Nota inserita al giocatore " + playerName)
+                player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
+                        .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                        .append(Component.text("Nota aggiunta al giocatore" + playerName).color(NamedTextColor.AQUA)
                                 .color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
             }
             case "remove" -> {
@@ -110,9 +111,9 @@ public class StaffNoteCommand implements SimpleCommand {
                 try {
                     id = Integer.parseInt(args[2]);
                 } catch (NumberFormatException ignored) {
-                    player.sendMessage(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE)
-                            .append(Component.text("Inserisci un numero")
-                                    .color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
+                    player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
+                            .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                            .append(Component.text("Inserisci un numero!").color(NamedTextColor.RED)));
                     return;
                 }
 
@@ -124,9 +125,9 @@ public class StaffNoteCommand implements SimpleCommand {
                     query.where(whereBuilder.and().equals("staff_id", playerId(player.getUniqueId().toString())).close());
                 }
                 query.build().execAsync();
-                player.sendMessage(Component.text("SUCCESSO! ").color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE)
-                        .append(Component.text("Nota rimossa al giocatore " + playerName)
-                                .color(NamedTextColor.GREEN).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
+                player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
+                        .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                        .append(Component.text("Nota rimossa al giocatore" + playerName).color(NamedTextColor.AQUA).color(NamedTextColor.GREEN)));
             }
             case "list" -> queryGetNotes.patternClone()
                     .where(WhereBuilder.builder().equalsNQ("staff_id", "players.id")
@@ -134,9 +135,9 @@ public class StaffNoteCommand implements SimpleCommand {
                             .and().equals("ps.uuid", playerUUID).close())
                     .build().execReturnAsync().thenAccept(queryData -> {
                         if (!queryData.isBeforeFirst()) {
-                            player.sendMessage(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE)
-                                    .append(Component.text("Il giocatore non ha nessuna nota")
-                                            .color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.FALSE)));
+                            player.sendMessage(Component.text("Hemerald ").color(NamedTextColor.LIGHT_PURPLE)
+                                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
+                                    .append(Component.text("Il giocatore non ha nessuna nota.").color(NamedTextColor.RED)));
                             return;
                         }
                         Component message = Component.text("Lista delle note di " + playerName + ":").color(NamedTextColor.DARK_AQUA);

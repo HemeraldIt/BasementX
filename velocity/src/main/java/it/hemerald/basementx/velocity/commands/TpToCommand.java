@@ -28,14 +28,16 @@ public class TpToCommand implements SimpleCommand {
 
         if (!(source instanceof Player from)) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Questo comando è eseguibile sono in game!").color(NamedTextColor.RED)));
             return;
         }
 
         if (args.length != 1) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Uso corretto: /tpto <player>").color(NamedTextColor.RED)));
             return;
         }
@@ -43,7 +45,8 @@ public class TpToCommand implements SimpleCommand {
         Optional<Player> optionalPlayer = velocity.getServer().getPlayer(args[0]);
         if (optionalPlayer.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
             return;
         }
@@ -51,7 +54,8 @@ public class TpToCommand implements SimpleCommand {
         Player to = optionalPlayer.get();
         if (to.getUsername().equalsIgnoreCase(from.getUsername())) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non puoi teletrasportarti da te stesso!").color(NamedTextColor.RED)));
             return;
         }
@@ -59,7 +63,8 @@ public class TpToCommand implements SimpleCommand {
         Optional<ServerConnection> optionalServerTo = to.getCurrentServer();
         if (optionalServerTo.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non è stato possibile connettersi al server di questo giocatore!").color(NamedTextColor.RED)));
             return;
         }
@@ -67,7 +72,8 @@ public class TpToCommand implements SimpleCommand {
         Optional<ServerConnection> optionalServerFrom = from.getCurrentServer();
         if (optionalServerFrom.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non è stato possibile connettersi al server di questo giocatore!").color(NamedTextColor.RED)));
             return;
         }

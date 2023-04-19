@@ -28,7 +28,8 @@ public class SendCommand implements SimpleCommand {
 
         if (args.length < 2) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Uso corretto: /send <player> <server>").color(NamedTextColor.RED)));
             return;
         }
@@ -42,7 +43,8 @@ public class SendCommand implements SimpleCommand {
                         Optional<RegisteredServer> optionalServerTo = velocity.getServer().getServer(args[1]);
                         if (optionalServerTo.isEmpty()) {
                             source.sendMessage(Component.text()
-                                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                                     .append(Component.text("Non è stato possibile mandare nessun giocatore in questo server!").color(NamedTextColor.RED)));
                             return;
                         }
@@ -50,7 +52,8 @@ public class SendCommand implements SimpleCommand {
                         RegisteredServer registeredServer = optionalServerTo.get();
                         if (server.getServerInfo().getName().equalsIgnoreCase(registeredServer.getServerInfo().getName())) {
                             source.sendMessage(Component.text()
-                                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                                     .append(Component.text("I giocatori si trovano già in quel nel server!").color(NamedTextColor.RED)));
                             return;
                         }
@@ -59,14 +62,16 @@ public class SendCommand implements SimpleCommand {
                     });
                 } else {
                     source.sendMessage(Component.text()
-                            .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                            .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                            .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                             .append(Component.text("Non puoi usare questo comando da console!").color(NamedTextColor.RED)));
                 }
                 return;
             }
 
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Giocatore non trovato!").color(NamedTextColor.RED)));
             return;
         }
@@ -77,7 +82,8 @@ public class SendCommand implements SimpleCommand {
         Optional<ServerConnection> optionalServerConnection = player.getCurrentServer();
         if (optionalServerTo.isEmpty() || optionalServerConnection.isEmpty()) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Non è stato possibile mandare il giocatore in questo server!").color(NamedTextColor.RED)));
             return;
         }
@@ -86,7 +92,8 @@ public class SendCommand implements SimpleCommand {
         ServerConnection serverConnectionFrom = optionalServerConnection.get();
         if (serverConnectionFrom.getServerInfo().getName().equalsIgnoreCase(registeredServer.getServerInfo().getName())) {
             source.sendMessage(Component.text()
-                    .append(Component.text("ERRORE! ").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, TextDecoration.State.TRUE))
+                    .append(Component.text("Hemerald").color(NamedTextColor.LIGHT_PURPLE))
+                    .append(Component.text(" » ").color(NamedTextColor.DARK_GRAY))
                     .append(Component.text("Il giocatore si trova già in quel nel server!").color(NamedTextColor.RED)));
             return;
         }

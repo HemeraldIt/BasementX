@@ -21,7 +21,7 @@ public class BridgeCommand implements CommandExecutor {
         if (!(sender instanceof Player player)) return false;
         Basement basement = BasementProvider.get();
         if (basement.getRemoteVelocityService().isOnRanch(player.getUniqueId(), "bridge_lobby")) {
-            player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "ERRORE! Sei già connesso nelle bedwars");
+            player.sendMessage(ChatColor.LIGHT_PURPLE + "Hemerald" + ChatColor.DARK_GRAY + " » " + ChatColor.RED + "Sei già connesso al TheBridge.");
             return true;
         }
         basement.getPlayerManager().sendToGameLobby(player.getUniqueId(), "bridge_lobby");
