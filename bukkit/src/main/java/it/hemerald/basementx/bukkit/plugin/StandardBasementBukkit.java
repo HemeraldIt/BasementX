@@ -29,6 +29,7 @@ import it.hemerald.basementx.bukkit.redis.message.handler.ServerShutdownHandler;
 import it.hemerald.basementx.bukkit.redis.message.handler.VelocityNotifyHandler;
 import it.hemerald.basementx.bukkit.scoreboard.ScoreboardManager;
 import it.hemerald.basementx.bukkit.staffmode.module.DefaultStaffModeModule;
+import it.hemerald.basementx.common.config.BasementConfig;
 import it.hemerald.basementx.common.nms.v1_19_R1.inventory.InventoryFixer;
 import it.hemerald.basementx.common.plugin.StandardBasement;
 import lombok.Setter;
@@ -69,9 +70,15 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         this.luckPerms = basementPlugin.getLuckPerms();
         this.permissionManager = new DefaultPermissionManager(luckPerms);
 
-        setServerID(plugin.getServer().getServerName());
         try {
-            getRemoteVelocityService().registerServer(plugin.getServer().getServerName(), plugin.getServer().getPort());
+            setServerID(plugin.getServer().getServerName());
+        } catch (NoSuchMethodError e) {
+            System.out.println("Server name not found, using server ID");
+            serverID = getSettingsManager().getProperty(BasementConfig.SERVER_ID);
+        }
+
+        try {
+            getRemoteVelocityService().registerServer(getServerID(), plugin.getServer().getPort());
         } catch (RemoteServiceAckTimeoutException e) {
             plugin.getLogger().severe("Velocity is offline, server not registered");
         }

@@ -13,7 +13,7 @@ public class VelocityNotifyHandler implements BasementMessageHandler<VelocityNot
     @Override
     public void execute(VelocityNotifyMessage message) {
         if (message.isShutdown()) return;
-        basement.getRemoteVelocityService().registerServer(basement.getPlugin().getServer().getServerName(), basement.getPlugin().getServer().getPort());
+        basement.getRemoteVelocityService().registerServer(basement.getServerID(), basement.getPlugin().getServer().getPort());
     }
 
     @Override
