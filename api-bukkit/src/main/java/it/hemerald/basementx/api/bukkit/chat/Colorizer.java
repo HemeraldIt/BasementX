@@ -33,8 +33,11 @@ public final class Colorizer {
         return nms.translateHex(msg);
     }
 
-    public interface NMS {
+    public static class NMS {
 
-        String translateHex(String msg);
+        public String translateHex(String msg) {
+            return msg;
+        }
+
     }
 }
