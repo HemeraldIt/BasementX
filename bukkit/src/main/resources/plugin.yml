@@ -1,6 +1,6 @@
 name: Basement
-author: TheDarkSword
-version: ${project.version}
+author: ohAlee
+version: 1.0
 main: it.hemerald.basementx.bukkit.BasementPluginMain
 api-version: 1.17
 depend: [LuckPerms]
