@@ -40,7 +40,11 @@ public enum MinecraftVersion {
     v1_17(755),
     v1_17_1(756),
     v1_18_1(757),
-    v1_18_2(758);
+    v1_18_2(758),
+    v1_19(759),
+    v1_19_2(760),
+    v1_19_3(761),
+    v1_19_4(762);
 
     private static final Int2ObjectMap<MinecraftVersion> mapping = new Int2ObjectOpenHashMap<>();
 

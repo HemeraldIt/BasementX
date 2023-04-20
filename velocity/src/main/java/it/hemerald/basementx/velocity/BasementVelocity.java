@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-@Plugin(id = "basement", name = "Basement", version = "1.0", authors = {"TheDarkSword"}, dependencies = {@Dependency(id = "luckperms"), @Dependency(id = "viaversion")})
+@Plugin(id = "basement", name = "Basement", version = "2.1.0", authors = {"ohAlee"}, dependencies = {@Dependency(id = "luckperms"), @Dependency(id = "viaversion")})
 @Getter
 public class BasementVelocity extends AbstractBasementPlugin {
 

@@ -1,6 +1,6 @@
 name: Basement
 author: ohAlee
-version: 1.0
+version: 2.1.0
 main: it.hemerald.basementx.bukkit.BasementPluginMain
 api-version: 1.17
 depend: [LuckPerms]
