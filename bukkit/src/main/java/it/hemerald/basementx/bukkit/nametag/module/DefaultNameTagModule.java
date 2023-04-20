@@ -8,6 +8,7 @@ import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
 import it.hemerald.basementx.bukkit.nametag.tags.TagGUI;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
+import it.hemerald.basementx.common.nms.v1_18_R2.nametag.filters.NMSSubFilter;
 import net.luckperms.api.event.node.NodeRemoveEvent;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.PermissionNode;
@@ -57,8 +58,8 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
                 });
             }
             case "v1_19_R1" -> {
-                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils(basement, UUID);
-                filters.put("sub", new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement) {
+                teamUtils = new it.hemerald.basementx.common.nms.v1_18_R2.team.TeamUtils(basement, UUID);
+                filters.put("sub", new NMSSubFilter(basement) {
                     @Override
                     public boolean isEnabled() {
                         return basement.getSettingsManager().getProperty(BasementBukkitConfig.SUB_FILTER);

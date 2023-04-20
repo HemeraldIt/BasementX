@@ -6,7 +6,7 @@ import it.hemerald.basementx.api.bukkit.chat.Colorizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ColorizerNMS implements Colorizer.NMS {
+public class ColorizerNMS extends Colorizer.NMS {
 
     private static final Pattern hexColorPattern = Pattern.compile("#([A-Fa-f0-9]{6})");
 

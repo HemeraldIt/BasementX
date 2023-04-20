@@ -38,6 +38,5 @@ public final class Colorizer {
         public String translateHex(String msg) {
             return msg;
         }
-
     }
 }

@@ -30,7 +30,6 @@ import it.hemerald.basementx.bukkit.redis.message.handler.VelocityNotifyHandler;
 import it.hemerald.basementx.bukkit.scoreboard.ScoreboardManager;
 import it.hemerald.basementx.bukkit.staffmode.module.DefaultStaffModeModule;
 import it.hemerald.basementx.common.config.BasementConfig;
-import it.hemerald.basementx.common.nms.v1_19_R1.inventory.InventoryFixer;
 import it.hemerald.basementx.common.plugin.StandardBasement;
 import lombok.Setter;
 import net.luckperms.api.LuckPerms;
@@ -84,30 +83,39 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
         }
 
         String version = plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
-        ItemDataManager itemDataManager = null;
         ScoreboardUtils scoreboardUtils = null;
 
-        switch (version) {
-            case "v1_8_R3" -> {
-                itemDataManager = new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemDataManager();
-                scoreboardUtils = new it.hemerald.basementx.common.nms.v1_8_R3.scoreboard.ScoreboardUtils();
-                ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemBuilderNMS());
-                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.chat.ColorizerNMS());
-            }
-            case "v1_19_R1" -> {
-                itemDataManager = new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemDataManager(plugin);
+        if (version.equals("v1_8_R3")) {
+            itemDataManager = new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemDataManager();
+            scoreboardUtils = new it.hemerald.basementx.common.nms.v1_8_R3.scoreboard.ScoreboardUtils();
+            ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_8_R3.item.ItemBuilderNMS());
+        } else {
+            // Can be generic
+            Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.chat.ColorizerNMS());
+            ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemBuilderNMS());
+            itemDataManager = new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemDataManager(plugin);
+
+            if (version.equals("v1_18_R2")) {
+                scoreboardUtils = new it.hemerald.basementx.common.nms.v1_18_R2.scoreboard.ScoreboardUtils();
+
+                new it.hemerald.basementx.common.nms.v1_18_R2.inventory.InventoryFixer(plugin);
+            } else if (version.equals("v1_19_R1")) {
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_19_R1.scoreboard.ScoreboardUtils();
-                ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemBuilderNMS());
-                Colorizer.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.chat.ColorizerNMS());
-                new InventoryFixer(plugin);
+
+                new it.hemerald.basementx.common.nms.v1_19_R1.inventory.InventoryFixer(plugin);
+            } else {
+                throw new IllegalStateException("Unsupported version: " + version);
             }
         }
+
+        this.scoreboardAdapter = ScoreboardAdapter.builder(plugin, scoreboardUtils).build();
 
         this.staffModeModule = new DefaultStaffModeModule(this);
         this.nameTagModule = new DefaultNameTagModule(this);
         this.disguiseModule = new DefaultDisguiseModule(this);
 
-        StreamMode streamMode = new BukkitStreamMode(getPlayerManager(), getNameTagModule());
+        streamMode = new BukkitStreamMode(getPlayerManager(), getNameTagModule());
+        streamMode.toggle(getSettingsManager().getProperty(BasementBukkitConfig.STREAM_MODE));
 
         getRedisManager().registerTopicListener(DisguiseMessage.TOPIC, new DisguiseHandler(this));
         getRedisManager().registerTopicListener(VelocityNotifyMessage.TOPIC, new VelocityNotifyHandler(this));
@@ -123,10 +131,6 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
             );
         }
 
-        this.scoreboardAdapter = ScoreboardAdapter.builder(plugin, scoreboardUtils).build();
-        this.itemDataManager = itemDataManager;
-        this.streamMode = streamMode;
-        this.streamMode.toggle(getSettingsManager().getProperty(BasementBukkitConfig.STREAM_MODE));
     }
 
     @Override
