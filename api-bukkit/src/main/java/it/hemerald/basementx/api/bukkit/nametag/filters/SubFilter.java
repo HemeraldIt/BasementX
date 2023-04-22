@@ -17,7 +17,11 @@ public abstract class SubFilter extends PermissionFilter {
 
     @Override
     public boolean test(Player player) {
-        return player.getFakeName() == null && !player.hasPermission("basement.staff") && super.test(player);
+        try {
+            return player.getFakeName() == null && !player.hasPermission("basement.staff") && super.test(player);
+        } catch (NoSuchMethodError e) {
+            return false;
+        }
     }
 
     public boolean test(String permission) {

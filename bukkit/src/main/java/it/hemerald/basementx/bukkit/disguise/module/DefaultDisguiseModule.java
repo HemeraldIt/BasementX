@@ -9,7 +9,7 @@ import it.hemerald.basementx.api.player.PlayerManager;
 import it.hemerald.basementx.bukkit.disguise.adapter.DefaultDisguiseAdapter;
 import it.hemerald.basementx.bukkit.player.BukkitBasementPlayer;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
-import org.bukkit.Skin;
+
 import org.bukkit.entity.Player;
 
 public class DefaultDisguiseModule extends DisguiseModule {
@@ -52,7 +52,7 @@ public class DefaultDisguiseModule extends DisguiseModule {
         String name = getRandomUsername();
         this.names.remove(name);
 
-        player.setFakeNameAndSkin(name, Skin.EMPTY);
+        player.setFakeNameAndSkin(name, org.bukkit.Skin.EMPTY);
 
         getBasement().getNameTagModule().update(player);
 
@@ -87,7 +87,7 @@ public class DefaultDisguiseModule extends DisguiseModule {
 
     @Override
     public boolean isDisguised(Player player) {
-        return player.getFakeName() != null;
+        try { return player.getFakeName() != null; } catch (NoSuchMethodError e) { return false; }
     }
 
     @Override

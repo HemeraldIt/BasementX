@@ -8,7 +8,6 @@ import it.hemerald.basementx.api.bukkit.nametag.module.NameTagModule;
 import it.hemerald.basementx.bukkit.nametag.adapter.DefaultNameTagAdapter;
 import it.hemerald.basementx.bukkit.nametag.tags.TagGUI;
 import it.hemerald.basementx.bukkit.plugin.config.BasementBukkitConfig;
-import it.hemerald.basementx.common.nms.v1_18_R2.nametag.filters.NMSSubFilter;
 import net.luckperms.api.event.node.NodeRemoveEvent;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.PermissionNode;
@@ -57,9 +56,18 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
                     }
                 });
             }
-            case "v1_19_R1" -> {
+            case "v1_18_R2" -> {
                 teamUtils = new it.hemerald.basementx.common.nms.v1_18_R2.team.TeamUtils(basement, UUID);
-                filters.put("sub", new NMSSubFilter(basement) {
+                filters.put("sub", new it.hemerald.basementx.common.nms.v1_18_R2.nametag.filters.NMSSubFilter(basement) {
+                    @Override
+                    public boolean isEnabled() {
+                        return basement.getSettingsManager().getProperty(BasementBukkitConfig.SUB_FILTER);
+                    }
+                });
+            }
+            case "v1_19_R1" -> {
+                teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils(basement, UUID);
+                filters.put("sub", new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement) {
                     @Override
                     public boolean isEnabled() {
                         return basement.getSettingsManager().getProperty(BasementBukkitConfig.SUB_FILTER);
@@ -162,7 +170,14 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         }
 
         updateTeam(player, team);
-        team.addEntry(player.getSafeFakeName());
+        String username;
+        try {
+            username = player.getSafeFakeName();
+        } catch (NoSuchMethodError e) {
+            username = player.getName();
+        }
+
+        team.addEntry(username);
         teams.put(player.getName(), team);
     }
 
@@ -242,7 +257,13 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
             priorityPrefix = String.valueOf(letter).repeat(repeat);
         }
 
-        return resize(UUID + priorityPrefix + player.getSafeFakeName());
+        String username;
+        try {
+            username = player.getSafeFakeName();
+        } catch (NoSuchMethodError e) {
+            username = player.getName();
+        }
+        return resize(UUID + priorityPrefix + username);
     }
 
     @Override
@@ -309,7 +330,13 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
         }
 
         healthBar.setDisplayName(ChatColor.RED + "\u2764");
-        healthBar.getScore(player.getSafeFakeName()).setScore(Math.max(0, (int) Math.round(health)));
+        String username;
+        try {
+            username = player.getSafeFakeName();
+        } catch (NoSuchMethodError e) {
+            username = player.getName();
+        }
+        healthBar.getScore(username).setScore(Math.max(0, (int) Math.round(health)));
 
         if (tab) updateHealthTab(player, health);
     }
@@ -322,8 +349,14 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
             healthBar.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         }
 
+        String username;
+        try {
+            username = player.getSafeFakeName();
+        } catch (NoSuchMethodError e) {
+            username = player.getName();
+        }
         healthBar.setDisplayName(ChatColor.RED + "\u2764");
-        healthBar.getScore(player.getSafeFakeName()).setScore(Math.max(0, (int) Math.round(health)));
+        healthBar.getScore(username).setScore(Math.max(0, (int) Math.round(health)));
     }
 
     @Override

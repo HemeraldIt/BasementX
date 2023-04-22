@@ -54,7 +54,13 @@ public class PlayerListener implements Listener {
                 }
             }));
         } else {
-            format.set(ChatColor.GRAY + player.getSafeFakeName() + ChatColor.GRAY + ": " + event.getMessage());
+            String username;
+            try {
+                username = player.getSafeFakeName();
+            } catch (NoSuchMethodError e) {
+                username = player.getName();
+            }
+            format.set(ChatColor.GRAY + username + ChatColor.GRAY + ": " + event.getMessage());
         }
 
         event.setFormat(format.get());

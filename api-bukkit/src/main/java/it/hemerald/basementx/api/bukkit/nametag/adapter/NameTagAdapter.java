@@ -45,7 +45,11 @@ public abstract class NameTagAdapter extends Adapter<NameTagModule> {
     }
 
     public String getPlayerName(Player player) {
-        return player.getSafeFakeName();
+        try {
+            return player.getSafeFakeName();
+        } catch (NoSuchMethodError e) {
+            return player.getName();
+        }
     }
 
     public String getFakePrefix(Player player) {
