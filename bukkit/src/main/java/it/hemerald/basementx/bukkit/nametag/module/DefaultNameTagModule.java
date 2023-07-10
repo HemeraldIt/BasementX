@@ -56,15 +56,6 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
                     }
                 });
             }
-            case "v1_18_R2" -> {
-                teamUtils = new it.hemerald.basementx.common.nms.v1_18_R2.team.TeamUtils(basement, UUID);
-                filters.put("sub", new it.hemerald.basementx.common.nms.v1_18_R2.nametag.filters.NMSSubFilter(basement) {
-                    @Override
-                    public boolean isEnabled() {
-                        return basement.getSettingsManager().getProperty(BasementBukkitConfig.SUB_FILTER);
-                    }
-                });
-            }
             case "v1_19_R1" -> {
                 teamUtils = new it.hemerald.basementx.common.nms.v1_19_R1.team.TeamUtils(basement, UUID);
                 filters.put("sub", new it.hemerald.basementx.common.nms.v1_19_R1.nametag.filters.NMSSubFilter(basement) {
@@ -116,7 +107,7 @@ public class DefaultNameTagModule extends NameTagModule implements Listener {
 
     @Override
     public void openInventory(Player player) {
-        TagGUI.getInventory(basement).open(player);
+        //TagGUI.getInventory(basement).open(player);
     }
 
     @Override

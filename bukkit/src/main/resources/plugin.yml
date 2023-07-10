@@ -15,20 +15,13 @@ commands:
     permission: basement.staff
     aliases:
       - staff
-      - sf
       - smode
-      - staffm
   vanish:
     permission: basement.staff
-#  tag:
-#    aliases: [tags, nametag, nametags]
   cheatban:
     permission: cheat.ban
   streammode:
     aliases: [sm]
-  bedwars:
-  thebridge:
-    aliases: [bridge, bg]
 
 permissions:
   basement.staff:

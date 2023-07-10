@@ -10,7 +10,6 @@ import it.hemerald.basementx.velocity.BasementVelocity;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 
 import java.util.List;
 import java.util.Optional;

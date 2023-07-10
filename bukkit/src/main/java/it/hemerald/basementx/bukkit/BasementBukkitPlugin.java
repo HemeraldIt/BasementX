@@ -12,7 +12,6 @@ import it.hemerald.basementx.bukkit.generic.handler.TpToHandler;
 import it.hemerald.basementx.bukkit.listeners.HostListener;
 import it.hemerald.basementx.bukkit.listeners.PlayerListener;
 import it.hemerald.basementx.bukkit.listeners.VulcanListener;
-import it.hemerald.basementx.bukkit.locale.EnglishLocale;
 import it.hemerald.basementx.bukkit.locale.ItalianLocale;
 import it.hemerald.basementx.bukkit.placeholders.BasementPlaceholder;
 import it.hemerald.basementx.bukkit.plugin.AbstractBukkitBasementPlugin;
@@ -113,10 +112,7 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
         plugin.getCommand("staffmode").setExecutor(new StaffModeCommand(basement));
         plugin.getCommand("tabreload").setExecutor(new ReloadTabCommand(basement));
         plugin.getCommand("vanish").setExecutor(new VanishCommand(basement));
-        //plugin.getCommand("tag").setExecutor(new TagCommand(basement));
         plugin.getCommand("streammode").setExecutor(new StreamModeToggle(basement));
-        plugin.getCommand("bedwars").setExecutor(new BedwarsCommand(basement));
-        plugin.getCommand("thebridge").setExecutor(new BridgeCommand(basement));
     }
 
     @Override
@@ -139,7 +135,6 @@ public class BasementBukkitPlugin extends AbstractBukkitBasementPlugin {
 
     @Override
     protected void registerLocales() {
-        basement.getLocaleManager().addLocale("basement", new EnglishLocale(plugin));
         basement.getLocaleManager().addLocale("basement", new ItalianLocale(plugin));
     }
 

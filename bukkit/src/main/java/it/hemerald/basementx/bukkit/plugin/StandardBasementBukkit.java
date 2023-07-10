@@ -95,11 +95,7 @@ public class StandardBasementBukkit extends StandardBasement implements Basement
             ItemBuilder.setNms(new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemBuilderNMS());
             itemDataManager = new it.hemerald.basementx.common.nms.v1_19_R1.item.ItemDataManager(plugin);
 
-            if (version.equals("v1_18_R2")) {
-                scoreboardUtils = new it.hemerald.basementx.common.nms.v1_18_R2.scoreboard.ScoreboardUtils();
-
-                new it.hemerald.basementx.common.nms.v1_18_R2.inventory.InventoryFixer(plugin);
-            } else if (version.equals("v1_19_R1")) {
+            if (version.equals("v1_19_R1")) {
                 scoreboardUtils = new it.hemerald.basementx.common.nms.v1_19_R1.scoreboard.ScoreboardUtils();
 
                 new it.hemerald.basementx.common.nms.v1_19_R1.inventory.InventoryFixer(plugin);
